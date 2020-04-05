@@ -1,24 +1,16 @@
 import React from "react";
-import useRouteMatch from "react-router";
 import { Row, Column } from "../../components/grid";
 import { Header } from "./Landing.styles";
 
 const Landing = () => {
-
-  const match = useRouteMatch("/");
-
   return (
-    <>
-      { match && 
-        <Row>
-          <Column span={{ mobile: 4, tablet: 3, desktop: 3 }}>
-            <Header>
-              Welcome - Landing Page
-            </Header>
-          </Column>
-        </Row>
-      }
-    </>
+    <Row>
+      <Column span={{ mobile: 4, tablet: 3, desktop: 3 }}>
+        <Header>
+          Welcome - Landing Page
+        </Header>
+      </Column>
+    </Row>
   ); 
 };
 

@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const Row = styled.div`
+export const AppContainer = styled.div`
+  width: 100vw;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  flex-wrap: wrap;
+  position: relative;
 `;
