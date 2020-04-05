@@ -2,23 +2,24 @@ const express = require("express");
 const http = require("http");
 const socket = require("socket.io");
 // import axios from "axios";
-// const router = require("./routes");
+const router = require("./routes");
 
-const PORT = 3000;
+const PORT = 3001;
 
 const app = express();
-// app.use(router);
+app.use(router);
 
-const server = http.createServer(app);
-const io = socket(server);
+const httpServer = http.createServer(app);
+const io = socket(httpServer);
 
 
-io.on('connection', (socket) => {
-  console.log(`Socket ${socket.id} connected.`);
+io.on('connect', socket => {
+  console.log(`Client is connected to ${socket.id}`);
+  socket.emit("message", { welcome: "Welcome" });
 
   socket.on('disconnect', () => {
-    console.log(`Socket ${socket.id} disconnected.`);
+    console.log(`Client is disconnected from ${socket.id}`);
   });
 });
 
-server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+httpServer.listen(PORT, () => console.log(`Listening on port ${PORT}`));
