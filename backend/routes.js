@@ -1,8 +1,8 @@
-import { Router } from "express";
-const router = Router();
+const express = require("express");
+const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send({ response: "checking incoming connections" }).status(200);
+  res.send({ response: "listening to connections" }).status(200);
 });
 
-export default router;
+module.exports = router;

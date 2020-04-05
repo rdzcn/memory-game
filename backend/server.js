@@ -1,15 +1,15 @@
-import express from "express";
-import { createServer } from "http";
-import socket from "socket.io";
+const express = require("express");
+const http = require("http");
+const socket = require("socket.io");
 // import axios from "axios";
-import router from "./routes";
+// const router = require("./routes");
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 const app = express();
-app.use(router);
+// app.use(router);
 
-const server = createServer(app);
+const server = http.createServer(app);
 const io = socket(server);
 
 
@@ -21,4 +21,4 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => console.log(`Listening on post ${PORT}`));
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
