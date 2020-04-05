@@ -1,10 +1,17 @@
-const app = require("express")();
-const http = require("http");
-const server = http.createServer(app);
-const socket = require("socket.io");
-const io = socket(server);
+import express from "express";
+import { createServer } from "http";
+import socket from "socket.io";
+// import axios from "axios";
+import router from "./routes";
 
 const PORT = process.env.PORT || 3000;
+
+const app = express();
+app.use(router);
+
+const server = createServer(app);
+const io = socket(server);
+
 
 io.on('connection', (socket) => {
   console.log(`Socket ${socket.id} connected.`);
@@ -14,4 +21,4 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT);
+server.listen(PORT, () => console.log(`Listening on post ${PORT}`));
