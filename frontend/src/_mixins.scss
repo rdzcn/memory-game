@@ -1,0 +1,44 @@
+//media breakpoints
+$xxs-min: 0;
+$xs-min: 359px;
+$sm-min: 575px;
+$md-min: 1024px;
+$lg-min: 1339px;
+$xl-min: 1919px;
+
+// MIN SELECTORS
+
+// XSmall devices
+@mixin min-width-xs {
+  @media (min-width: #{$xs-min}) {
+    @content;
+  }
+}
+
+// Small devices
+@mixin min-width-sm {
+  @media (min-width: #{$sm-min}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin min-width-md {
+  @media (min-width: #{$md-min}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin min-width-lg {
+  @media (min-width: #{$lg-min}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin min-width-xl {
+  @media (min-width: #{$xl-min}) {
+    @content;
+  }
+}

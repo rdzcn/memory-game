@@ -1,11 +1,11 @@
 import React from "react";
 import useRouteMatch from "react-router";
 import { Row, Column } from "../../components/grid";
-import { Header } from "./Landing.styles";
+import { Header } from "./Game.styles";
 
-const Landing = () => {
+const Game = () => {
 
-  const match = useRouteMatch("/");
+  const match = useRouteMatch("/games/:id");
 
   return (
     <>
@@ -13,7 +13,7 @@ const Landing = () => {
         <Row>
           <Column span={{ mobile: 4, tablet: 3, desktop: 3 }}>
             <Header>
-              Welcome - Landing Page
+              Game Page
             </Header>
           </Column>
         </Row>
@@ -22,4 +22,4 @@ const Landing = () => {
   ); 
 };
 
-export default Landing;
+export default Game;
