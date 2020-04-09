@@ -4,14 +4,16 @@ import { Row, Column } from "../../components/grid";
 import { Header } from "./Landing.styles";
 
 const Landing = () => {
-  const URL = "http://localhost:3001";
+  const URL = window.location.href;
   const socket = io(URL);
 
   useEffect(() => {
-    socket.on("connect",() => {
-      console.log("SOCKET-ID-LANDING", socket.id);
-    });
-  }, [socket, URL]);
+    if (socket) {
+      socket.on("connect",() => {
+        console.log("SOCKET-ID-LANDING", socket.id);
+      });
+    }
+  }, [socket]);
 
   return (
     <Row>

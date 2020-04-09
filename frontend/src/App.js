@@ -11,7 +11,7 @@ function App() {
     <AppContainer>
       <Switch>
         <Route exact key="landing" path="/" component={Landing}/>
-        <Route exact key="game" path="/game/:id" component={Game}/>
+        <Route key="game" path="/game/:id" component={Game}/>
       </Switch>
     </AppContainer>
   );
