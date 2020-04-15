@@ -15,5 +15,5 @@ export const Input = styled.input`
 `;
 
 export const Label = styled.span`
-  padding: 0.2rem;
+  padding: 0.5rem 0;
 `;
