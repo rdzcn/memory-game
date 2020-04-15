@@ -5,12 +5,15 @@ export const Header = styled.header`
   flex-direction: column;
   text-align: center;
   width: 100%;
+  border-radius: 6px;
   `;
 
 export const Image = styled.img`
   width: 100%;
   height: 300px;
   object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 6px;
 `;
 
 export const Title = styled.h1`
@@ -21,5 +24,6 @@ export const Title = styled.h1`
   width: 100%;
   margin: 0 auto 1rem;
   padding: 1rem;
-  text-align: center; 
+  text-align: center;
+  border-radius: 6px; 
 `;

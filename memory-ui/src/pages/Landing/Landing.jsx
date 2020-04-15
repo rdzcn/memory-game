@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
-import { Row, Column, PageWrapper } from "../../components/grid";
+import { Row, Column } from "../../components/grid";
+import Card  from "../../components/card/Card";
 import { Header, Image, Title } from "./Landing.styles";
+import NewGameForm from "../../components/form/Form";
+
 import backgroundImg from "../../assets/landing.svg";
 
 const Landing = () => {
@@ -15,14 +18,10 @@ const Landing = () => {
       </Header>
       <Row>
         <Column span={{ mobile: 4, tablet: 2, desktop: 4 }}>
-          <Title>
-            Create a Game
-          </Title>
+          <Card title="Create a new game" cardBody={<NewGameForm />} />
         </Column>
         <Column span={{ mobile: 4, tablet: 4, desktop: 8 }}>
-          <Title>
-            Join a Game
-          </Title>
+          <Card title="Join a game" />
         </Column>
       </Row>
     </Row>
