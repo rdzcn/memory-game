@@ -7,7 +7,7 @@ import {
 } from "./Card.styles";
 
 const Card = props => {
-  const { title, cardBody } = props;
+  const { title, cardBody, cardFooter } = props;
   return (
     <CardWrapper>
       <CardTitle>
@@ -17,7 +17,7 @@ const Card = props => {
         {cardBody}
       </CardBody>
       <CardFooter>
-
+        {cardFooter}
       </CardFooter>
     </CardWrapper>
   );
