@@ -15,7 +15,7 @@ const io = socket(httpServer);
 
 io.on('connect', socket => {
   console.log(`Client is connected to ${socket.id}`);
-  socket.emit("message", { welcome: "Welcome" });
+  socket.emit("message", "welcome");
 
   socket.on('disconnect', () => {
     console.log(`Client is disconnected from ${socket.id}`);
