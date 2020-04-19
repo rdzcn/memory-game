@@ -5,7 +5,7 @@ router.get("/", (req, res) => {
   res.send({ response: "listening to connections on landing" }).status(200);
 });
 
-router.get("/game/:id", (req, res) => {
+router.get("/games/:id", (req, res) => {
   res.send({ response: "listening to connections on games" }).status(200);
 });
 

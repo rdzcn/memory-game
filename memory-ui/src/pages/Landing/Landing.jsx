@@ -10,14 +10,34 @@ import backgroundImg from "../../assets/landing.svg";
 
 const Landing = () => {
  
+  const socket = io("http://localhost:3001",{
+    transports: ["websocket"],
+    rejectUnauthorized: false,
+  });
+
   useEffect(() => {
-    const socket = io.socket("http://localhost:3000");
-    console.log(socket.id);
-  }, []);
+    socket.emit("connect", socket);
+    socket.on("message", message => {
+      console.log("MESSAGE from SERVER", message);
+    });
+  });
 
   const createGame = formData => {
     const nickname = formData.get("nickname");
-    const password = null || formData.get("password");  
+    const password = null || formData.get("password");
+    const game = {
+      id: 1,
+      players: [
+        {
+          nickname: nickname,
+          id: socket.id
+        }
+      ],
+      password: password
+    };
+    
+    socket.emit("game created", game);
+    window.location = `/games/${game.id}`;
   };
 
   return (
