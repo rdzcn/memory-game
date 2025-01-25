@@ -6,16 +6,18 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node-dev app/app.ts --port 4040"
+    "dev": "ts-node-dev app/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^20",
     "ts-node-dev": "^2.0.0",
