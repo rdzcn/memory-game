@@ -1,0 +1,34 @@
+{
+  "workbench.colorTheme": "Gruvbox Light Soft",
+  "workbench.startupEditor": "none",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.insertSpaces": false,
+  "editor.tabSize": 4,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false
+  },
+  "biome.searchInPath": true,
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "git.autofetch": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "biome.enabled": true
+}

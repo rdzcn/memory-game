@@ -1,0 +1,9 @@
+[
+	{
+		"gameId": "abc123",
+		"players": [
+			{ "id": "user1", "name": "Alice", "score": 0 },
+			{ "id": "user2", "name": "Bob", "score": 0 }
+		]
+	}
+]
