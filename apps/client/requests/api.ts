@@ -65,8 +65,11 @@ export function sendPostJson<T, R>(path: string, data?: unknown) {
 }
 
 //API CALLS
-export function createGame({ username }: { username: string }) {
-	return sendPostJson("/games/create", { username });
+export function createGame({
+	username,
+	gameTitle,
+}: { username: string; gameTitle: string }) {
+	return sendPostJson("/games/create", { username, gameTitle });
 }
 
 export function getGames() {

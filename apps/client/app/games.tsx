@@ -11,12 +11,26 @@ import {
 import type { Game } from "@common/types";
 import Link from "next/link";
 import CreateGameDialog from "./create-game-dialog";
+import { useEffect, useState } from "react";
+import socket from "@/requests/socketHandler";
 
 interface GamesProps {
-	games: Game[];
+	initialGames: Game[];
 }
 
-export default function Games({ games }: GamesProps) {
+export default function Games({ initialGames }: GamesProps) {
+	const [games, setGames] = useState(initialGames);
+
+	useEffect(() => {
+		socket.on("gameCreated", (newGame) => {
+			setGames((prevGames) => [...prevGames, newGame]);
+		});
+
+		return () => {
+			socket.off("gameCreated");
+		};
+	}, []);
+
 	return (
 		<main className="container mx-auto p-4">
 			<h1 className="text-4xl font-bold text-center mb-8">

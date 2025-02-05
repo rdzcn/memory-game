@@ -12,9 +12,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { createGame } from "@/requests/api";
 
 type FormData = {
-	name: string;
+	gameTitle: string;
 	username: string;
 };
 
@@ -26,9 +27,13 @@ export default function CreateGameDialog() {
 		formState: { errors },
 	} = useForm<FormData>();
 
-	const onSubmit = (data: FormData) => {
-		console.log("Game Created:", data);
-		setOpen(false); // Close the dialog after submission
+	const onSubmit = async (data: FormData) => {
+		try {
+			await createGame(data);
+			setOpen(false);
+		} catch (error) {
+			console.error("Failed to create game", error);
+		}
 	};
 
 	return (
@@ -36,19 +41,19 @@ export default function CreateGameDialog() {
 			<DialogTrigger asChild>
 				<Button>Create a Game</Button>
 			</DialogTrigger>
-			<DialogContent aria-describedby="create-game-dialog">
+			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Create a New Game</DialogTitle>
 				</DialogHeader>
 				<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 					<div className="space-y-2">
-						<Label htmlFor="name">Game Name</Label>
+						<Label htmlFor="gameTitle">Game Name</Label>
 						<Input
-							id="name"
-							{...register("name", { required: "Game name is required" })}
+							id="gameTitle"
+							{...register("gameTitle", { required: "Game name is required" })}
 						/>
-						{errors.name && (
-							<p className="text-red-500 text-sm">{errors.name.message}</p>
+						{errors.gameTitle && (
+							<p className="text-red-500 text-sm">{errors.gameTitle.message}</p>
 						)}
 					</div>
 					<div className="space-y-2">

@@ -1,9 +1,40 @@
 [
-	{
-		"gameId": "abc123",
-		"players": [
-			{ "id": "user1", "name": "Alice", "score": 0 },
-			{ "id": "user2", "name": "Bob", "score": 0 }
-		]
-	}
+  {
+    "gameId": "abc123",
+    "gameTitle": "Game 1",
+    "players": [
+      {
+        "id": "user1",
+        "name": "Alice",
+        "score": 0
+      },
+      {
+        "id": "user2",
+        "name": "Bob",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "gameId": "953a8d0d-6c59-46c0-9ee2-6b1a470e8f82",
+    "gameTitle": "title1",
+    "players": [
+      {
+        "id": "7184be1c-b534-486b-a33d-bd6fe6c8692b",
+        "name": "john",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "gameId": "b1c15246-96d7-41d9-984f-dc901c461f2a",
+    "gameTitle": "title2",
+    "players": [
+      {
+        "id": "7a294197-ddd0-4684-85d0-aa9918ad2165",
+        "name": "jack",
+        "score": 0
+      }
+    ]
+  }
 ]
