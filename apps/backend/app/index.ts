@@ -1,23 +1,21 @@
 import express from "express";
-import { Server } from "socket.io";
-import http from "node:http";
+import { Server as SocketIOServer } from "socket.io";
+import { createServer } from "node:http";
 import cors from "cors";
 import { errorHandler } from "./middleware";
 import GamesController from "./controllers/games.controller";
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
-	cors: {
-		origin: "*",
-		methods: ["GET", "POST"],
-	},
-});
-
-app.use(cors());
 const PORT = 4040;
 
+const app = express();
+app.use(express.static("public"));
+app.use(cors());
 app.use(express.json());
+app.use(errorHandler);
+
+const server = createServer(app);
+
+const io = new SocketIOServer(server);
 
 // WebSocket connection
 io.on("connection", (socket) => {
@@ -25,6 +23,10 @@ io.on("connection", (socket) => {
 
 	socket.on("disconnect", () => {
 		console.log("❌ A user disconnected", socket.id);
+	});
+
+	socket.on("error", (err) => {
+		console.error("Socket error:", err);
 	});
 });
 
@@ -43,8 +45,6 @@ app.post("/games/create", async (req, res) => {
 	}
 });
 
-app.use(errorHandler);
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });

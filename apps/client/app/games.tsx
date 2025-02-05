@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import socket from "@/requests/socketHandler";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -9,10 +12,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import type { Game } from "@common/types";
-import Link from "next/link";
 import CreateGameDialog from "./create-game-dialog";
-import { useEffect, useState } from "react";
-import socket from "@/requests/socketHandler";
 
 interface GamesProps {
 	initialGames: Game[];
@@ -40,7 +40,7 @@ export default function Games({ initialGames }: GamesProps) {
 				{games.map((game) => (
 					<Card key={game.gameId} className="flex flex-col">
 						<CardHeader>
-							<CardTitle>{game.gameId}</CardTitle>
+							<CardTitle>{game.gameTitle}</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<p>Players: {game.players.length}</p>
