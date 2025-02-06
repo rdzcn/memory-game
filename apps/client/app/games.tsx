@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import type { Game } from "@common/types";
 import CreateGameDialog from "./create-game-dialog";
+import JoinGameDialog from "./join-game-dialog";
 
 interface GamesProps {
 	initialGames: Game[];
@@ -49,11 +50,11 @@ export default function Games({ initialGames }: GamesProps) {
 							</p>
 						</CardContent>
 						<CardFooter className="mt-auto">
-							<Button asChild className="w-full">
-								<Link href={`/game/${game.gameId}`}>
-									{game.players.length === 1 ? "Join Game" : "View Game"}
-								</Link>
-							</Button>
+							{game.players.length === 1 ? (
+								<JoinGameDialog gameId={game.gameId} />
+							) : (
+								"View Game"
+							)}
 						</CardFooter>
 					</Card>
 				))}

@@ -52,24 +52,38 @@ class GamesController {
 			const { gameId, username } = req.body;
 
 			const games = readGames();
-			const game = games.find((g) => g.gameId === gameId);
+			const gameIndex = games.findIndex((g) => g.gameId === gameId);
 
-			if (!game) {
+			if (gameIndex === -1) {
 				return res.status(404).json({ message: "Game not found" });
 			}
+
+			const game = games[gameIndex];
 
 			// Prevent duplicate players
 			if (game.players.some((p) => p.name === username)) {
 				return res.status(400).json({ message: "Player already in game" });
 			}
 
-			game.players.push({ id: crypto.randomUUID(), name: username, score: 0 });
+			// Create new array to ensure immutability
+			const updatedGame = {
+				...game,
+				players: [
+					...game.players,
+					{ id: crypto.randomUUID(), name: username, score: 0 },
+				],
+			};
+
+			// Replace old game object in the array
+			games[gameIndex] = updatedGame;
+
+			// Persist updated games list
 			writeGames(games);
 
 			// Emit event to update all clients
-			this.io.emit("gameUpdated", game);
+			this.io.emit("gameUpdated", updatedGame);
 
-			res.status(200).json(game);
+			res.status(200).json(updatedGame);
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: "Internal server error" });
@@ -80,6 +94,21 @@ class GamesController {
 		try {
 			const games = readGames();
 			res.json(games);
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	}
+
+	async getGameById(req: Request, res: Response) {
+		try {
+			const games = readGames();
+			const game = games.find((g) => g.gameId === req.params.gameId);
+
+			if (!game) {
+				return res.status(404).json({ message: "Game not found" });
+			}
+			res.json(game);
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: "Internal server error" });

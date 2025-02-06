@@ -56,6 +56,13 @@ app.post("/games/join", async (req, res) => {
 		res.status(500).json({ message: "Internal server error" });
 	}
 });
+app.get("/games/:gameId", async (req, res) => {
+	try {
+		await gamesController.getGameById(req, res);
+	} catch (error) {
+		res.status(500).json({ message: "Internal server error" });
+	}
+});
 
 server.listen(PORT, () => {
 	console.log(`🚀 Server is running on http://localhost:${PORT}`);

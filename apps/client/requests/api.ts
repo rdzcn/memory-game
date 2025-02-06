@@ -72,6 +72,17 @@ export function createGame({
 	return sendPostJson<unknown, Game>("/games/create", { username, gameTitle });
 }
 
+export function joinGame({
+	username,
+	gameId,
+}: { username: string; gameId: string }) {
+	return sendPostJson<unknown, Game>("/games/join", { username, gameId });
+}
+
 export function getGames() {
 	return sendGetJson<unknown, Game[]>("/games");
+}
+
+export function getGameById(gameId: string) {
+	return sendGetJson<unknown, Game>(`/games/${gameId}`);
 }
