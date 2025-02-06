@@ -15,7 +15,12 @@ app.use(errorHandler);
 
 const server = createServer(app);
 
-const io = new SocketIOServer(server);
+const io = new SocketIOServer(server, {
+	cors: {
+		origin: "*",
+		methods: ["GET", "POST"],
+	},
+});
 
 // WebSocket connection
 io.on("connection", (socket) => {
@@ -40,6 +45,13 @@ app.get("/games", gamesController.getGames);
 app.post("/games/create", async (req, res) => {
 	try {
 		await gamesController.createGame(req, res);
+	} catch (error) {
+		res.status(500).json({ message: "Internal server error" });
+	}
+});
+app.post("/games/join", async (req, res) => {
+	try {
+		await gamesController.joinGame(req, res);
 	} catch (error) {
 		res.status(500).json({ message: "Internal server error" });
 	}

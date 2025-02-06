@@ -1,21 +1,5 @@
 [
   {
-    "gameId": "abc123",
-    "gameTitle": "Game 1",
-    "players": [
-      {
-        "id": "user1",
-        "name": "Alice",
-        "score": 0
-      },
-      {
-        "id": "user2",
-        "name": "Bob",
-        "score": 0
-      }
-    ]
-  },
-  {
     "gameId": "953a8d0d-6c59-46c0-9ee2-6b1a470e8f82",
     "gameTitle": "title1",
     "players": [
@@ -27,56 +11,45 @@
     ]
   },
   {
-    "gameId": "b1c15246-96d7-41d9-984f-dc901c461f2a",
-    "gameTitle": "title2",
+    "gameId": "68f944e7-e28a-4515-82db-8e2f1b09e359",
+    "gameTitle": "My new game",
     "players": [
       {
-        "id": "7a294197-ddd0-4684-85d0-aa9918ad2165",
-        "name": "jack",
+        "id": "5ae767de-6840-41c5-a5f1-ed1f3047e7a8",
+        "name": "Sally",
         "score": 0
       }
     ]
   },
   {
-    "gameId": "a1031faa-e454-42ca-9bd7-98930c6ae9b0",
+    "gameId": "feb2069f-5cc0-48ff-b532-e93be03c28b4",
     "gameTitle": "third game",
     "players": [
       {
-        "id": "0664accb-a956-4206-a1fc-ba6a147ef881",
-        "name": "julia",
+        "id": "0191ee76-e213-4cf9-9476-6c653e8e9c56",
+        "name": "Nick",
         "score": 0
       }
     ]
   },
   {
-    "gameId": "31efc5b4-7fd9-4c99-bf89-8a50634a824f",
-    "gameTitle": "fourth game",
+    "gameId": "bf4769e7-c462-4dc7-8a5d-2cfcf04bc887",
+    "gameTitle": "4th game",
     "players": [
       {
-        "id": "6c5ca35e-c6e0-4b76-9c5b-c1835716d6b7",
-        "name": "julia",
+        "id": "81a9b591-9f13-489d-a3a9-b54c8a347da9",
+        "name": "Raul",
         "score": 0
       }
     ]
   },
   {
-    "gameId": "016e7231-40db-438f-996e-bb325442a73b",
-    "gameTitle": "sixth",
+    "gameId": "77a94837-3855-4d90-85df-0f975eb12bc6",
+    "gameTitle": "5th game",
     "players": [
       {
-        "id": "8b9a346e-4452-4891-a3e4-4f8794a6b913",
-        "name": "julia",
-        "score": 0
-      }
-    ]
-  },
-  {
-    "gameId": "66a54b08-78ef-4df2-ad5a-5f008a0b96ff",
-    "gameTitle": "johnny same",
-    "players": [
-      {
-        "id": "37672d0f-d475-41d3-9e25-81873513e581",
-        "name": "jack",
+        "id": "c2af72dd-a678-45ec-9935-a87fe3fffeb9",
+        "name": "Ahmet",
         "score": 0
       }
     ]

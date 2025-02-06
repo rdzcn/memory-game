@@ -47,6 +47,35 @@ class GamesController {
 		}
 	}
 
+	async joinGame(req: Request, res: Response) {
+		try {
+			const { gameId, username } = req.body;
+
+			const games = readGames();
+			const game = games.find((g) => g.gameId === gameId);
+
+			if (!game) {
+				return res.status(404).json({ message: "Game not found" });
+			}
+
+			// Prevent duplicate players
+			if (game.players.some((p) => p.name === username)) {
+				return res.status(400).json({ message: "Player already in game" });
+			}
+
+			game.players.push({ id: crypto.randomUUID(), name: username, score: 0 });
+			writeGames(games);
+
+			// Emit event to update all clients
+			this.io.emit("gameUpdated", game);
+
+			res.status(200).json(game);
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	}
+
 	async getGames(_req: Request, res: Response) {
 		try {
 			const games = readGames();

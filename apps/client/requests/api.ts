@@ -69,7 +69,7 @@ export function createGame({
 	username,
 	gameTitle,
 }: { username: string; gameTitle: string }) {
-	return sendPostJson("/games/create", { username, gameTitle });
+	return sendPostJson<unknown, Game>("/games/create", { username, gameTitle });
 }
 
 export function getGames() {

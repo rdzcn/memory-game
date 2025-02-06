@@ -1,8 +1,14 @@
+import { revalidatePath } from "next/cache";
 import { getGames } from "@/requests/api";
 import Games from "./games";
 
 export async function fetchGames() {
-	return getGames();
+	try {
+		return getGames();
+	} catch (error) {
+		console.error("Failed to fetch games", error);
+		return [];
+	}
 }
 
 export default async function Home() {
@@ -13,9 +19,6 @@ export default async function Home() {
 			<main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
 				<Games initialGames={data} />
 			</main>
-			<footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-				{JSON.stringify(data, null, 2)}
-			</footer>
 		</div>
 	);
 }

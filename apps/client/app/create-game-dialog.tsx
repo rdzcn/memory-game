@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import {
 	Dialog,
 	DialogTrigger,
@@ -26,10 +27,12 @@ export default function CreateGameDialog() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FormData>();
+	const router = useRouter();
 
 	const onSubmit = async (data: FormData) => {
 		try {
-			await createGame(data);
+			const newGame = await createGame(data);
+			router.push(`/game/${newGame.gameId}`);
 			setOpen(false);
 		} catch (error) {
 			console.error("Failed to create game", error);
