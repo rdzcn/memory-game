@@ -53,7 +53,7 @@ export default function Games({ initialGames }: GamesProps) {
 							{game.players.length === 1 ? (
 								<JoinGameDialog gameId={game.gameId} />
 							) : (
-								"View Game"
+								<Link href={`/game/${game.gameId}`}>View Game</Link>
 							)}
 						</CardFooter>
 					</Card>

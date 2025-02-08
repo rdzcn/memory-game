@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Game } from "@common/types";
 import socket from "@/requests/socketHandler";
+import { Button } from "@/components/ui/button";
 
 interface GameBoardProps {
 	gameData: Game;
@@ -29,6 +30,7 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 			<pre className="bg-gray-800 p-4 rounded-lg text-sm font-mono overflow-x-auto whitespace-pre-wrap">
 				{JSON.stringify(game, null, 2)}
 			</pre>
+			<Button className="mt-4">Leave game</Button>
 		</div>
 	);
 }
