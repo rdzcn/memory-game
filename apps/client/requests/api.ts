@@ -69,14 +69,20 @@ export function createGame({
 	username,
 	gameTitle,
 }: { username: string; gameTitle: string }) {
-	return sendPostJson<unknown, Game>("/games/create", { username, gameTitle });
+	return sendPostJson<unknown, { playerId: string; gameId: string }>(
+		"/games/create",
+		{ username, gameTitle },
+	);
 }
 
 export function joinGame({
 	username,
 	gameId,
 }: { username: string; gameId: string }) {
-	return sendPostJson<unknown, Game>("/games/join", { username, gameId });
+	return sendPostJson<unknown, { playerId: string }>("/games/join", {
+		username,
+		gameId,
+	});
 }
 
 export function getGames() {

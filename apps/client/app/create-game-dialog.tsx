@@ -31,8 +31,9 @@ export default function CreateGameDialog() {
 
 	const onSubmit = async (data: FormData) => {
 		try {
-			const newGame = await createGame(data);
-			router.push(`/game/${newGame.gameId}`);
+			const { playerId: player1Id, gameId } = await createGame(data);
+			console.log("player1Id", player1Id);
+			router.push(`/game/${gameId}?playerId=${player1Id}`);
 			setOpen(false);
 		} catch (error) {
 			console.error("Failed to create game", error);

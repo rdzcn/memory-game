@@ -11,17 +11,17 @@
     ]
   },
   {
-    "gameId": "2acb242b-15bf-4a37-ac33-4ade7cb39be3",
-    "gameTitle": "Lynn and Arda",
+    "gameId": "a1805910-ffe0-42b5-aa39-5228073314bb",
+    "gameTitle": "Super",
     "players": [
       {
-        "id": "6b6b05fb-139a-4311-a2cc-9e1ab416a913",
-        "name": "Lynn",
+        "id": "4c2e986e-eda2-4d07-81e4-98c8a83b8129",
+        "name": "jill",
         "score": 0
       },
       {
-        "id": "274162b7-bfc0-4f00-8c83-d0daaa70d989",
-        "name": "Arda",
+        "id": "f7b7f88f-5a89-416d-a359-e8ae8466ef47",
+        "name": "hernan",
         "score": 0
       }
     ]

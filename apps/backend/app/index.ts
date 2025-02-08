@@ -3,7 +3,11 @@ import { Server as SocketIOServer } from "socket.io";
 import { createServer } from "node:http";
 import cors from "cors";
 import { errorHandler } from "./middleware";
-import GamesController from "./controllers/games.controller";
+import GamesController, {
+	readGames,
+	writeGames,
+} from "./controllers/games.controller";
+import type { Game } from "@common/types/game.types";
 
 const PORT = 4040;
 
@@ -24,7 +28,31 @@ const io = new SocketIOServer(server, {
 
 // WebSocket connection
 io.on("connection", (socket) => {
-	console.log("✅ A user connected", socket.id);
+	socket.on("leaveGame", ({ gameId, playerId }) => {
+		const games = readGames();
+		const gameIndex = games.findIndex((g) => g.gameId === gameId);
+
+		if (gameIndex !== -1) {
+			// Create a new updated game object
+			const updatedGame = {
+				...games[gameIndex],
+				players: games[gameIndex].players.filter((p) => p.id !== playerId),
+			};
+
+			let updatedGames: Game[];
+			if (updatedGame.players.length === 0) {
+				// Remove the game if no players left
+				updatedGames = games.filter((g) => g.gameId !== gameId);
+			} else {
+				// Otherwise, replace the modified game in the array
+				updatedGames = [...games];
+				updatedGames[gameIndex] = updatedGame;
+			}
+
+			writeGames(updatedGames);
+			io.emit("gameUpdated", updatedGame);
+		}
+	});
 
 	socket.on("disconnect", () => {
 		console.log("❌ A user disconnected", socket.id);

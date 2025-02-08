@@ -30,8 +30,9 @@ export default function JoinGameDialog({ gameId }: { gameId: string }) {
 
 	const onSubmit = async (data: FormData) => {
 		try {
-			await joinGame({ ...data, gameId });
-			router.push(`/game/${gameId}`);
+			const { playerId: player2Id } = await joinGame({ ...data, gameId });
+			console.log("player2Id", player2Id);
+			router.push(`/game/${gameId}?playerId=${player2Id}`);
 			setOpen(false);
 		} catch (error) {
 			console.error("Failed to create game", error);

@@ -6,12 +6,12 @@ import type { Server } from "socket.io";
 
 const GAMES_FILE = path.resolve(__dirname, "../../data/games.json");
 
-const readGames = (): Game[] => {
+export const readGames = (): Game[] => {
 	if (!fs.existsSync(GAMES_FILE)) return [];
 	return JSON.parse(fs.readFileSync(GAMES_FILE, "utf8"));
 };
 
-const writeGames = (games: Game[]) => {
+export const writeGames = (games: Game[]) => {
 	fs.writeFileSync(GAMES_FILE, JSON.stringify(games, null, 2));
 };
 
@@ -26,10 +26,13 @@ class GamesController {
 		try {
 			const { gameTitle, username } = req.body;
 
+			const gameId = crypto.randomUUID();
+			const playerId = crypto.randomUUID();
+
 			const newGame = {
-				gameId: crypto.randomUUID(),
+				gameId,
 				gameTitle,
-				players: [{ id: crypto.randomUUID(), name: username, score: 0 }],
+				players: [{ id: playerId, name: username, score: 0 }],
 			};
 
 			// Save game data to file
@@ -40,7 +43,7 @@ class GamesController {
 			// Emit event to update all clients
 			this.io.emit("gameCreated", newGame);
 
-			res.status(201).json(newGame);
+			res.status(201).json({ gameId, playerId });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: "Internal server error" });
@@ -65,13 +68,12 @@ class GamesController {
 				return res.status(400).json({ message: "Player already in game" });
 			}
 
+			const playerId = crypto.randomUUID();
+
 			// Create new array to ensure immutability
 			const updatedGame = {
 				...game,
-				players: [
-					...game.players,
-					{ id: crypto.randomUUID(), name: username, score: 0 },
-				],
+				players: [...game.players, { id: playerId, name: username, score: 0 }],
 			};
 
 			// Replace old game object in the array
@@ -83,7 +85,7 @@ class GamesController {
 			// Emit event to update all clients
 			this.io.emit("gameUpdated", updatedGame);
 
-			res.status(200).json(updatedGame);
+			res.status(200).json({ playerId });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: "Internal server error" });
