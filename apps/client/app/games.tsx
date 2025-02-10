@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import socket from "@/requests/socketHandler";
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -11,24 +10,25 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { Game } from "@common/types";
+import type { GameState } from "@common/types";
 import CreateGameDialog from "./create-game-dialog";
 import JoinGameDialog from "./join-game-dialog";
 
 interface GamesProps {
-	initialGames: Game[];
+	initialGames: GameState[];
 }
 
 export default function Games({ initialGames }: GamesProps) {
 	const [games, setGames] = useState(initialGames);
 
 	useEffect(() => {
-		socket.on("gameCreated", (newGame) => {
-			setGames((prevGames) => [...prevGames, newGame]);
+		socket.on("game-created", (game: GameState) => {
+			console.log("Game created: GAMES", game);
+			setGames((prevGames) => [...prevGames, game]);
 		});
 
 		return () => {
-			socket.off("gameCreated");
+			socket.off("game-created");
 		};
 	}, []);
 
@@ -39,21 +39,19 @@ export default function Games({ initialGames }: GamesProps) {
 			</h1>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 				{games.map((game) => (
-					<Card key={game.gameId} className="flex flex-col">
+					<Card key={game.id} className="flex flex-col">
 						<CardHeader>
-							<CardTitle>{game.gameTitle}</CardTitle>
+							<CardTitle>{game.title}</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<p>Players: {game.players.length}</p>
-							<p>
-								Status: {game.players.length === 1 ? "Waiting" : "In Progress"}
-							</p>
+							<p>Status: {game.status}</p>
 						</CardContent>
 						<CardFooter className="mt-auto">
 							{game.players.length === 1 ? (
-								<JoinGameDialog gameId={game.gameId} />
+								<JoinGameDialog gameId={game.id} />
 							) : (
-								<Link href={`/game/${game.gameId}`}>View Game</Link>
+								<Link href={`/game/${game.id}`}>View Game</Link>
 							)}
 						</CardFooter>
 					</Card>

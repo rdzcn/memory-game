@@ -1,100 +1,104 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Request, Response } from "express";
-import type { Game } from "../../../../packages/common/types/game.types";
-import type { Server } from "socket.io";
+import type { GameState } from "@common/types/game.types";
+import { Game } from "../game";
 
 const GAMES_FILE = path.resolve(__dirname, "../../data/games.json");
 
-export const readGames = (): Game[] => {
-	if (!fs.existsSync(GAMES_FILE)) return [];
+export const readGames = (): Record<string, GameState> => {
+	if (!fs.existsSync(GAMES_FILE)) return {};
 	return JSON.parse(fs.readFileSync(GAMES_FILE, "utf8"));
 };
 
-export const writeGames = (games: Game[]) => {
-	fs.writeFileSync(GAMES_FILE, JSON.stringify(games, null, 2));
+export const writeGames = (games: Record<string, GameState>) => {
+	fs.writeFileSync(GAMES_FILE, JSON.stringify(games, null, 4));
 };
 
 class GamesController {
-	private io: Server;
+	private games: Map<string, GameState> = new Map();
 
-	constructor(io: Server) {
-		this.io = io;
+	constructor() {
+		this.games = new Map(Object.entries(readGames()));
 	}
 
-	async createGame(req: Request, res: Response) {
-		try {
-			const { gameTitle, username } = req.body;
+	createGame({ gameTitle, username }: { gameTitle: string; username: string }) {
+		const playerId = crypto.randomUUID();
+		const newGame = new Game(gameTitle);
 
-			const gameId = crypto.randomUUID();
-			const playerId = crypto.randomUUID();
+		const player = {
+			id: playerId,
+			name: username,
+			socketId: "",
+			score: 0,
+		};
 
-			const newGame = {
-				gameId,
-				gameTitle,
-				players: [{ id: playerId, name: username, score: 0 }],
-			};
+		newGame.addPlayer(player);
+		const gameId = newGame.getId();
+		const gameData = { ...newGame.getState(), title: gameTitle };
+		this.games.set(gameId, gameData);
 
-			// Save game data to file
-			const games = readGames();
-			games.push(newGame);
-			writeGames(games);
+		// Save game data to file
+		const games = readGames();
+		games[gameId] = gameData;
+		writeGames(games);
 
-			// Emit event to update all clients
-			this.io.emit("gameCreated", newGame);
+		return newGame.getState();
+	}
 
-			res.status(201).json({ gameId, playerId });
-		} catch (error) {
-			console.error(error);
-			res.status(500).json({ message: "Internal server error" });
+	joinGame({ gameId, username }: { gameId: string; username: string }) {
+		const game = this.games.get(gameId);
+		const playerId = crypto.randomUUID();
+		const player = {
+			id: playerId,
+			name: username,
+			socketId: "",
+			score: 0,
+		};
+
+		if (!game) {
+			throw new Error("Game not found");
 		}
+		game.players.push(player);
+		this.games.set(gameId, game);
+		writeGames(Object.fromEntries(this.games));
+
+		return { playerId, game };
 	}
 
-	async joinGame(req: Request, res: Response) {
-		try {
-			const { gameId, username } = req.body;
+	getInMemoryGames() {
+		return Array.from(this.games.values());
+	}
 
-			const games = readGames();
-			const gameIndex = games.findIndex((g) => g.gameId === gameId);
+	getGame(gameId: string): GameState | undefined {
+		return this.games.get(gameId);
+	}
 
-			if (gameIndex === -1) {
-				return res.status(404).json({ message: "Game not found" });
-			}
-
-			const game = games[gameIndex];
-
-			// Prevent duplicate players
-			if (game.players.some((p) => p.name === username)) {
-				return res.status(400).json({ message: "Player already in game" });
-			}
-
-			const playerId = crypto.randomUUID();
-
-			// Create new array to ensure immutability
-			const updatedGame = {
-				...game,
-				players: [...game.players, { id: playerId, name: username, score: 0 }],
-			};
-
-			// Replace old game object in the array
-			games[gameIndex] = updatedGame;
-
-			// Persist updated games list
-			writeGames(games);
-
-			// Emit event to update all clients
-			this.io.emit("gameUpdated", updatedGame);
-
-			res.status(200).json({ playerId });
-		} catch (error) {
-			console.error(error);
-			res.status(500).json({ message: "Internal server error" });
+	leaveGame({ gameId, playerId }: { gameId: string; playerId: string }) {
+		const game = this.games.get(gameId);
+		if (!game) {
+			throw new Error("Game not found");
 		}
+
+		const remainingPlayer = game.players.filter((p) => p.id !== playerId);
+		const updatedGame = { ...game, players: remainingPlayer };
+
+		// TODO: If there is no player left, delete the game
+		if (remainingPlayer.length === 0) {
+			this.games.delete(gameId);
+			writeGames(Object.fromEntries(this.games));
+			return null;
+		}
+
+		this.games.set(gameId, updatedGame);
+		writeGames(Object.fromEntries(this.games));
+		return updatedGame;
 	}
 
-	async getGames(_req: Request, res: Response) {
+	// express handlers
+	async getAllGames(_req: Request, res: Response): Promise<void> {
 		try {
-			const games = readGames();
+			const games = Array.from(this.games.values());
 			res.json(games);
 		} catch (error) {
 			console.error(error);
@@ -102,19 +106,16 @@ class GamesController {
 		}
 	}
 
-	async getGameById(req: Request, res: Response) {
-		try {
-			const games = readGames();
-			const game = games.find((g) => g.gameId === req.params.gameId);
+	async getGameById(req: Request, res: Response): Promise<void> {
+		const { id } = req.params;
+		const game = this.getGame(id);
 
-			if (!game) {
-				return res.status(404).json({ message: "Game not found" });
-			}
-			res.json(game);
-		} catch (error) {
-			console.error(error);
-			res.status(500).json({ message: "Internal server error" });
+		if (!game) {
+			res.status(404).json({ message: "Game not found" });
+			return;
 		}
+
+		res.json(game);
 	}
 }
 

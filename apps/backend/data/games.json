@@ -1,29 +1,42 @@
-[
-  {
-    "gameId": "953a8d0d-6c59-46c0-9ee2-6b1a470e8f82",
-    "gameTitle": "title1",
-    "players": [
-      {
-        "id": "7184be1c-b534-486b-a33d-bd6fe6c8692b",
-        "name": "john",
-        "score": 0
-      }
-    ]
-  },
-  {
-    "gameId": "a1805910-ffe0-42b5-aa39-5228073314bb",
-    "gameTitle": "Super",
-    "players": [
-      {
-        "id": "4c2e986e-eda2-4d07-81e4-98c8a83b8129",
-        "name": "jill",
-        "score": 0
-      },
-      {
-        "id": "f7b7f88f-5a89-416d-a359-e8ae8466ef47",
-        "name": "hernan",
-        "score": 0
-      }
-    ]
-  }
-]
+{
+    "953a8d0d-6c59-46c0-9ee2-6b1a470e8f82": {
+        "id": "953a8d0d-6c59-46c0-9ee2-6b1a470e8f82",
+        "title": "title1",
+        "players": [
+            {
+                "id": "7184be1c-b534-486b-a33d-bd6fe6c8692b",
+                "name": "john",
+                "score": 0,
+                "socketId": "some-socket-id-1"
+            },
+            {
+                "id": "82e5b210-d33f-4a19-9a2e-5fb9c4c28c12",
+                "name": "jane",
+                "score": 0,
+                "socketId": "some-socket-id-2"
+            }
+        ],
+        "currentTurn": "7184be1c-b534-486b-a33d-bd6fe6c8692b",
+        "status": "playing"
+    },
+    "337c1a37-73d6-4bc0-8d3c-764e7da23b6c": {
+        "id": "337c1a37-73d6-4bc0-8d3c-764e7da23b6c",
+        "players": [
+            {
+                "id": "75100a06-849f-45f7-b297-647aa14a184a",
+                "name": "jack",
+                "socketId": "aqguRwPosiNh_YyMAAAh",
+                "score": 0
+            },
+            {
+                "id": "f553ff35-523b-435e-a54d-073871d6a06d",
+                "name": "john",
+                "socketId": "",
+                "score": 0
+            }
+        ],
+        "currentTurn": "75100a06-849f-45f7-b297-647aa14a184a",
+        "status": "waiting",
+        "title": "HELLO"
+    }
+}

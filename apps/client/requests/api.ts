@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { AxiosRequestConfig } from "axios";
-import type { Game } from "@common/types";
+import type { GameState } from "@common/types";
 
 // Create an Axios instance
 export const axiosInstance = axios.create({
@@ -86,9 +86,9 @@ export function joinGame({
 }
 
 export function getGames() {
-	return sendGetJson<unknown, Game[]>("/games");
+	return sendGetJson<unknown, GameState[]>("/games");
 }
 
 export function getGameById(gameId: string) {
-	return sendGetJson<unknown, Game>(`/games/${gameId}`);
+	return sendGetJson<unknown, GameState>(`/games/${gameId}`);
 }

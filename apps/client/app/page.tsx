@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import { getGames } from "@/requests/api";
 import Games from "./games";
 

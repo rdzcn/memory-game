@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { createGame, joinGame } from "@/requests/api";
+import socket from "@/requests/socketHandler";
 
 type FormData = {
 	username: string;
@@ -21,6 +21,7 @@ type FormData = {
 
 export default function JoinGameDialog({ gameId }: { gameId: string }) {
 	const [open, setOpen] = useState(false);
+	const [error, setError] = useState("");
 	const {
 		register,
 		handleSubmit,
@@ -29,14 +30,16 @@ export default function JoinGameDialog({ gameId }: { gameId: string }) {
 	const router = useRouter();
 
 	const onSubmit = async (data: FormData) => {
-		try {
-			const { playerId: player2Id } = await joinGame({ ...data, gameId });
-			console.log("player2Id", player2Id);
-			router.push(`/game/${gameId}?playerId=${player2Id}`);
+		socket.emit("join-game", { ...data, gameId });
+
+		socket.once("player-joined", (playerId: string) => {
+			router.push(`/game/${gameId}?playerId=${playerId}`);
 			setOpen(false);
-		} catch (error) {
-			console.error("Failed to create game", error);
-		}
+		});
+
+		socket.once("error", ({ message }) => {
+			setError(message);
+		});
 	};
 
 	return (
