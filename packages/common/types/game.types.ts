@@ -24,3 +24,11 @@ export interface Card {
 	isRevealed: boolean;
 	isMatched: boolean;
 }
+
+export interface PlayerConnection {
+	playerId: string;
+	gameId: string;
+	lastHeartbeat: number;
+	missedBeats: number;
+	socketId?: string;
+}

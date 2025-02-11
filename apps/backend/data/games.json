@@ -19,23 +19,23 @@
         "currentTurn": "7184be1c-b534-486b-a33d-bd6fe6c8692b",
         "status": "playing"
     },
-    "337c1a37-73d6-4bc0-8d3c-764e7da23b6c": {
-        "id": "337c1a37-73d6-4bc0-8d3c-764e7da23b6c",
+    "72e9ed61-cc13-48a0-b4c4-883dda05b752": {
+        "id": "72e9ed61-cc13-48a0-b4c4-883dda05b752",
         "players": [
             {
-                "id": "75100a06-849f-45f7-b297-647aa14a184a",
+                "id": "79e79793-6db0-4ad5-8014-342a1f44705c",
                 "name": "jack",
-                "socketId": "aqguRwPosiNh_YyMAAAh",
+                "socketId": "A2ChMybQgnckUWivAAAV",
                 "score": 0
             },
             {
-                "id": "f553ff35-523b-435e-a54d-073871d6a06d",
-                "name": "john",
+                "id": "594c2435-58ae-4a79-b485-ec28cfbb2823",
+                "name": "jill",
                 "socketId": "",
                 "score": 0
             }
         ],
-        "currentTurn": "75100a06-849f-45f7-b297-647aa14a184a",
+        "currentTurn": "79e79793-6db0-4ad5-8014-342a1f44705c",
         "status": "waiting",
         "title": "HELLO"
     }

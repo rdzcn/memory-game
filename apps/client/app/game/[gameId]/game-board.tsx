@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import type { GameState } from "@common/types";
 import socket from "@/requests/socketHandler";
 import { Button } from "@/components/ui/button";
+import useHeartbeat from "@/app/hooks/useHeartbeat";
 
 interface GameBoardProps {
 	gameData: GameState;
@@ -15,6 +16,8 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const playerId = searchParams.get("playerId");
+
+	useHeartbeat(socket, game.id, playerId);
 
 	const handleLeaveGame = useCallback(() => {
 		if (playerId) {
@@ -27,11 +30,6 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 		socket.on("game-updated", (updatedGame) => {
 			setGame(updatedGame);
 		});
-
-		// Set up heartbeat
-		// const heartbeatInterval = setInterval(() => {
-		// 	socket.emit("heartbeat", { gameId: game.id, playerId });
-		// }, 5000); // Send heartbeat every 5 seconds
 
 		return () => {
 			socket.off("game-updated");

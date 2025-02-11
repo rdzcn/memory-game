@@ -1,9 +1,9 @@
-import { getGames } from "@/requests/api";
+import { getGames, getGamesWithFetch } from "@/requests/api";
 import Games from "./games";
 
 export async function fetchGames() {
 	try {
-		return getGames();
+		return getGamesWithFetch();
 	} catch (error) {
 		console.error("Failed to fetch games", error);
 		return [];

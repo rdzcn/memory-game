@@ -77,13 +77,12 @@ class GamesController {
 	leaveGame({ gameId, playerId }: { gameId: string; playerId: string }) {
 		const game = this.games.get(gameId);
 		if (!game) {
-			throw new Error("Game not found");
+			return null;
 		}
 
 		const remainingPlayer = game.players.filter((p) => p.id !== playerId);
 		const updatedGame = { ...game, players: remainingPlayer };
 
-		// TODO: If there is no player left, delete the game
 		if (remainingPlayer.length === 0) {
 			this.games.delete(gameId);
 			writeGames(Object.fromEntries(this.games));

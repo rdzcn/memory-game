@@ -92,3 +92,21 @@ export function getGames() {
 export function getGameById(gameId: string) {
 	return sendGetJson<unknown, GameState>(`/games/${gameId}`);
 }
+
+export async function getGamesWithFetch() {
+	try {
+		const res = await fetch("http://localhost:4040/games", {
+			method: "GET",
+			cache: "no-store",
+		});
+
+		if (!res.ok) {
+			throw new Error(`Failed to fetch games: ${res.statusText}`);
+		}
+
+		return res.json();
+	} catch (error) {
+		console.error("Error fetching games:", error);
+		return [];
+	}
+}
