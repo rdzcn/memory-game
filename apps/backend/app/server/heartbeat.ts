@@ -60,10 +60,7 @@ export class HeartbeatManager {
 	private async checkConnections() {
 		const now = Date.now();
 
-		for (const [
-			playerId,
-			{ connection, socket },
-		] of this.connections.entries()) {
+		for (const { connection, socket } of this.connections.values()) {
 			const timeSinceLastHeartbeat = now - connection.lastHeartbeat;
 
 			if (timeSinceLastHeartbeat >= this.HEARTBEAT_TIMEOUT) {

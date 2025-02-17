@@ -17,6 +17,8 @@ export class GameEventHandler {
 		socket.on("join-game", (data) => this.handleJoinGame(socket, data));
 		socket.on("leave-game", (data) => this.handleLeaveGame(socket, data));
 		socket.on("heartbeat", (data) => this.handleHeartbeat(socket, data));
+		socket.on("start-game", (data) => this.handleStartGame(socket, data));
+		socket.on("flip-card", (data) => this.handleFlipCard(socket, data));
 		socket.on("disconnect", () => this.handleDisconnect(socket));
 	}
 
@@ -46,6 +48,11 @@ export class GameEventHandler {
 			username,
 		});
 
+		if (!game) {
+			socket.emit("game-not-found");
+			return;
+		}
+
 		socket.join(gameId);
 		this.heartbeatManager.registerSocket(socket, gameId, playerId);
 
@@ -64,6 +71,29 @@ export class GameEventHandler {
 
 		this.io.to(gameId).emit("player-left", playerId);
 		this.io.to(gameId).emit("game-updated", game);
+	}
+
+	handleStartGame(socket: Socket, { gameId }: { gameId: string }): void {
+		const game = this.gameController.startGame({ gameId });
+
+		this.io.to(gameId).emit("game-updated", game);
+	}
+
+	handleFlipCard(
+		socket: Socket,
+		{
+			gameId,
+			id,
+			pairIndex,
+		}: { gameId: string; id: string; pairIndex: number },
+	): void {
+		const flippedCards = this.gameController.flipCard({
+			gameId,
+			id,
+			pairIndex,
+		});
+
+		this.io.to(gameId).emit("card-flipped", flippedCards);
 	}
 
 	handleDisconnect(socket: Socket): void {

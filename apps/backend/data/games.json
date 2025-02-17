@@ -18,25 +18,5 @@
         ],
         "currentTurn": "7184be1c-b534-486b-a33d-bd6fe6c8692b",
         "status": "playing"
-    },
-    "72e9ed61-cc13-48a0-b4c4-883dda05b752": {
-        "id": "72e9ed61-cc13-48a0-b4c4-883dda05b752",
-        "players": [
-            {
-                "id": "79e79793-6db0-4ad5-8014-342a1f44705c",
-                "name": "jack",
-                "socketId": "A2ChMybQgnckUWivAAAV",
-                "score": 0
-            },
-            {
-                "id": "594c2435-58ae-4a79-b485-ec28cfbb2823",
-                "name": "jill",
-                "socketId": "",
-                "score": 0
-            }
-        ],
-        "currentTurn": "79e79793-6db0-4ad5-8014-342a1f44705c",
-        "status": "waiting",
-        "title": "HELLO"
     }
 }

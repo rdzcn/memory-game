@@ -57,7 +57,7 @@ class GamesController {
 		};
 
 		if (!game) {
-			throw new Error("Game not found");
+			return { playerId: "", game: null };
 		}
 		game.players.push(player);
 		this.games.set(gameId, game);
@@ -93,6 +93,24 @@ class GamesController {
 		writeGames(Object.fromEntries(this.games));
 		return updatedGame;
 	}
+
+	startGame({ gameId }: { gameId: string }) {
+		const game = this.games.get(gameId);
+		if (!game) {
+			return null;
+		}
+
+		const updatedGame: GameState = { ...game, status: "playing" };
+		this.games.set(gameId, updatedGame);
+		writeGames(Object.fromEntries(this.games));
+		return updatedGame;
+	}
+
+	flipCard({
+		gameId,
+		id,
+		pairIndex,
+	}: { gameId: string; id: string; pairIndex: number }) {}
 
 	// express handlers
 	async getAllGames(_req: Request, res: Response): Promise<void> {
