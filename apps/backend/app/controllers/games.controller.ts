@@ -110,7 +110,9 @@ class GamesController {
 		gameId,
 		id,
 		pairIndex,
-	}: { gameId: string; id: string; pairIndex: number }) {}
+	}: { gameId: string; id: string; pairIndex: number }) {
+
+	}
 
 	// express handlers
 	async getAllGames(_req: Request, res: Response): Promise<void> {

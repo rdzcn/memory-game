@@ -15,6 +15,10 @@ export interface GameState {
 	id: string;
 	currentTurn: string;
 	status: GameStatus;
+	flippedCards: {
+		id: string;
+		pairIndex: number;
+	}[];
 }
 
 export interface Card {

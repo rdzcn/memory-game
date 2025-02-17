@@ -5,50 +5,19 @@ type GameStatus = "waiting" | "playing" | "finished";
 export class Game {
 	private id: string;
 	private players: Player[];
-	// private cards: Card[];
+	private flippedCards: { id: string; pairIndex: number }[];
 	private currentTurn: string;
 	private status: GameStatus;
 	private title: string;
-	// private lastFlippedCard?: Card;
-	// private winner?: Player;
 
 	constructor(title: string) {
 		this.id = crypto.randomUUID(); // Generate unique game ID
 		this.players = [];
-		// this.cards = this.initializeCards();
 		this.currentTurn = "";
 		this.status = "waiting";
 		this.title = title;
+		this.flippedCards = [];
 	}
-
-	// private initializeCards(): Card[] {
-	// 	// Create pairs of cards (8 pairs = 16 cards total)
-	// 	const values = [1, 2, 3, 4, 5, 6, 7, 8];
-	// 	const cards: Card[] = [];
-
-	// 	// Create two cards for each value
-	// 	for (const value of values) {
-	// 		for (let i = 0; i < 2; i++) {
-	// 			cards.push({
-	// 				id: cards.length,
-	// 				value,
-	// 				isFlipped: false,
-	// 				isMatched: false,
-	// 			});
-	// 		}
-	// 	}
-
-	// 	// Shuffle the cards
-	// 	return this.shuffleCards(cards);
-	// }
-
-	// private shuffleCards(cards: Card[]): Card[] {
-	// 	for (let i = cards.length - 1; i > 0; i--) {
-	// 		const j = Math.floor(Math.random() * (i + 1));
-	// 		[cards[i], cards[j]] = [cards[j], cards[i]];
-	// 	}
-	// 	return cards;
-	// }
 
 	public addPlayer(player: Player): boolean {
 		if (this.players.length >= 2) {
@@ -155,12 +124,13 @@ export class Game {
 		return {
 			id: this.id,
 			players: this.players,
-			// cards: this.cards,
+			flippedCards: this.flippedCards,
 			currentTurn: this.currentTurn,
 			status: this.status,
 			// lastFlippedCard: this.lastFlippedCard,
 			// winner: this.winner,
 			title: this.title,
+
 		};
 	}
 
