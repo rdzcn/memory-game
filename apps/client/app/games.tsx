@@ -23,7 +23,6 @@ export default function Games({ initialGames }: GamesProps) {
 
 	useEffect(() => {
 		socket.on("game-created", (game: GameState) => {
-			console.log("Game created: GAMES", game);
 			setGames((prevGames) => [...prevGames, game]);
 		});
 

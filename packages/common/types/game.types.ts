@@ -15,18 +15,22 @@ export interface GameState {
 	id: string;
 	currentTurn: string;
 	status: GameStatus;
-	flippedCards: {
-		id: string;
-		pairIndex: number;
-	}[];
+	flippedCards: Card[];
+	lastFlippedCard: Card | undefined;
+	winner: Player | undefined;
+	cards: Card[];
 }
 
 export interface Card {
 	id: number;
 	value: string;
-	position: number;
-	isRevealed: boolean;
+	isFlipped: boolean;
 	isMatched: boolean;
+}
+
+export interface CardData {
+	id: number;
+	value: string;
 }
 
 export interface PlayerConnection {

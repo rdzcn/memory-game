@@ -19,6 +19,7 @@ export class GameEventHandler {
 		socket.on("heartbeat", (data) => this.handleHeartbeat(socket, data));
 		socket.on("start-game", (data) => this.handleStartGame(socket, data));
 		socket.on("flip-card", (data) => this.handleFlipCard(socket, data));
+		socket.on("switch-turn", (data) => this.handleSwitchTurn(data));
 		socket.on("disconnect", () => this.handleDisconnect(socket));
 	}
 
@@ -79,21 +80,23 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game);
 	}
 
+	handleSwitchTurn({ gameId }: { gameId: string }): void {
+		const game = this.gameController.switchTurn({ gameId });
+
+		this.io.to(gameId).emit("game-updated", game);
+	}
+
 	handleFlipCard(
 		socket: Socket,
-		{
-			gameId,
-			id,
-			pairIndex,
-		}: { gameId: string; id: string; pairIndex: number },
+		{ gameId, playerId, id }: { gameId: string; id: number; playerId: string },
 	): void {
-		const flippedCards = this.gameController.flipCard({
+		const gameState = this.gameController.flipCard({
 			gameId,
 			id,
-			pairIndex,
+			playerId,
 		});
 
-		this.io.to(gameId).emit("card-flipped", flippedCards);
+		this.io.to(gameId).emit("game-updated", gameState);
 	}
 
 	handleDisconnect(socket: Socket): void {

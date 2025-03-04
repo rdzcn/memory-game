@@ -1,15 +1,12 @@
 "use client";
 
+import type { Card, CardData } from "@common/types";
 import Image from "next/image";
-import type { CardData } from "../data/cards";
 
 interface MemoryCardProps {
-	card: CardData;
-	flippedCards: CardData[];
-	handleFlipCard: ({
-		id,
-		pairIndex,
-	}: { id: string; pairIndex: number }) => void;
+	card: Card;
+	flippedCards: Card[];
+	handleFlipCard: ({ id }: { id: number }) => void;
 }
 
 export function MemoryCard({
@@ -17,21 +14,23 @@ export function MemoryCard({
 	flippedCards,
 	handleFlipCard,
 }: MemoryCardProps) {
-	const { id, pairIndex } = card;
-	const isFlipped = flippedCards.find(
-		(flippedCard) =>
-			flippedCard.id === card.id && flippedCard.pairIndex === card.pairIndex,
-	);
+	const { id, value, isFlipped, isMatched } = card;
+
+	const handleButtonClick = () => {
+		handleFlipCard({ id });
+	};
 
 	return (
 		<>
-			<li
-				onClick={() => handleFlipCard({ id, pairIndex })}
-				onKeyUp={() => handleFlipCard({ id, pairIndex })}
-			>
+			<button type="button" onClick={handleButtonClick}>
 				{isFlipped ? (
 					<div>
-						<Image src={card.src} alt={card.id} width={96} height={96} />
+						<Image
+							src={`/images/${value}.png`}
+							alt="memory-card"
+							width={96}
+							height={96}
+						/>
 					</div>
 				) : (
 					<div>
@@ -43,7 +42,7 @@ export function MemoryCard({
 						/>
 					</div>
 				)}
-			</li>
+			</button>
 		</>
 	);
 }

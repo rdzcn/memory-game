@@ -16,10 +16,20 @@ export const writeGames = (games: Record<string, GameState>) => {
 };
 
 class GamesController {
-	private games: Map<string, GameState> = new Map();
+	private games: Map<string, Game> = new Map();
 
 	constructor() {
-		this.games = new Map(Object.entries(readGames()));
+		// Convert saved game states back to Game instances
+		const savedGames = readGames();
+		for (const [gameId, gameState] of Object.entries(savedGames)) {
+			const game = new Game(gameState.title, true);
+
+			console.log("CONSTRUCTIR", game);
+
+			// Restore the game state
+			game.restoreState(gameState);
+			this.games.set(gameId, game);
+		}
 	}
 
 	createGame({ gameTitle, username }: { gameTitle: string; username: string }) {
@@ -35,12 +45,13 @@ class GamesController {
 
 		newGame.addPlayer(player);
 		const gameId = newGame.getId();
-		const gameData = { ...newGame.getState(), title: gameTitle };
-		this.games.set(gameId, gameData);
 
-		// Save game data to file
+		// Store the Game instance
+		this.games.set(gameId, newGame);
+
+		// Save game state to file
 		const games = readGames();
-		games[gameId] = gameData;
+		games[gameId] = newGame.getState();
 		writeGames(games);
 
 		return newGame.getState();
@@ -48,6 +59,11 @@ class GamesController {
 
 	joinGame({ gameId, username }: { gameId: string; username: string }) {
 		const game = this.games.get(gameId);
+		if (!game) {
+			throw new Error("Game not found");
+		}
+
+		// Now you have access to all Game instance methods
 		const playerId = crypto.randomUUID();
 		const player = {
 			id: playerId,
@@ -56,21 +72,21 @@ class GamesController {
 			score: 0,
 		};
 
-		if (!game) {
-			return { playerId: "", game: null };
-		}
-		game.players.push(player);
-		this.games.set(gameId, game);
-		writeGames(Object.fromEntries(this.games));
+		game.addPlayer(player);
 
-		return { playerId, game };
+		// Save updated state
+		const games = readGames();
+		games[gameId] = game.getState();
+		writeGames(games);
+
+		return { playerId, game: game.getState() };
 	}
 
 	getInMemoryGames() {
 		return Array.from(this.games.values());
 	}
 
-	getGame(gameId: string): GameState | undefined {
+	getGame(gameId: string): Game | undefined {
 		return this.games.get(gameId);
 	}
 
@@ -80,38 +96,89 @@ class GamesController {
 			return null;
 		}
 
-		const remainingPlayer = game.players.filter((p) => p.id !== playerId);
-		const updatedGame = { ...game, players: remainingPlayer };
+		// Use the Game instance method to remove player
+		game.removePlayer(playerId);
 
-		if (remainingPlayer.length === 0) {
+		// If no players left, remove the game
+		if (game.getState().players.length === 0) {
 			this.games.delete(gameId);
-			writeGames(Object.fromEntries(this.games));
+			this.saveGames();
 			return null;
 		}
 
-		this.games.set(gameId, updatedGame);
-		writeGames(Object.fromEntries(this.games));
-		return updatedGame;
+		// Save the updated state
+		const games = readGames();
+		games[gameId] = game.getState();
+		writeGames(games);
+
+		return game.getState();
 	}
 
 	startGame({ gameId }: { gameId: string }) {
 		const game = this.games.get(gameId);
+
 		if (!game) {
 			return null;
 		}
 
-		const updatedGame: GameState = { ...game, status: "playing" };
-		this.games.set(gameId, updatedGame);
-		writeGames(Object.fromEntries(this.games));
-		return updatedGame;
+		// Update the game status through state restoration
+		const currentState = game.getState();
+		game.restoreState({
+			...currentState,
+			status: "playing",
+		});
+
+		// Save the updated state
+		const games = readGames();
+		games[gameId] = game.getState();
+		writeGames(games);
+
+		return game.getState();
+	}
+
+	private saveGames() {
+		const gameStates = Object.fromEntries(
+			Array.from(this.games.entries()).map(([id, game]) => [
+				id,
+				game.getState(),
+			]),
+		);
+		writeGames(gameStates);
 	}
 
 	flipCard({
 		gameId,
 		id,
-		pairIndex,
-	}: { gameId: string; id: string; pairIndex: number }) {
+		playerId,
+	}: { gameId: string; id: number; playerId: string }) {
+		const game = this.games.get(gameId);
 
+		if (!game) {
+			return null;
+		}
+
+		const isFlipped = game.flipCard({ id, playerId });
+
+		if (isFlipped) {
+			// Save the updated state
+			const games = readGames();
+			games[gameId] = game.getState();
+			writeGames(games);
+		}
+
+		return game.getState();
+	}
+
+	switchTurn({ gameId }: { gameId: string }) {
+		const game = this.games.get(gameId);
+
+		if (!game) {
+			return null;
+		}
+
+		game.switchTurn();
+		console.log("GAME CONTROLLER GAME STATE", game.getState());
+		return game.getState();
 	}
 
 	// express handlers
