@@ -6,11 +6,8 @@ import type { GameState } from "@common/types";
 import socket from "@/requests/socketHandler";
 import { Button } from "@/components/ui/button";
 import useHeartbeat from "@/app/hooks/useHeartbeat";
-// import { GameClientState } from "../game.reducer";
-import cardData, { type CardData } from "../data/cards";
 import { MemoryCard } from "../components/memory-card";
-import { set } from "react-hook-form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface GameBoardProps {
 	gameData: GameState;
@@ -80,37 +77,57 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 		socket.emit("flip-card", { gameId: game.id, id, playerId });
 	};
 
+	const currentPlayerName = playerId === game.currentTurn ? player?.name : "Unknown"
+
 	return (
 		<>
 			<Card key={game.id} className="flex flex-col w-fit my-0 mx-auto">
-				<CardHeader>
+				<CardHeader className="text-center">
 					<CardTitle>Current turn</CardTitle>
 				</CardHeader>
 				<CardContent className="text-center">
 					<span>
-						{player?.id === game.currentTurn ? player.name : "Unknown"}
+						{currentPlayerName}
 					</span>
 				</CardContent>
 			</Card>
-			<div className="grid grid-cols-6 gap-8 w-fit mx-auto">
-				{game.cards.map((card) => (
-					<MemoryCard
-						key={`${card.id}`}
-						card={card}
-						flippedCards={game.flippedCards}
-						handleFlipCard={handleFlipCard}
-					/>
-				))}
-			</div>
-			<div className="bg-gray-900 text-white p-6 rounded-2xl shadow-lg max-w-2xl mx-auto mt-6">
-				<h3 className="text-lg font-semibold text-blue-400 mb-4">
-					{game.title}
-				</h3>
-				<span className="text-sm">{`Player's turn: ${game.currentTurn}`}</span>
-				<h2 className="text-2xl font-semibold text-white mb-4">{playerId}</h2>
-				<Button className="mt-4" onClick={handleLeaveGameClick}>
-					Leave game
-				</Button>
+			<div className="flex justify-center">
+				<Card key="player1" className="flex flex-col w-fit my-0 mx-auto">
+					<CardHeader className="text-center">
+						<CardTitle>Player 1</CardTitle>
+					</CardHeader>
+					<CardContent className="text-center">
+						<span>
+							{game.players[0].name} - {game.players[0].score}
+						</span>
+					</CardContent>
+					<CardFooter>
+						<Button onClick={handleLeaveGameClick}>Leave game</Button>
+					</CardFooter>
+				</Card>
+				<div className="grid grid-cols-6 gap-8 w-fit mx-auto">
+					{game.cards.map((card) => (
+						<MemoryCard
+							key={`${card.id}`}
+							card={card}
+							flippedCards={game.flippedCards}
+							handleFlipCard={handleFlipCard}
+						/>
+					))}
+				</div>
+				<Card key="player2" className="flex flex-col w-fit my-0 mx-auto">
+					<CardHeader className="text-center">
+						<CardTitle>Player 2</CardTitle>
+					</CardHeader>
+					<CardContent className="text-center">
+						<span>
+							{game.players[1] ? `${game.players[1].name} - ${game.players[1].score}` : "Waiting for player"}
+						</span>
+					</CardContent>
+					<CardFooter>
+						<Button onClick={handleLeaveGameClick}>Leave game</Button>
+					</CardFooter>
+				</Card>
 			</div>
 		</>
 	);

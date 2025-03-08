@@ -1,45 +1,33 @@
 {
-    "81a4b027-e8b5-4e91-a154-02093145fbda": {
-        "id": "81a4b027-e8b5-4e91-a154-02093145fbda",
+    "7e64f372-257d-4ef9-ae64-a2a225142a8b": {
+        "id": "7e64f372-257d-4ef9-ae64-a2a225142a8b",
         "players": [
             {
-                "id": "dc1c2ef7-e4d9-4c93-acca-7a1cd6b6cb2c",
-                "name": "jack",
+                "id": "b3f86081-4703-4611-83e3-4051a703f219",
+                "name": "Jack",
                 "socketId": "",
-                "score": 0
+                "score": 3
+            },
+            {
+                "id": "1e2f5857-72a6-408c-be0e-b19353f1fa41",
+                "name": "John",
+                "socketId": "",
+                "score": 2
             }
         ],
         "flippedCards": [],
-        "currentTurn": "dc1c2ef7-e4d9-4c93-acca-7a1cd6b6cb2c",
-        "status": "waiting",
-        "title": "HELLO",
+        "currentTurn": "b3f86081-4703-4611-83e3-4051a703f219",
+        "status": "playing",
+        "title": "Hello",
         "cards": [
             {
-                "id": 6,
-                "value": "experiment",
-                "isFlipped": false,
-                "isMatched": false
+                "id": 12,
+                "value": "magnetism",
+                "isFlipped": true,
+                "isMatched": true
             },
             {
-                "id": 5,
-                "value": "chip",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 15,
-                "value": "microscope",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 2,
-                "value": "centrifuge",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 16,
+                "id": 17,
                 "value": "periodic-table",
                 "isFlipped": false,
                 "isMatched": false
@@ -51,68 +39,20 @@
                 "isMatched": false
             },
             {
-                "id": 13,
-                "value": "magnetism",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 1,
-                "value": "bioinformatics",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 12,
-                "value": "magnetism",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 20,
-                "value": "test-tube",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 3,
-                "value": "centrifuge",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 21,
-                "value": "test-tube",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
                 "id": 18,
                 "value": "scientist",
                 "isFlipped": false,
                 "isMatched": false
             },
             {
-                "id": 4,
-                "value": "chip",
+                "id": 2,
+                "value": "centrifuge",
                 "isFlipped": false,
                 "isMatched": false
             },
             {
-                "id": 0,
-                "value": "bioinformatics",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 10,
-                "value": "gmo",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 17,
-                "value": "periodic-table",
+                "id": 6,
+                "value": "experiment",
                 "isFlipped": false,
                 "isMatched": false
             },
@@ -123,28 +63,16 @@
                 "isMatched": false
             },
             {
-                "id": 14,
-                "value": "microscope",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
                 "id": 22,
                 "value": "virus",
-                "isFlipped": false,
-                "isMatched": false
+                "isFlipped": true,
+                "isMatched": true
             },
             {
-                "id": 23,
-                "value": "virus",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 11,
-                "value": "gmo",
-                "isFlipped": false,
-                "isMatched": false
+                "id": 1,
+                "value": "bioinformatics",
+                "isFlipped": true,
+                "isMatched": true
             },
             {
                 "id": 7,
@@ -153,10 +81,88 @@
                 "isMatched": false
             },
             {
+                "id": 16,
+                "value": "periodic-table",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 15,
+                "value": "microscope",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "bioinformatics",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
                 "id": 8,
                 "value": "flask",
                 "isFlipped": false,
                 "isMatched": false
+            },
+            {
+                "id": 21,
+                "value": "test-tube",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 11,
+                "value": "gmo",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 14,
+                "value": "microscope",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 3,
+                "value": "centrifuge",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "virus",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 4,
+                "value": "chip",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 20,
+                "value": "test-tube",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 10,
+                "value": "gmo",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 5,
+                "value": "chip",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 13,
+                "value": "magnetism",
+                "isFlipped": true,
+                "isMatched": true
             }
         ]
     }
