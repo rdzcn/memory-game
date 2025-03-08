@@ -1,6 +1,6 @@
 "use client";
 
-import type { Card, CardData } from "@common/types";
+import type { Card } from "@common/types";
 import Image from "next/image";
 
 interface MemoryCardProps {

@@ -215,24 +215,6 @@ export class Game {
 				);
 			}
 		}
-		// else {
-		// No match, cards will be flipped back by the frontend after a delay
-		// card.isFlipped = false;
-		// const firstCard = this.cards.find(
-		// 	(c) => c.id === this.lastFlippedCard?.id,
-		// );
-		// if (firstCard) {
-		// 	firstCard.isFlipped = false;
-		// }
-		// if (this.lastFlippedCard) {
-		// 	this.lastFlippedCard.isFlipped = false;
-		// }
-
-		// Switch turns
-		// this.switchTurn();
-		// }
-
-		// Reset lastFlippedCard
 		this.lastFlippedCard = undefined;
 		return true;
 	}

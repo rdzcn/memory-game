@@ -177,7 +177,9 @@ class GamesController {
 		}
 
 		game.switchTurn();
-		console.log("GAME CONTROLLER GAME STATE", game.getState());
+		const games = readGames();
+		games[gameId] = game.getState();
+		writeGames(games);
 		return game.getState();
 	}
 
@@ -194,8 +196,16 @@ class GamesController {
 
 	async getGameById(req: Request, res: Response): Promise<void> {
 		const { id } = req.params;
-		const game = this.getGame(id);
 
+		// Reload games from JSON
+		const savedGames = readGames();
+		if (savedGames[id]) {
+			const game = new Game(savedGames[id].title, true);
+			this.games.set(id, game);
+			game.restoreState(savedGames[id]);
+		}
+
+		const game = this.getGame(id);
 		if (!game) {
 			res.status(404).json({ message: "Game not found" });
 			return;

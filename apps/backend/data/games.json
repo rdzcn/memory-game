@@ -1,44 +1,19 @@
 {
-    "8c76c6c4-def5-42e2-8d4e-0c5ee227c863": {
-        "id": "8c76c6c4-def5-42e2-8d4e-0c5ee227c863",
+    "81a4b027-e8b5-4e91-a154-02093145fbda": {
+        "id": "81a4b027-e8b5-4e91-a154-02093145fbda",
         "players": [
             {
-                "id": "934ccef4-fdc9-4e25-99a7-c5c094df260d",
-                "name": "jill",
-                "socketId": "1uO4KfOq9FQpnm_fAAAh",
-                "score": 1
-            },
-            {
-                "id": "b1592100-2268-49ab-aa06-9a26e5e99997",
+                "id": "dc1c2ef7-e4d9-4c93-acca-7a1cd6b6cb2c",
                 "name": "jack",
-                "socketId": "lvAFCDim6hMZPUI_AAAN",
+                "socketId": "",
                 "score": 0
             }
         ],
-        "flippedCards": [
-            {
-                "id": 1,
-                "value": "bioinformatics",
-                "isFlipped": true,
-                "isMatched": false
-            },
-            {
-                "id": 4,
-                "value": "chip",
-                "isFlipped": true,
-                "isMatched": false
-            }
-        ],
-        "currentTurn": "934ccef4-fdc9-4e25-99a7-c5c094df260d",
-        "status": "playing",
+        "flippedCards": [],
+        "currentTurn": "dc1c2ef7-e4d9-4c93-acca-7a1cd6b6cb2c",
+        "status": "waiting",
         "title": "HELLO",
         "cards": [
-            {
-                "id": 14,
-                "value": "microscope",
-                "isFlipped": true,
-                "isMatched": true
-            },
             {
                 "id": 6,
                 "value": "experiment",
@@ -46,25 +21,19 @@
                 "isMatched": false
             },
             {
+                "id": 5,
+                "value": "chip",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
                 "id": 15,
                 "value": "microscope",
-                "isFlipped": true,
-                "isMatched": true
-            },
-            {
-                "id": 9,
-                "value": "flask",
                 "isFlipped": false,
                 "isMatched": false
             },
             {
-                "id": 12,
-                "value": "magnetism",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 3,
+                "id": 2,
                 "value": "centrifuge",
                 "isFlipped": false,
                 "isMatched": false
@@ -76,75 +45,9 @@
                 "isMatched": false
             },
             {
-                "id": 8,
+                "id": 9,
                 "value": "flask",
                 "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 5,
-                "value": "chip",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 19,
-                "value": "scientist",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 21,
-                "value": "test-tube",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 0,
-                "value": "bioinformatics",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 1,
-                "value": "bioinformatics",
-                "isFlipped": true,
-                "isMatched": false
-            },
-            {
-                "id": 7,
-                "value": "experiment",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 11,
-                "value": "gmo",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 23,
-                "value": "virus",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 18,
-                "value": "scientist",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 2,
-                "value": "centrifuge",
-                "isFlipped": false,
-                "isMatched": false
-            },
-            {
-                "id": 4,
-                "value": "chip",
-                "isFlipped": true,
                 "isMatched": false
             },
             {
@@ -154,8 +57,14 @@
                 "isMatched": false
             },
             {
-                "id": 22,
-                "value": "virus",
+                "id": 1,
+                "value": "bioinformatics",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 12,
+                "value": "magnetism",
                 "isFlipped": false,
                 "isMatched": false
             },
@@ -166,14 +75,86 @@
                 "isMatched": false
             },
             {
-                "id": 17,
-                "value": "periodic-table",
+                "id": 3,
+                "value": "centrifuge",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 21,
+                "value": "test-tube",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 18,
+                "value": "scientist",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 4,
+                "value": "chip",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "bioinformatics",
                 "isFlipped": false,
                 "isMatched": false
             },
             {
                 "id": 10,
                 "value": "gmo",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 17,
+                "value": "periodic-table",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 19,
+                "value": "scientist",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 14,
+                "value": "microscope",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 22,
+                "value": "virus",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "virus",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 11,
+                "value": "gmo",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 7,
+                "value": "experiment",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 8,
+                "value": "flask",
                 "isFlipped": false,
                 "isMatched": false
             }

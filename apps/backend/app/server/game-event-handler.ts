@@ -19,8 +19,14 @@ export class GameEventHandler {
 		socket.on("heartbeat", (data) => this.handleHeartbeat(socket, data));
 		socket.on("start-game", (data) => this.handleStartGame(socket, data));
 		socket.on("flip-card", (data) => this.handleFlipCard(socket, data));
-		socket.on("switch-turn", (data) => this.handleSwitchTurn(data));
+		socket.on("switch-turn", (data) => this.handleSwitchTurn(socket, data));
 		socket.on("disconnect", () => this.handleDisconnect(socket));
+		socket.on("request-game-state", ({ gameId }) => {
+			const game = this.gameController.getGame(gameId);
+			if (game) {
+				socket.emit("game-state", game.getState());
+			}
+		});
 	}
 
 	handleCreateGame(
@@ -80,12 +86,6 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game);
 	}
 
-	handleSwitchTurn({ gameId }: { gameId: string }): void {
-		const game = this.gameController.switchTurn({ gameId });
-
-		this.io.to(gameId).emit("game-updated", game);
-	}
-
 	handleFlipCard(
 		socket: Socket,
 		{ gameId, playerId, id }: { gameId: string; id: number; playerId: string },
@@ -97,6 +97,13 @@ export class GameEventHandler {
 		});
 
 		this.io.to(gameId).emit("game-updated", gameState);
+	}
+
+	handleSwitchTurn(socket: Socket, { gameId }: { gameId: string }): void {
+		const game = this.gameController.switchTurn({ gameId });
+
+		this.io.to(gameId).emit("turn-switched", game);
+		console.log("TURN SWITCHED emitted once");
 	}
 
 	handleDisconnect(socket: Socket): void {
