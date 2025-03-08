@@ -7,17 +7,11 @@
                 "name": "Jack",
                 "socketId": "",
                 "score": 3
-            },
-            {
-                "id": "1e2f5857-72a6-408c-be0e-b19353f1fa41",
-                "name": "John",
-                "socketId": "",
-                "score": 2
             }
         ],
         "flippedCards": [],
         "currentTurn": "b3f86081-4703-4611-83e3-4051a703f219",
-        "status": "playing",
+        "status": "waiting",
         "title": "Hello",
         "cards": [
             {
