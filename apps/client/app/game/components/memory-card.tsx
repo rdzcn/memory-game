@@ -26,7 +26,7 @@ export function MemoryCard({
 				{isFlipped ? (
 					<div>
 						<Image
-							src={value === "bulbasaur" ? `/images/${value}.svg` : `/images/${value}.png`}
+							src={`/images/${value}.svg`}
 							alt="memory-card"
 							width={96}
 							height={96}
@@ -35,7 +35,7 @@ export function MemoryCard({
 				) : (
 					<div>
 						<Image
-							src="/images/flip.png"
+							src="/images/pokeball.svg"
 							alt="placeholder"
 							width={96}
 							height={96}

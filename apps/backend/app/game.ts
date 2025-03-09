@@ -9,17 +9,17 @@ type GameStatus = "waiting" | "playing" | "finished";
 
 const cardData: CardData[] = [
 	{ id: 0, value: "bulbasaur" },
-	{ id: 1, value: "centrifuge" },
-	{ id: 2, value: "chip" },
-	{ id: 3, value: "experiment" },
-	{ id: 4, value: "flask" },
-	{ id: 5, value: "gmo" },
-	{ id: 6, value: "magnetism" },
-	{ id: 7, value: "microscope" },
-	{ id: 8, value: "periodic-table" },
-	{ id: 9, value: "scientist" },
-	{ id: 10, value: "test-tube" },
-	{ id: 11, value: "virus" },
+	{ id: 1, value: "caterpie" },
+	{ id: 2, value: "chansey" },
+	{ id: 3, value: "charmander" },
+	{ id: 4, value: "clefairy" },
+	{ id: 5, value: "cubone" },
+	{ id: 6, value: "farfetchd" },
+	{ id: 7, value: "squirtle" },
+	{ id: 8, value: "hitmonchan" },
+	{ id: 9, value: "scyther" },
+	{ id: 10, value: "seadra" },
+	{ id: 11, value: "weezing" },
 ];
 
 export class Game {
