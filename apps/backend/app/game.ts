@@ -8,7 +8,7 @@ import type {
 type GameStatus = "waiting" | "playing" | "finished";
 
 const cardData: CardData[] = [
-	{ id: 0, value: "bioinformatics" },
+	{ id: 0, value: "bulbasaur" },
 	{ id: 1, value: "centrifuge" },
 	{ id: 2, value: "chip" },
 	{ id: 3, value: "experiment" },
