@@ -23,25 +23,23 @@ export function MemoryCard({
 	return (
 		<>
 			<button type="button" onClick={handleButtonClick}>
-				{isFlipped ? (
-					<div>
+				<div className="w-24 h-24 border border-gray-300 rounded-md flex items-center justify-center aspect-[4/3] relative overflow-hidden">
+					{isFlipped ? (
 						<Image
 							src={`/images/${value}.svg`}
 							alt="memory-card"
-							width={96}
-							height={96}
+							className="object-contain w-full h-full"
+							fill
 						/>
-					</div>
-				) : (
-					<div>
+					) : (
 						<Image
 							src="/images/pokeball.svg"
 							alt="placeholder"
 							width={96}
 							height={96}
 						/>
-					</div>
-				)}
+					)}
+				</div>
 			</button>
 		</>
 	);

@@ -19,6 +19,7 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 	const router = useRouter();
 	const playerId = searchParams.get("playerId");
 	const player = game.players.find((player) => player.id === playerId);
+	const otherPlayer = game.players.find((player) => player.id !== playerId);
 
 	useHeartbeat(socket, game.id, playerId);
 
@@ -77,20 +78,10 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 		socket.emit("flip-card", { gameId: game.id, id, playerId });
 	};
 
-	const currentPlayerName = playerId === game.currentTurn ? player?.name : "Unknown"
+	const currentPlayerName = playerId === game.currentTurn ? player?.name : otherPlayer?.name;
 
 	return (
 		<>
-			<Card key={game.id} className="flex flex-col w-fit my-0 mx-auto">
-				<CardHeader className="text-center">
-					<CardTitle>Current turn</CardTitle>
-				</CardHeader>
-				<CardContent className="text-center">
-					<span>
-						{currentPlayerName}
-					</span>
-				</CardContent>
-			</Card>
 			<div className="flex justify-center">
 				<Card key="player1" className="flex flex-col w-fit my-0 mx-auto">
 					<CardHeader className="text-center">
@@ -105,16 +96,16 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 						<Button onClick={handleLeaveGameClick}>Leave game</Button>
 					</CardFooter>
 				</Card>
-				<div className="grid grid-cols-6 gap-8 w-fit mx-auto">
-					{game.cards.map((card) => (
-						<MemoryCard
-							key={`${card.id}`}
-							card={card}
-							flippedCards={game.flippedCards}
-							handleFlipCard={handleFlipCard}
-						/>
-					))}
-				</div>
+				<Card key={game.id} className="flex flex-col w-fit my-0 mx-auto">
+					<CardHeader className="text-center">
+						<CardTitle>Current turn</CardTitle>
+					</CardHeader>
+					<CardContent className="text-center">
+						<span>
+							{currentPlayerName}
+						</span>
+					</CardContent>
+				</Card>
 				<Card key="player2" className="flex flex-col w-fit my-0 mx-auto">
 					<CardHeader className="text-center">
 						<CardTitle>Player 2</CardTitle>
@@ -129,6 +120,17 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 					</CardFooter>
 				</Card>
 			</div>
+			<div className="grid grid-cols-6 gap-8 w-fit mx-auto">
+				{game.cards.map((card) => (
+					<MemoryCard
+						key={`${card.id}`}
+						card={card}
+						flippedCards={game.flippedCards}
+						handleFlipCard={handleFlipCard}
+					/>
+				))}
+			</div>
+
 		</>
 	);
 }
