@@ -1,21 +1,23 @@
 {
-  "name": "memory-game",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "client": "pnpm --filter @memory-game/client run dev",
-    "backend": "pnpm --filter @memory-game/backend run dev",
-    "build": "pnpm -r build",
-    "format": "pnpm biome write"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "biome": "^0.3.3"
-  },
-  "devDependencies": {
-    "turbo": "^2.4.0"
-  }
+	"name": "memory-game",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"client": "pnpm --filter @memory-game/client run dev",
+		"backend": "pnpm --filter @memory-game/backend run dev",
+		"build": "pnpm -r build",
+		"format": "pnpm biome write",
+		"check-types": "tsc --noEmit"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"biome": "^0.3.3"
+	},
+	"devDependencies": {
+		"turbo": "^2.4.0"
+	},
+	"packageManager": "pnpm@9.14.1"
 }

@@ -13,6 +13,7 @@ export class GameEventHandler {
 	}
 
 	handleConnection(socket: Socket): void {
+		socket.on("get-games", () => this.handleGetGames());
 		socket.on("create-game", (data) => this.handleCreateGame(socket, data));
 		socket.on("join-game", (data) => this.handleJoinGame(socket, data));
 		socket.on("leave-game", (data) => this.handleLeaveGame(socket, data));
@@ -27,6 +28,11 @@ export class GameEventHandler {
 				socket.emit("game-state", game.getState());
 			}
 		});
+	}
+
+	handleGetGames(): void {
+		const games = this.gameController.getInMemoryGames();
+		this.io.emit("games", games);
 	}
 
 	handleCreateGame(

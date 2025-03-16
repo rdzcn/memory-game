@@ -14,17 +14,17 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface GameBoardProps {
-	gameData: GameState;
+	gameId: string;
 }
 
-export default function GameBoard({ gameData }: GameBoardProps) {
-	const [game, setGame] = useState(gameData);
+export default function GameBoard({ gameId }: GameBoardProps) {
+	const [game, setGame] = useState({} as GameState);
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const playerId = searchParams.get("playerId");
-	const player = game.players.find((player) => player.id === playerId);
-	const otherPlayer = game.players.find((player) => player.id !== playerId);
-	const matchedPairs = Math.floor(game.cards.filter((card) => card.isMatched).length / 2);
+	const player = game.players?.find((player) => player.id === playerId);
+	const otherPlayer = game.players?.find((player) => player.id !== playerId);
+	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
 
 	useHeartbeat(socket, game.id, playerId);
 
@@ -38,8 +38,12 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 	console.log("GameBoard", game);
 
 	useEffect(() => {
-		socket.emit("request-game-state", { gameId: game.id });
+		if (gameId) {
+			socket.emit("request-game-state", { gameId });
+		}
+	}, [gameId]);
 
+	useEffect(() => {
 		const handleGameUpdated = (updatedGame: GameState) => {
 			setGame(updatedGame);
 		};
@@ -53,18 +57,18 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 			socket.off("turn-switched", handleGameUpdated);
 			socket.off("game-state", handleGameUpdated);
 		};
-	}, [game.id]);
+	}, []);
 
 	useEffect(() => {
 		if (
-			game.flippedCards.length === 2 &&
-			game.flippedCards[0].value !== game.flippedCards[1].value &&
+			game.flippedCards?.length === 2 &&
+			game.flippedCards[0]?.value !== game.flippedCards[1].value &&
 			game.currentTurn === playerId
 		) {
 			setTimeout(() => {
 				socket.emit("switch-turn", { gameId: game.id });
 				console.log("Switching turn");
-			}, 500);
+			}, 1000);
 		}
 	}, [game.flippedCards, game.id, playerId, game.currentTurn]);
 
@@ -108,7 +112,7 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 						<div className="flex items-center gap-2">
 							<Trophy className="h-5 w-5 text-amber-500" />
 							<span className="font-bold text-amber-700">
-								Pairs: {matchedPairs}/{game.cards.length / 2}
+								Pairs: {matchedPairs}/{game.cards?.length / 2}
 							</span>
 						</div>
 					</div>
@@ -121,19 +125,12 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 						className={cn(
 							"p-4 transition-all duration-300",
 							player?.id === game.currentTurn
-								? "bg-gradient-to-r from-blue-100 to-purple-100 border-2 border-purple-300 shadow-lg"
+								? "bg-gradient-to-r from-blue-100 to-purple-100 shadow-lg"
 								: "bg-white",
-							// index === 1 ? "md:col-span-1 md:col-start-3" : "",
 						)}
 					>
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-3">
-								{/* <Avatar className={cn("border-2", player.isActive ? "border-purple-400" : "border-gray-200")}>
-										<AvatarImage src={player.avatar} alt={player.name} />
-										<AvatarFallback className="bg-purple-200 text-purple-700">
-											{player.name.substring(0, 2).toUpperCase()}
-										</AvatarFallback>
-									</Avatar> */}
 								<div>
 									<div className="font-bold text-lg text-purple-900">{player?.name}</div>
 									<div className="flex items-center gap-1">
@@ -171,18 +168,12 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 						className={cn(
 							"p-4 transition-all duration-300 md:col-span-1 md:col-start-3",
 							otherPlayer?.id === game.currentTurn
-								? "bg-gradient-to-r from-blue-100 to-purple-100 border-2 border-purple-300 shadow-lg"
+								? "bg-gradient-to-r from-blue-100 to-purple-100 shadow-lg"
 								: "bg-white",
 						)}
 					>
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-3">
-								{/* <Avatar className={cn("border-2", player.isActive ? "border-purple-400" : "border-gray-200")}>
-										<AvatarImage src={player.avatar} alt={player.name} />
-										<AvatarFallback className="bg-purple-200 text-purple-700">
-											{player.name.substring(0, 2).toUpperCase()}
-										</AvatarFallback>
-									</Avatar> */}
 								<div>
 									<div className="font-bold text-lg text-purple-900">{otherPlayer?.name}</div>
 									<div className="flex items-center gap-1">
@@ -254,7 +245,7 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 				</div>
 				<div className="grid grid-cols-6 gap-8 w-fit mx-auto">
 					<AnimatePresence>
-						{game.cards.map((card, index) => (
+						{game.cards?.map((card, index) => (
 							<motion.div
 								key={card.id}
 								initial={{ opacity: 0, scale: 0.8 }}
@@ -273,6 +264,53 @@ export default function GameBoard({ gameData }: GameBoardProps) {
 
 					</AnimatePresence>
 				</div>
+				{matchedPairs === 12 && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+						onClick={() => console.log("RESET GAME")}
+					>
+						<motion.div
+							initial={{ scale: 0.8, y: 20 }}
+							animate={{ scale: 1, y: 0 }}
+							className="bg-white rounded-xl p-6 max-w-md text-center shadow-2xl"
+							onClick={(e) => e.stopPropagation()}
+						>
+							<motion.div
+								animate={{
+									rotate: [0, 10, -10, 10, -10, 0],
+									y: [0, -10, 0],
+								}}
+								transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, repeatDelay: 1 }}
+								className="text-6xl mb-4"
+							>
+								🏆
+							</motion.div>
+							<h2 className="text-2xl font-bold text-purple-700 mb-2">Congratulations!</h2>
+							<p className="text-gray-600 mb-4">You completed the game in TIMER!</p>
+							<div className="mb-6">
+								<h3 className="font-bold text-purple-600 mb-2">Final Scores:</h3>
+								<div className="flex justify-center gap-6">
+									{game.players.map((player, index) => (
+										<div key={player.id} className="text-center">
+											<div className="font-medium text-purple-900">{player.name}</div>
+											<div className="text-amber-600 font-bold">{player.score}</div>
+										</div>
+									))}
+								</div>
+							</div>
+							<div className="flex gap-2 justify-center">
+								<Button
+									onClick={() => console.log("RESET GAME")}
+									className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+								>
+									Play Again
+								</Button>
+							</div>
+						</motion.div>
+					</motion.div>
+				)}
 			</div>
 		</div>
 	);
