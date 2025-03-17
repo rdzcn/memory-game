@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import useSocket from "@/requests/socketHandler";
+import socket from "@/requests/socketHandler";
 import {
 	Card,
 	CardContent,
@@ -16,16 +16,12 @@ import JoinGameDialog from "./join-game-dialog";
 
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);
-	const socket = useSocket();
 
 	useEffect(() => {
-		if (socket) {
-			socket.emit("get-games");
-		}
-	}, [socket]);
+		socket.emit("get-games");
+	}, []);
 
 	useEffect(() => {
-		if (socket === null) return;
 		socket.on("games", (games: GameState[]) => {
 			setGames(games);
 		});
@@ -37,7 +33,7 @@ export default function Home() {
 			socket.off("game-created");
 			socket.off("games");
 		};
-	}, [socket]);
+	}, []);
 
 	return (
 		<div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">

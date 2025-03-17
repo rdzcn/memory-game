@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import useSocket from "@/requests/socketHandler";
+import socket from "@/requests/socketHandler";
 
 type FormData = {
 	username: string;
@@ -28,21 +28,18 @@ export default function JoinGameDialog({ gameId }: { gameId: string }) {
 		formState: { errors },
 	} = useForm<FormData>();
 	const router = useRouter();
-	const socket = useSocket();
 
 	const onSubmit = async (data: FormData) => {
-		if (socket) {
-			socket.emit("join-game", { ...data, gameId });
+		socket.emit("join-game", { ...data, gameId });
 
-			socket.once("player-joined", (playerId: string) => {
-				router.push(`/game/${gameId}?playerId=${playerId}`);
-				setOpen(false);
-			});
+		socket.once("player-joined", (playerId: string) => {
+			router.push(`/game/${gameId}?playerId=${playerId}`);
+			setOpen(false);
+		});
 
-			socket.once("error", ({ message }) => {
-				setError(message);
-			});
-		}
+		socket.once("error", ({ message }) => {
+			setError(message);
+		});
 	};
 
 	return (
