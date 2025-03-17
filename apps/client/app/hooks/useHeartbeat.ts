@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import type { Socket } from "socket.io-client";
 
 const useHeartbeat = (
-	socket: Socket,
+	socket: Socket | null,
 	gameId: string,
 	playerId: string | null,
 ) => {

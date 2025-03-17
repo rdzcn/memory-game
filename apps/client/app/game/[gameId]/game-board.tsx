@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Trophy, Timer, Users, LogOut, Sparkles, Gamepad2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { GameState } from "@common/types";
-import socket from "@/requests/socketHandler";
+import useSocket from "@/requests/socketHandler";
 import { Button } from "@/components/ui/button";
 import useHeartbeat from "@/app/hooks/useHeartbeat";
 import { MemoryCard } from "../components/memory-card";
@@ -25,25 +25,27 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	const player = game.players?.find((player) => player.id === playerId);
 	const otherPlayer = game.players?.find((player) => player.id !== playerId);
 	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
+	const socket = useSocket();
 
 	useHeartbeat(socket, game.id, playerId);
 
 	const handleLeaveGame = useCallback(() => {
-		if (playerId) {
+		if (playerId && socket) {
 			socket.emit("leave-game", { gameId: game.id, playerId });
 		}
 		router.push("/");
-	}, [playerId, game.id, router]);
+	}, [playerId, game.id, router, socket]);
 
 	console.log("GameBoard", game);
 
 	useEffect(() => {
-		if (gameId) {
+		if (gameId && socket) {
 			socket.emit("request-game-state", { gameId });
 		}
-	}, [gameId]);
+	}, [gameId, socket]);
 
 	useEffect(() => {
+		if (!socket) return;
 		const handleGameUpdated = (updatedGame: GameState) => {
 			setGame(updatedGame);
 		};
@@ -57,9 +59,10 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 			socket.off("turn-switched", handleGameUpdated);
 			socket.off("game-state", handleGameUpdated);
 		};
-	}, []);
+	}, [socket]);
 
 	useEffect(() => {
+		if (!socket) return;
 		if (
 			game.flippedCards?.length === 2 &&
 			game.flippedCards[0]?.value !== game.flippedCards[1].value &&
@@ -70,21 +73,23 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 				console.log("Switching turn");
 			}, 1000);
 		}
-	}, [game.flippedCards, game.id, playerId, game.currentTurn]);
+	}, [game.flippedCards, game.id, playerId, game.currentTurn, socket]);
 
 	const handleLeaveGameClick = () => {
 		handleLeaveGame();
 	};
 
 	const handleStartGame = () => {
-		socket.emit("start-game", { gameId: game.id });
+		if (socket) {
+			socket.emit("start-game", { gameId: game.id });
+		}
 	};
 
 	const handleFlipCard = ({ id }: { id: number }) => {
 		if (playerId !== game.currentTurn) {
 			return;
 		}
-		socket.emit("flip-card", { gameId: game.id, id, playerId });
+		socket?.emit("flip-card", { gameId: game.id, id, playerId });
 	};
 
 	const currentPlayerName = playerId === game.currentTurn ? player?.name : otherPlayer?.name;
