@@ -1,6 +1,6 @@
-import type { PlayerConnection } from "@common/types/game.types";
-import type { Server, Socket } from "socket.io";
+import type { Socket } from "socket.io";
 import type { GameEventHandler } from "./game-event-handler";
+import type { PlayerConnection } from "@common/types/game.types";
 
 export class HeartbeatManager {
 	private readonly HEARTBEAT_INTERVAL = 3000; // Send heartbeat every 3 seconds

@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "outDir": "build",
+    "outDir": "./dist",
+    "rootDir": "./app",
     "resolveJsonModule": true,
     "target": "es2021",
     "lib": ["es2021"],
-    "module": "commonjs",
+    "module": "CommonJS",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@common/*": ["../../packages/common/*"],
+      "@common/*": ["../../packages/common/src/*"],
 			"@app/*": ["./app/*"]
     },
     "sourceMap": true,
@@ -16,6 +17,10 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    
-  }
+  },
+  "include": ["app/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../../packages/common" }
+  ]
 }
