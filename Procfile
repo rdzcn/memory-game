@@ -1,1 +1,1 @@
-web: pnpm --filter backend start
+web: cd apps/backend && node dist/index.js & cd apps/client && npm start
