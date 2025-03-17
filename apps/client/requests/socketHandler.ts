@@ -3,11 +3,13 @@ import { io } from "socket.io-client";
 // Determine the correct Socket.IO endpoint based on environment
 const getSocketUrl = () => {
 	if (typeof window === "undefined") {
+		console.log("CLIEBNT 0");
 		return { url: "http://localhost:4040", path: "/socket.io" };
 	}
 
 	if (process.env.NODE_ENV === "production") {
-		return { url: window.location.origin, path: "/api/socket.io" };
+		console.log("CLIEBNT 1");
+		return { url: "http://localhost:4040", path: "/socket.io" };
 	}
 
 	return { url: "http://localhost:4040", path: "/socket.io" };

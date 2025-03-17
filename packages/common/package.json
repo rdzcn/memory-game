@@ -6,7 +6,8 @@
 	"types": "./dist/index.d.ts",
 	"scripts": {
 		"build": "tsc",
-		"dev": "tsc --watch"
+		"dev": "tsc --watch",
+		"start": "/echo 'No start script'"
 	},
 	"devDependencies": {
 		"@types/node": "^18.15.0",
