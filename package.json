@@ -12,7 +12,8 @@
 		"dev": "turbo run dev",
 		"lint": "turbo run lint",
 		"test": "turbo run test",
-		"clean": "turbo run clean"
+		"clean": "turbo run clean",
+		"start": "turbo run start --parallel"
 	},
 	"keywords": [],
 	"author": "",

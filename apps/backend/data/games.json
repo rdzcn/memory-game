@@ -3,12 +3,6 @@
         "id": "043553e0-4127-4933-8c6e-fbbc99365821",
         "players": [
             {
-                "id": "30c8f5d5-1f0f-466c-ae7c-6bdcb28e1edf",
-                "name": "jack",
-                "socketId": "Dc4dTvmAJwrxy6M4AAAY",
-                "score": 0
-            },
-            {
                 "id": "d3ebaf6c-cd64-41b1-94de-4ef8defab807",
                 "name": "jill",
                 "socketId": "6wFLMBYsOVJlLOhtAAAa",
@@ -17,7 +11,7 @@
         ],
         "flippedCards": [],
         "currentTurn": "30c8f5d5-1f0f-466c-ae7c-6bdcb28e1edf",
-        "status": "playing",
+        "status": "waiting",
         "title": "third game",
         "cards": [
             {
