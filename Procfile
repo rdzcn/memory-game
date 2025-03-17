@@ -1,1 +1,1 @@
-web: cd apps/backend && node dist/index.js & cd apps/client && npm start
+web: pnpm run start-all
