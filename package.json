@@ -12,8 +12,7 @@
 		"dev": "turbo run dev",
 		"lint": "turbo run lint",
 		"test": "turbo run test",
-		"clean": "turbo run clean",
-		"start-all": "concurrently \"cd apps/backend && node dist/index.js\" \"cd apps/client && pnpm run start\""
+		"clean": "turbo run clean"
 	},
 	"keywords": [],
 	"author": "",
@@ -22,7 +21,6 @@
 		"biome": "^0.3.3"
 	},
 	"devDependencies": {
-		"concurrently": "^9.1.2",
 		"turbo": "^2.4.0"
 	},
 	"packageManager": "pnpm@9.14.1"
