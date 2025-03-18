@@ -24,8 +24,6 @@ class GamesController {
 		for (const [gameId, gameState] of Object.entries(savedGames)) {
 			const game = new Game(gameState.title, true);
 
-			console.log("CONSTRUCTIR", game);
-
 			// Restore the game state
 			game.restoreState(gameState);
 			this.games.set(gameId, game);
