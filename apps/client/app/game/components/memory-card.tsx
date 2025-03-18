@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import type { Card } from "@common/types";
+import type { Card } from "@//types/game.types";
 
 interface MemoryCardProps {
 	card: Card;

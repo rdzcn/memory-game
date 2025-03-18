@@ -10,7 +10,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { GameState } from "@common/types";
+import type { GameState } from "@/types/game.types";
 import CreateGameDialog from "./create-game-dialog";
 import JoinGameDialog from "./join-game-dialog";
 

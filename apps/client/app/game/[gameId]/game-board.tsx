@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Trophy, Timer, Users, LogOut, Sparkles, Gamepad2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { GameState } from "@common/types";
 import socket from "@/requests/socketHandler";
 import { Button } from "@/components/ui/button";
 import useHeartbeat from "@/app/hooks/useHeartbeat";
@@ -12,6 +11,7 @@ import { MemoryCard } from "../components/memory-card";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import type { GameState } from "@/types/game.types";
 
 interface GameBoardProps {
 	gameId: string;

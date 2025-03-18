@@ -1,9 +1,4 @@
-import type {
-	Card,
-	CardData,
-	GameState,
-	Player,
-} from "@common/types/game.types";
+import type { Card, CardData, GameState, Player } from "./types/game.types";
 
 type GameStatus = "waiting" | "playing" | "finished";
 

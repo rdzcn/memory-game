@@ -9,7 +9,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@common/*": ["../../packages/common/src/*"],
 			"@app/*": ["./app/*"]
     },
     "sourceMap": true,
@@ -19,8 +18,5 @@
     "skipLibCheck": true,
   },
   "include": ["app/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "references": [
-    { "path": "../../packages/common" }
-  ]
+  "exclude": ["node_modules", "dist"]
 }

@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import socket from "@/requests/socketHandler";
-import type { GameState } from "@common/types";
+import type { GameState } from "@/types/game.types";
 
 type FormData = {
 	gameTitle: string;

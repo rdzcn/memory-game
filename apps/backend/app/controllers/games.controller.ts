@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Request, Response } from "express";
-import type { GameState } from "@common/types/game.types";
 import { Game } from "../game";
+import type { GameState } from "../types/game.types";
 
 const GAMES_FILE = path.resolve(__dirname, "../../data/games.json");
 
