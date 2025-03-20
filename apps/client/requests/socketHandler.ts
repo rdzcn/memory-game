@@ -8,7 +8,8 @@ const url =
 // const url = "https://developing-garnet-rdzcn-64909d47.koyeb.app";
 
 const socket = io(url, {
-	path: "/api/socket.io",
+	path:
+		process.env.NODE_ENV === "development" ? "/socket.io" : "/api/socket.io",
 	transports: ["websocket", "polling"],
 	reconnection: true,
 	reconnectionAttempts: 5,
