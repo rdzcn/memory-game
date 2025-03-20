@@ -1,11 +1,16 @@
 import { io } from "socket.io-client";
 
-const socket = io("https://developing-garnet-rdzcn-64909d47.koyeb.app", {
+const url =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:4040"
+		: "https://developing-garnet-rdzcn-64909d47.koyeb.app";
+
+const socket = io(url, {
 	path: "/api/socket.io",
 	transports: ["websocket", "polling"],
-	reconnection: true,
-	reconnectionAttempts: 5,
-	reconnectionDelay: 1000,
+	// reconnection: true,
+	// reconnectionAttempts: 5,
+	// reconnectionDelay: 1000,
 });
 
 socket.on("connect", () => {

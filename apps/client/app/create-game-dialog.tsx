@@ -35,6 +35,7 @@ export default function CreateGameDialog() {
 		socket.emit("create-game", data);
 
 		socket.once("game-created", (game: GameState) => {
+			console.log("Game created", game);
 			router.push(`/game/${game.id}?playerId=${game.players[0].id}`);
 			setOpen(false);
 		});

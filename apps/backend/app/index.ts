@@ -19,9 +19,9 @@ app.use(errorHandler);
 const server = createServer(app);
 
 const io = new SocketIOServer(server, {
-	path: process.env.NODE_ENV === "production" ? "/api/socket.io" : "/socket.io",
+	path: "/api/socket.io",
 	cors: {
-		origin: "*",
+		origin: "http://localhost:7070",
 		methods: ["GET", "POST"],
 	},
 });

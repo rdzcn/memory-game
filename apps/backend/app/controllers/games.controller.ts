@@ -7,12 +7,23 @@ import type { GameState } from "../types/game.types";
 const GAMES_FILE = path.resolve(__dirname, "../../data/games.json");
 
 export const readGames = (): Record<string, GameState> => {
-	if (!fs.existsSync(GAMES_FILE)) return {};
-	return JSON.parse(fs.readFileSync(GAMES_FILE, "utf8"));
+	try {
+		if (!fs.existsSync(GAMES_FILE)) return {};
+		const data = fs.readFileSync(GAMES_FILE, "utf8");
+		return data ? JSON.parse(data) : {};
+	} catch (error) {
+		console.error("Error reading games file:", error);
+		return {};
+	}
 };
 
 export const writeGames = (games: Record<string, GameState>) => {
-	fs.writeFileSync(GAMES_FILE, JSON.stringify(games, null, 4));
+	try {
+		fs.writeFileSync(GAMES_FILE, JSON.stringify(games, null, 4));
+		console.log("Game successfully saved.");
+	} catch (error) {
+		console.error("Error writing to file:", error);
+	}
 };
 
 class GamesController {
