@@ -19,7 +19,7 @@ app.use(errorHandler);
 const server = createServer(app);
 
 const io = new SocketIOServer(server, {
-	path: "/api/socket.io",
+	path: "/socket.io",
 	cors: {
 		origin: "*",
 		methods: ["GET", "POST"],
