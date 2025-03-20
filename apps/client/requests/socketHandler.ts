@@ -5,6 +5,8 @@ const url =
 		? "http://localhost:4040"
 		: "wss://developing-garnet-rdzcn-64909d47.koyeb.app";
 
+// const url = "wss://developing-garnet-rdzcn-64909d47.koyeb.app";
+
 const socket = io(url, {
 	path: "/api/socket.io",
 	transports: ["websocket", "polling"],

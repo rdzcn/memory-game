@@ -21,7 +21,7 @@ const server = createServer(app);
 const io = new SocketIOServer(server, {
 	path: "/api/socket.io",
 	cors: {
-		origin: "http://localhost:7070",
+		origin: "*",
 		methods: ["GET", "POST"],
 	},
 });
