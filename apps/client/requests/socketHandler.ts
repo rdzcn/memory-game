@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 const url =
 	process.env.NODE_ENV === "development"
 		? "http://localhost:4040"
-		: "https://developing-garnet-rdzcn-64909d47.koyeb.app";
+		: "wss://developing-garnet-rdzcn-64909d47.koyeb.app";
 
 const socket = io(url, {
 	path: "/api/socket.io",
