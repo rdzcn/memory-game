@@ -8,9 +8,9 @@ const url =
 const socket = io(url, {
 	path: "/api/socket.io",
 	transports: ["websocket", "polling"],
-	// reconnection: true,
-	// reconnectionAttempts: 5,
-	// reconnectionDelay: 1000,
+	reconnection: true,
+	reconnectionAttempts: 5,
+	reconnectionDelay: 1000,
 });
 
 socket.on("connect", () => {
