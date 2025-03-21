@@ -11,8 +11,9 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import type { GameState } from "@/types/game.types";
-import CreateGameDialog from "./create-game-dialog";
-import JoinGameDialog from "./join-game-dialog";
+import CreateGameDialog from "./components/create-game-dialog";
+import JoinGameDialog from "./components/join-game-dialog";
+import { GameCard } from "./components/game-card";
 
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);
@@ -44,22 +45,23 @@ export default function Home() {
 					</h1>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 						{games.map((game) => (
-							<Card key={game.id} className="flex flex-col">
-								<CardHeader>
-									<CardTitle>{game.title}</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<p>Players: {game.players.length}</p>
-									<p>Status: {game.status}</p>
-								</CardContent>
-								<CardFooter className="mt-auto">
-									{game.players.length === 1 ? (
-										<JoinGameDialog gameId={game.id} />
-									) : (
-										<Link href={`/game/${game.id}`}>View Game</Link>
-									)}
-								</CardFooter>
-							</Card>
+							// <Card key={game.id} className="flex flex-col">
+							// 	<CardHeader>
+							// 		<CardTitle>{game.title}</CardTitle>
+							// 	</CardHeader>
+							// 	<CardContent>
+							// 		<p>Players: {game.players.length}</p>
+							// 		<p>Status: {game.status}</p>
+							// 	</CardContent>
+							// 	<CardFooter className="mt-auto">
+							// 		{game.players.length === 1 ? (
+							// 			<JoinGameDialog gameId={game.id} />
+							// 		) : (
+							// 			<Link href={`/game/${game.id}`}>View Game</Link>
+							// 		)}
+							// 	</CardFooter>
+							// </Card>
+							<GameCard key={game.id} game={game} />
 						))}
 					</div>
 					<div className="mt-8 text-center">
