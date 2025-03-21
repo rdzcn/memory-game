@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { Request, Response } from "express";
 import { Game } from "../game";
 import type { GameState } from "../types/game.types";
 

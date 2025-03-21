@@ -301,12 +301,12 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								</div>
 							</div>
 							<div className="flex gap-2 justify-center">
-								<Button
+								{/* <Button
 									onClick={() => console.log("RESET GAME")}
 									className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
 								>
 									Play Again
-								</Button>
+								</Button> */}
 								<Button
 									onClick={() => router.push("/")}
 									className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
