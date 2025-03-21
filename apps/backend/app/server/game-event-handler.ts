@@ -39,15 +39,17 @@ export class GameEventHandler {
 		socket: Socket,
 		{ username, gameTitle }: { username: string; gameTitle: string },
 	): void {
-		const game = this.gameController.createGame({ username, gameTitle });
+		const socketId = socket.id;
+		const game = this.gameController.createGame({
+			username,
+			gameTitle,
+			socketId,
+		});
 
 		const player = game.players[0];
 
 		socket.join(game.id);
 		this.heartbeatManager.registerSocket(socket, game.id, player.id);
-
-		// Update player's socket ID
-		player.socketId = socket.id;
 
 		this.io.emit("game-created", game);
 	}
@@ -59,6 +61,7 @@ export class GameEventHandler {
 		const { playerId, game } = this.gameController.joinGame({
 			gameId,
 			username,
+			socketId: socket.id,
 		});
 
 		if (!game) {
@@ -68,8 +71,6 @@ export class GameEventHandler {
 
 		socket.join(gameId);
 		this.heartbeatManager.registerSocket(socket, gameId, playerId);
-
-		game.players[1].socketId = socket.id;
 
 		this.io.to(gameId).emit("player-joined", playerId);
 		this.io.to(gameId).emit("game-updated", game);

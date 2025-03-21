@@ -6,8 +6,6 @@ import { errorHandler } from "./middleware";
 import GamesController from "./controllers/games.controller";
 import { GameEventHandler } from "./server/game-event-handler";
 
-// const HEARTBEAT_INTERVAL = 5000;
-// const PLAYER_TIMEOUT = 10000;
 const PORT = 4040;
 
 const app = express();
@@ -42,14 +40,6 @@ io.on("connection", (socket) => {
 // Routes
 app.get("/", (req, res) => {
 	res.send("Hello, Express!");
-});
-
-app.get("/games", (req, res) => {
-	gamesController.getAllGames(req, res);
-});
-
-app.get("/games/:id", (req, res) => {
-	gamesController.getGameById(req, res);
 });
 
 server.listen(PORT, "0.0.0.0", () => {

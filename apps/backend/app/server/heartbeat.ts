@@ -4,8 +4,8 @@ import type { PlayerConnection } from "../types/game.types";
 
 export class HeartbeatManager {
 	private readonly HEARTBEAT_INTERVAL = 3000; // Send heartbeat every 3 seconds
-	private readonly HEARTBEAT_TIMEOUT = 5000; // Consider disconnected after 10 seconds
-	private readonly MAX_MISSED_BEATS = 1; // Maximum missed heartbeats before disconnect
+	private readonly HEARTBEAT_TIMEOUT = 10000; // Consider disconnected after 10 seconds
+	private readonly MAX_MISSED_BEATS = 3; // Maximum missed heartbeats before disconnect
 
 	private connections: Map<
 		string,
@@ -13,16 +13,22 @@ export class HeartbeatManager {
 	> = new Map();
 	private intervalId: NodeJS.Timeout | null = null;
 	private gameHandler: GameEventHandler;
+	private gameFinished = false;
 
 	constructor(gameHandler: GameEventHandler) {
 		this.gameHandler = gameHandler;
+	}
+
+	public setGameFinished(isFinished: boolean) {
+		this.gameFinished = isFinished;
 	}
 
 	public registerSocket(socket: Socket, gameId: string, playerId: string) {
 		this.registerConnection(playerId, gameId, socket);
 	}
 
-	private registerConnection(playerId: string, gameId: string, socket: Socket) {
+	registerConnection(playerId: string, gameId: string, socket: Socket) {
+		console.log(`Registering connection: Player ${playerId} in Game ${gameId}`);
 		this.connections.set(playerId, {
 			connection: {
 				playerId,
@@ -40,6 +46,8 @@ export class HeartbeatManager {
 		if (entry) {
 			entry.connection.lastHeartbeat = Date.now();
 			entry.connection.missedBeats = 0;
+		} else {
+			console.warn(`Heartbeat received for unknown player: ${playerId}`);
 		}
 	}
 
@@ -66,6 +74,10 @@ export class HeartbeatManager {
 			if (timeSinceLastHeartbeat >= this.HEARTBEAT_TIMEOUT) {
 				connection.missedBeats++;
 
+				console.log(
+					`Player ${connection.playerId} missed ${connection.missedBeats}/${this.MAX_MISSED_BEATS} heartbeats`,
+				);
+
 				if (connection.missedBeats >= this.MAX_MISSED_BEATS) {
 					await this.handleDisconnection(connection, socket);
 				}
@@ -84,10 +96,12 @@ export class HeartbeatManager {
 		this.removeConnection(connection.playerId);
 
 		// Pass the actual socket instance
-		this.gameHandler.handleLeaveGame(socket, {
-			gameId: connection.gameId,
-			playerId: connection.playerId,
-		});
+		if (!this.gameFinished) {
+			this.gameHandler.handleLeaveGame(socket, {
+				gameId: connection.gameId,
+				playerId: connection.playerId,
+			});
+		}
 	}
 
 	public stop() {

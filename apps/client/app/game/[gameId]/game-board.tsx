@@ -26,7 +26,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	const otherPlayer = game.players?.find((player) => player.id !== playerId);
 	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
 
-	useHeartbeat(socket, game.id, playerId);
+	useHeartbeat({ socket, gameId: game.id, playerId, isFinished: matchedPairs === 12 });
 
 	const handleLeaveGame = useCallback(() => {
 		if (playerId) {
@@ -306,6 +306,12 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 									className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
 								>
 									Play Again
+								</Button>
+								<Button
+									onClick={() => router.push("/")}
+									className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+								>
+									Go to the Playground
 								</Button>
 							</div>
 						</motion.div>

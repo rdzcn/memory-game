@@ -41,14 +41,18 @@ class GamesController {
 		}
 	}
 
-	createGame({ gameTitle, username }: { gameTitle: string; username: string }) {
+	createGame({
+		gameTitle,
+		username,
+		socketId,
+	}: { gameTitle: string; username: string; socketId: string }) {
 		const playerId = crypto.randomUUID();
 		const newGame = new Game(gameTitle);
 
 		const player = {
 			id: playerId,
 			name: username,
-			socketId: "",
+			socketId,
 			score: 0,
 		};
 
@@ -66,7 +70,11 @@ class GamesController {
 		return newGame.getState();
 	}
 
-	joinGame({ gameId, username }: { gameId: string; username: string }) {
+	joinGame({
+		gameId,
+		username,
+		socketId,
+	}: { gameId: string; username: string; socketId: string }) {
 		const game = this.games.get(gameId);
 		if (!game) {
 			throw new Error("Game not found");
@@ -77,7 +85,7 @@ class GamesController {
 		const player = {
 			id: playerId,
 			name: username,
-			socketId: "",
+			socketId,
 			score: 0,
 		};
 
@@ -105,21 +113,18 @@ class GamesController {
 			return null;
 		}
 
-		// Use the Game instance method to remove player
 		game.removePlayer(playerId);
 
-		// If no players left, remove the game
 		if (game.getState().players.length === 0) {
-			this.games.delete(gameId);
+			// Only remove if game is NOT finished
+			if (game.getState().status !== "finished") {
+				this.games.delete(gameId);
+			}
 			this.saveGames();
 			return null;
 		}
 
-		// Save the updated state
-		const games = readGames();
-		games[gameId] = game.getState();
-		writeGames(games);
-
+		this.saveGames();
 		return game.getState();
 	}
 
@@ -146,12 +151,18 @@ class GamesController {
 	}
 
 	private saveGames() {
-		const gameStates = Object.fromEntries(
-			Array.from(this.games.entries()).map(([id, game]) => [
-				id,
-				game.getState(),
-			]),
-		);
+		const existingGames = readGames();
+
+		const gameStates = {
+			...existingGames,
+			...Object.fromEntries(
+				Array.from(this.games.entries()).map(([id, game]) => [
+					id,
+					game.getState(),
+				]),
+			),
+		};
+
 		writeGames(gameStates);
 	}
 
@@ -190,37 +201,6 @@ class GamesController {
 		games[gameId] = game.getState();
 		writeGames(games);
 		return game.getState();
-	}
-
-	// express handlers
-	async getAllGames(_req: Request, res: Response): Promise<void> {
-		try {
-			const games = Array.from(this.games.values());
-			res.json(games);
-		} catch (error) {
-			console.error(error);
-			res.status(500).json({ message: "Internal server error" });
-		}
-	}
-
-	async getGameById(req: Request, res: Response): Promise<void> {
-		const { id } = req.params;
-
-		// Reload games from JSON
-		const savedGames = readGames();
-		if (savedGames[id]) {
-			const game = new Game(savedGames[id].title, true);
-			this.games.set(id, game);
-			game.restoreState(savedGames[id]);
-		}
-
-		const game = this.getGame(id);
-		if (!game) {
-			res.status(404).json({ message: "Game not found" });
-			return;
-		}
-
-		res.json(game);
 	}
 }
 
