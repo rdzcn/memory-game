@@ -17,6 +17,7 @@ import JoinGameDialog from "./components/join-game-dialog";
 import { GameCard } from "./components/game-card";
 import { Clock, Gamepad2, Star, Trophy, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { set } from "react-hook-form";
 
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);
@@ -29,15 +30,13 @@ export default function Home() {
 	}, []);
 
 	useEffect(() => {
-		socket.on("games", (games: GameState[]) => {
+		const setGamesData = (games: GameState[]) => {
 			setGames(games);
-		});
-		socket.on("game-created", (game: GameState) => {
-			setGames((prevGames) => [...prevGames, game]);
-		});
+		};
+
+		socket.on("games", setGamesData);
 
 		return () => {
-			socket.off("game-created");
 			socket.off("games");
 		};
 	}, []);

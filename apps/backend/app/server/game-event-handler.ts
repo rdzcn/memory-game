@@ -52,6 +52,9 @@ export class GameEventHandler {
 		socket.join(game.id);
 		this.heartbeatManager.registerSocket(socket, game.id, player.id);
 
+		const games = this.gameController.getInMemoryGames();
+		this.io.emit("games", games);
+
 		this.io.emit("game-created", game);
 	}
 
@@ -72,6 +75,9 @@ export class GameEventHandler {
 
 		socket.join(gameId);
 		this.heartbeatManager.registerSocket(socket, gameId, playerId);
+
+		const games = this.gameController.getInMemoryGames();
+		this.io.emit("games", games);
 
 		this.io.to(gameId).emit("player-joined", playerId);
 		this.io.to(gameId).emit("game-updated", game);
