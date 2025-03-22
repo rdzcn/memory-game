@@ -53,6 +53,8 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 			socket.emit("request-game-state", { gameId });
 			if (!playerId) {
 				socket.emit("watch-game", { gameId });
+			} else {
+				socket.emit("register-socket", { gameId, playerId });
 			}
 		}
 	}, [gameId, playerId]);
@@ -228,7 +230,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 										<p className="text-sm text-gray-600">Time: TIMER</p>
 									</div>
 									<Button
-										onClick={() => playerId ? handleStartNewGame() : router.push("/")}
+										onClick={() => playerId ? handleStartNewGame : router.push("/")}
 										className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
 									>
 										{playerId ? "Play Again" : "Go to the Playground"}
@@ -238,7 +240,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								<>
 									<h3 className="font-bold text-purple-700">Game in Progress</h3>
 									<Button
-										onClick={() => playerId ? handleStartNewGame() : router.push("/")}
+										onClick={() => playerId ? handleStartNewGame : router.push("/")}
 										variant="outline"
 										className="border-purple-200 text-purple-700 hover:bg-purple-50"
 									>
