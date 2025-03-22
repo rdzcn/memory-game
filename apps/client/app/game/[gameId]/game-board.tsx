@@ -251,7 +251,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 						</div>
 					</Card>
 				</div>
-				<div className="grid grid-cols-6 gap-8 w-fit mx-auto">
+				<div className="grid grid-cols-6 gap-2 md:grid-cols-6 md:gap-8 w-fit mx-auto">
 					<AnimatePresence>
 						{game.cards?.map((card, index) => (
 							<motion.div

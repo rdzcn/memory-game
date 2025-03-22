@@ -23,7 +23,7 @@ export function MemoryCard({
 	return (
 		<>
 			<button type="button" onClick={handleButtonClick}>
-				<div className="w-24 h-24 flex items-center justify-center aspect-[4/3] relative overflow-hidden">
+				<div className="w-12 h-12 md:w-24 md:h-24 flex items-center justify-center aspect-[4/3] relative overflow-hidden">
 					<motion.div
 						className="relative w-full h-full transition-transform duration-500 transform-style-3d preserve-3d"
 						initial={false}
