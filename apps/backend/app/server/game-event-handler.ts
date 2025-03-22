@@ -21,6 +21,7 @@ export class GameEventHandler {
 		socket.on("start-game", (data) => this.handleStartGame(socket, data));
 		socket.on("flip-card", (data) => this.handleFlipCard(socket, data));
 		socket.on("switch-turn", (data) => this.handleSwitchTurn(socket, data));
+		socket.on("watch-game", (data) => this.handleWatchGame(socket, data));
 		socket.on("disconnect", () => this.handleDisconnect(socket));
 		socket.on("request-game-state", ({ gameId }) => {
 			const game = this.gameController.getGame(gameId);
@@ -115,6 +116,15 @@ export class GameEventHandler {
 
 		this.io.to(gameId).emit("turn-switched", game);
 		console.log("TURN SWITCHED emitted once");
+	}
+
+	handleWatchGame(socket: Socket, { gameId }: { gameId: string }): void {
+		const game = this.gameController.getGame(gameId);
+		if (!game) {
+			socket.emit("game-not-found");
+			return;
+		}
+		socket.join(gameId);
 	}
 
 	handleDisconnect(socket: Socket): void {

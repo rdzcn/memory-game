@@ -11,7 +11,7 @@ import { MemoryCard } from "../components/memory-card";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import type { GameState } from "@/types/game.types";
+import type { GameState, Player } from "@/types/game.types";
 
 interface GameBoardProps {
 	gameId: string;
@@ -22,8 +22,19 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const playerId = searchParams.get("playerId");
-	const player = game.players?.find((player) => player.id === playerId);
-	const otherPlayer = game.players?.find((player) => player.id !== playerId);
+
+	let player: Player | undefined;
+	let otherPlayer: Player | undefined;
+
+	if (playerId) {
+		// Playing mode
+		player = game.players?.find((player) => player.id === playerId);
+		otherPlayer = game.players?.find((player) => player.id !== playerId);
+	} else {
+		// Viewing mode
+		player = game.players?.[0];
+		otherPlayer = game.players?.[1];
+	}
 	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
 
 	useHeartbeat({ socket, gameId: game.id, playerId, isFinished: matchedPairs === 12 });
@@ -40,8 +51,11 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	useEffect(() => {
 		if (gameId) {
 			socket.emit("request-game-state", { gameId });
+			if (!playerId) {
+				socket.emit("watch-game", { gameId });
+			}
 		}
-	}, [gameId]);
+	}, [gameId, playerId]);
 
 	useEffect(() => {
 		const handleGameUpdated = (updatedGame: GameState) => {
@@ -72,12 +86,9 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 		}
 	}, [game.flippedCards, game.id, playerId, game.currentTurn]);
 
-	const handleLeaveGameClick = () => {
-		handleLeaveGame();
-	};
-
-	const handleStartGame = () => {
-		socket.emit("start-game", { gameId: game.id });
+	const handleStartNewGame = () => {
+		console.log("Starting new game...");
+		// socket.emit("start-game", { gameId: game.id });
 	};
 
 	const handleFlipCard = ({ id }: { id: number }) => {
@@ -156,11 +167,6 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								Leave
 							</Button>
 						</div>
-						{!player && (
-							<Badge variant="secondary" className="mt-2 bg-yellow-100 text-yellow-700 border border-yellow-200">
-								Waiting to join...
-							</Badge>
-						)}
 					</Card>
 					{/* Player 2 */}
 					<Card
@@ -199,11 +205,11 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								Leave
 							</Button>
 						</div>
-						{!otherPlayer && (
+						{player?.id && !otherPlayer ? (
 							<Badge variant="secondary" className="mt-2 bg-yellow-100 text-yellow-700 border border-yellow-200">
 								Waiting to join...
 							</Badge>
-						)}
+						) : null}
 					</Card>
 					<Card className="p-4 bg-white md:col-span-1 md:col-start-2">
 						<div className="flex flex-col items-center justify-center gap-2">
@@ -222,21 +228,21 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 										<p className="text-sm text-gray-600">Time: TIMER</p>
 									</div>
 									<Button
-										onClick={() => console.log("RESET GAME")}
+										onClick={() => playerId ? handleStartNewGame() : router.push("/")}
 										className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
 									>
-										Play Again
+										{playerId ? "Play Again" : "Go to the Playground"}
 									</Button>
 								</>
 							) : (
 								<>
 									<h3 className="font-bold text-purple-700">Game in Progress</h3>
 									<Button
-										onClick={() => console.log("RESET GAME")}
+										onClick={() => playerId ? handleStartNewGame() : router.push("/")}
 										variant="outline"
 										className="border-purple-200 text-purple-700 hover:bg-purple-50"
 									>
-										Restart Game
+										{playerId ? "Restart Game" : "Go to the Playground"}
 									</Button>
 								</>
 							)}

@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { Trophy, Users } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -8,6 +9,7 @@ import type { GameState } from "@/types/game.types"
 import JoinGameDialog from "./join-game-dialog"
 
 export function GameCard({ game }: { game: GameState }) {
+	const router = useRouter();
 	const getStatusColor = (status: string) => {
 		switch (status) {
 			case "finished":
@@ -65,7 +67,7 @@ export function GameCard({ game }: { game: GameState }) {
 				>
 					{game.status === "waiting" ? "Join game" : "View Game"}
 				</Button> */}
-				{game.status === "waiting" ? <JoinGameDialog gameId={game.id} /> : "View Game"}
+				{game.status === "waiting" ? <JoinGameDialog gameId={game.id} /> : <Button onClick={() => router.push(`/game/${game.id}`)}>View Game</Button>}
 			</CardFooter>
 		</Card>
 	)
