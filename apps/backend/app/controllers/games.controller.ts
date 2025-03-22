@@ -3,7 +3,7 @@ import path from "node:path";
 import { Game } from "../game";
 import type { GameState } from "../types/game.types";
 
-const GAMES_FILE = path.resolve(__dirname, "../../data/games.json");
+const GAMES_FILE = path.resolve(__dirname, "../data/games.json");
 
 export const readGames = (): Record<string, GameState> => {
 	try {
