@@ -103,6 +103,10 @@ export class GameEventHandler {
 			playerId,
 		});
 
+		if (gameState?.status === "finished") {
+			this.heartbeatManager.setGameFinished(true);
+		}
+
 		this.io.to(gameId).emit("game-updated", gameState);
 	}
 
