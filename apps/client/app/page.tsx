@@ -21,6 +21,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);
 	const [activeTab, setActiveTab] = useState("all")
+	const completedGames = games.filter((game) => game.status === "finished");
+	const totalPlayers = games.reduce((acc, game) => acc + game.players.length, 0);
 
 	useEffect(() => {
 		socket.emit("get-games");
@@ -58,7 +60,7 @@ export default function Home() {
 								<Users className="h-6 w-6 text-blue-500 mr-2" />
 								<div>
 									<p className="text-sm text-blue-700">Total Players</p>
-									<p className="text-xl font-bold text-blue-800">24</p>
+									<p className="text-xl font-bold text-blue-800">{totalPlayers}</p>
 								</div>
 							</CardContent>
 						</Card>
@@ -68,7 +70,7 @@ export default function Home() {
 								<Trophy className="h-6 w-6 text-purple-500 mr-2" />
 								<div>
 									<p className="text-sm text-purple-700">Games Completed</p>
-									<p className="text-xl font-bold text-purple-800">18</p>
+									<p className="text-xl font-bold text-purple-800">{completedGames.length}</p>
 								</div>
 							</CardContent>
 						</Card>
