@@ -52,7 +52,7 @@ export default function Home() {
 					<p className="text-lg text-purple-400">Fun memory games for kids!</p>
 				</header>
 
-				<div className="flex justify-between items-center mb-6">
+				<div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
 					<div className="flex space-x-4">
 						<Card className="bg-blue-50 border-blue-200">
 							<CardContent className="p-4 flex items-center">
