@@ -3,9 +3,9 @@ import { io } from "socket.io-client";
 const url =
 	process.env.NODE_ENV === "development"
 		? "http://localhost:4040"
-		: "wss://developing-garnet-rdzcn-64909d47.koyeb.app";
+		: "https://memory-game-api-5iaa.onrender.com";
 
-// const url = "https://developing-garnet-rdzcn-64909d47.koyeb.app";
+// const url = "https://memory-game-api-5iaa.onrender.com";
 
 const socket = io(url, {
 	path:

@@ -23,6 +23,8 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	const router = useRouter();
 	const playerId = searchParams.get("playerId");
 
+	console.log("GameBoard", game);
+
 	let player: Player | undefined;
 	let otherPlayer: Player | undefined;
 
@@ -42,11 +44,11 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	const handleLeaveGame = useCallback(() => {
 		if (playerId) {
 			socket.emit("leave-game", { gameId: game.id, playerId });
+		} else {
+			socket.emit("unregister-socket", { gameId: game.id });
 		}
 		router.push("/");
 	}, [playerId, game.id, router]);
-
-	console.log("GameBoard", game);
 
 	useEffect(() => {
 		if (gameId) {
@@ -76,6 +78,21 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	}, []);
 
 	useEffect(() => {
+		const handleReconnect = (socketId: string) => {
+			console.log("User reconnected", socketId);
+			if (socketId === socket.id) {
+				console.log("Update player session");
+				socket.emit("update-session", { gameId: game.id, playerId });
+			}
+		}
+		socket.on("user-disconnected", handleReconnect);
+
+		return () => {
+			socket.off("user-disconnected", handleReconnect);
+		};
+	}, [game.id, playerId]);
+
+	useEffect(() => {
 		if (
 			game.flippedCards?.length === 2 &&
 			game.flippedCards[0]?.value !== game.flippedCards[1].value &&
@@ -86,11 +103,16 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 				console.log("Switching turn");
 			}, 1000);
 		}
-	}, [game.flippedCards, game.id, playerId, game.currentTurn]);
+	}, [game, playerId]);
 
 	const handleStartNewGame = () => {
 		console.log("Starting new game...");
 		// socket.emit("start-game", { gameId: game.id });
+	};
+
+	const navigateToPlayground = () => {
+		router.push("/");
+		socket.emit("unregister-socket", { gameId: game.id });
 	};
 
 	const handleFlipCard = ({ id }: { id: number }) => {
@@ -230,7 +252,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 										<p className="text-sm text-gray-600">Time: TIMER</p>
 									</div>
 									<Button
-										onClick={() => playerId ? handleStartNewGame : router.push("/")}
+										onClick={() => playerId ? handleStartNewGame : navigateToPlayground}
 										className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
 									>
 										{playerId ? "Play Again" : "Go to the Playground"}
@@ -240,7 +262,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								<>
 									<h3 className="font-bold text-purple-700">Game in Progress</h3>
 									<Button
-										onClick={() => playerId ? handleStartNewGame : router.push("/")}
+										onClick={() => playerId ? handleStartNewGame : navigateToPlayground}
 										variant="outline"
 										className="border-purple-200 text-purple-700 hover:bg-purple-50"
 									>

@@ -29,7 +29,6 @@ const gameEventHandler = new GameEventHandler(io, gamesController);
 
 // WebSocket connection
 io.on("connection", (socket) => {
-	console.log("🚀 A user connected", socket.id);
 	gameEventHandler.handleConnection(socket);
 
 	socket.on("error", (err) => {

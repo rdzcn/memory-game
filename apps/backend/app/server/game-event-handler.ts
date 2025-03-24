@@ -13,12 +13,16 @@ export class GameEventHandler {
 	}
 
 	handleConnection(socket: Socket): void {
+		socket.on("connect", () => this.handleSocketConnection(socket));
 		socket.on("get-games", () => this.handleGetGames());
 		socket.on("create-game", (data) => this.handleCreateGame(socket, data));
 		socket.on("join-game", (data) => this.handleJoinGame(socket, data));
 		socket.on("leave-game", (data) => this.handleLeaveGame(socket, data));
 		socket.on("register-socket", (data) =>
 			this.handleRegisterSocket(socket, data),
+		);
+		socket.on("unregister-socket", (data) =>
+			this.handleUnregisterSocket(socket, data),
 		);
 		socket.on("heartbeat", (data) => this.handleHeartbeat(socket, data));
 		socket.on("start-game", (data) => this.handleStartGame(socket, data));
@@ -146,9 +150,19 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game?.getState());
 	}
 
+	handleUnregisterSocket(socket: Socket, { gameId }: { gameId: string }): void {
+		socket.leave(gameId);
+	}
+
 	handleDisconnect(socket: Socket): void {
 		console.log("User disconnected", socket.id);
-		// this.heartbeatManager.removeConnection(socket.id);
+		this.heartbeatManager.removeConnection(socket.id);
+		this.io.emit("user-disconnected", socket.id);
+	}
+
+	handleSocketConnection(socket: Socket): void {
+		console.log("User connected", socket.id);
+		this.io.emit("user-connected", socket.id);
 	}
 
 	handleHeartbeat(
