@@ -8,8 +8,7 @@ const url =
 // const url = "https://memory-game-api-5iaa.onrender.com";
 
 const socket = io(url, {
-	path:
-		process.env.NODE_ENV === "development" ? "/socket.io" : "/api/socket.io",
+	path: "/socket.io",
 	transports: ["websocket", "polling"],
 	reconnection: true,
 	reconnectionAttempts: 5,
