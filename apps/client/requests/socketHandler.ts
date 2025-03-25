@@ -16,7 +16,11 @@ const socket = io(url, {
 });
 
 socket.on("connect", () => {
-	console.log("Connected to server", socket.id);
+	console.log("Connected to server - SOCKET HANDLER", socket.id);
+});
+
+socket.on("disconnect", () => {
+	console.log("Disconnected from server");
 });
 
 socket.on("connect_error", (error) => {

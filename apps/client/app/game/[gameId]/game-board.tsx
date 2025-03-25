@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Trophy, Timer, Users, LogOut, Sparkles, Gamepad2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -55,8 +55,6 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 			socket.emit("request-game-state", { gameId });
 			if (!playerId) {
 				socket.emit("watch-game", { gameId });
-			} else {
-				socket.emit("register-socket", { gameId, playerId });
 			}
 		}
 	}, [gameId, playerId]);
@@ -78,21 +76,6 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	}, []);
 
 	useEffect(() => {
-		const handleReconnect = (socketId: string) => {
-			console.log("User reconnected", socketId);
-			if (socketId === socket.id) {
-				console.log("Update player session");
-				socket.emit("update-session", { gameId: game.id, playerId });
-			}
-		}
-		socket.on("user-disconnected", handleReconnect);
-
-		return () => {
-			socket.off("user-disconnected", handleReconnect);
-		};
-	}, [game.id, playerId]);
-
-	useEffect(() => {
 		if (
 			game.flippedCards?.length === 2 &&
 			game.flippedCards[0]?.value !== game.flippedCards[1].value &&
@@ -104,6 +87,29 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 			}, 1000);
 		}
 	}, [game, playerId]);
+
+	useEffect(() => {
+		const handleDisconnect = (reason: string) => {
+			console.log("Disconnected from server - Reason:", reason);
+			socket.emit("unregister-socket", { gameId: game.id });
+		};
+
+		const handleReconnect = () => {
+			console.log("Connected to server - GAME BOARD");
+			if (playerId && game.id) {
+				socket.emit("register-socket", { gameId: game.id, playerId });
+			}
+		};
+
+		socket.on("connect", handleReconnect);
+		socket.on("disconnect", handleDisconnect);
+
+		return () => {
+			socket.off("connect", handleReconnect);
+			socket.off("disconnect", handleDisconnect);
+		};
+	}, [game.id, playerId]);
+
 
 	const handleStartNewGame = () => {
 		console.log("Starting new game...");

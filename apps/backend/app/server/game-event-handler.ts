@@ -13,7 +13,6 @@ export class GameEventHandler {
 	}
 
 	handleConnection(socket: Socket): void {
-		socket.on("connect", () => this.handleSocketConnection(socket));
 		socket.on("get-games", () => this.handleGetGames());
 		socket.on("create-game", (data) => this.handleCreateGame(socket, data));
 		socket.on("join-game", (data) => this.handleJoinGame(socket, data));
@@ -158,11 +157,6 @@ export class GameEventHandler {
 		console.log("User disconnected", socket.id);
 		this.heartbeatManager.removeConnection(socket.id);
 		this.io.emit("user-disconnected", socket.id);
-	}
-
-	handleSocketConnection(socket: Socket): void {
-		console.log("User connected", socket.id);
-		this.io.emit("user-connected", socket.id);
 	}
 
 	handleHeartbeat(
