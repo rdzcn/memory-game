@@ -39,16 +39,16 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	}
 	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
 
-	useHeartbeat({ socket, gameId: game.id, playerId, isFinished: matchedPairs === 12 });
+	useHeartbeat({ socket, gameId, playerId, isFinished: matchedPairs === 12 });
 
 	const handleLeaveGame = useCallback(() => {
 		if (playerId) {
-			socket.emit("leave-game", { gameId: game.id, playerId });
+			socket.emit("leave-game", { gameId, playerId });
 		} else {
-			socket.emit("unregister-socket", { gameId: game.id });
+			socket.emit("unregister-socket", { gameId });
 		}
 		router.push("/");
-	}, [playerId, game.id, router]);
+	}, [playerId, gameId, router]);
 
 	useEffect(() => {
 		if (gameId) {
@@ -82,22 +82,22 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 			game.currentTurn === playerId
 		) {
 			setTimeout(() => {
-				socket.emit("switch-turn", { gameId: game.id });
+				socket.emit("switch-turn", { gameId });
 				console.log("Switching turn");
 			}, 1000);
 		}
-	}, [game, playerId]);
+	}, [game, gameId, playerId]);
 
 	useEffect(() => {
 		const handleDisconnect = (reason: string) => {
 			console.log("Disconnected from server - Reason:", reason);
-			socket.emit("unregister-socket", { gameId: game.id });
+			socket.emit("unregister-socket", { gameId });
 		};
 
 		const handleReconnect = () => {
 			console.log("Connected to server - GAME BOARD");
-			if (playerId && game.id) {
-				socket.emit("register-socket", { gameId: game.id, playerId });
+			if (playerId && gameId) {
+				socket.emit("register-socket", { gameId, playerId });
 			}
 		};
 
@@ -108,7 +108,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 			socket.off("connect", handleReconnect);
 			socket.off("disconnect", handleDisconnect);
 		};
-	}, [game.id, playerId]);
+	}, [gameId, playerId]);
 
 
 	const handleStartNewGame = () => {
@@ -118,14 +118,14 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 
 	const navigateToPlayground = () => {
 		router.push("/");
-		socket.emit("unregister-socket", { gameId: game.id });
+		socket.emit("unregister-socket", { gameId });
 	};
 
 	const handleFlipCard = ({ id }: { id: number }) => {
 		if (playerId !== game.currentTurn) {
 			return;
 		}
-		socket.emit("flip-card", { gameId: game.id, id, playerId });
+		socket.emit("flip-card", { gameId, id, playerId });
 	};
 
 	const currentPlayerName = playerId === game.currentTurn ? player?.name : otherPlayer?.name;

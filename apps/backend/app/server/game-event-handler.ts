@@ -146,6 +146,7 @@ export class GameEventHandler {
 		socket.join(gameId);
 
 		const game = this.gameController.getGame(gameId);
+		console.log("Game state", game?.getState());
 		this.io.to(gameId).emit("game-updated", game?.getState());
 	}
 
