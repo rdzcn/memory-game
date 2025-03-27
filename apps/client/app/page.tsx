@@ -84,7 +84,6 @@ export default function Home() {
 							</CardContent>
 						</Card>
 					</div>
-
 					<CreateGameDialog />
 				</div>
 
@@ -130,7 +129,7 @@ export default function Home() {
 					</TabsContent>
 				</Tabs>
 
-				<div className="mt-8 text-center">
+				{/* <div className="mt-8 text-center">
 					<h2 className="text-2xl font-bold text-purple-600 mb-4">Recent Achievements</h2>
 					<div className="flex justify-center space-x-4">
 						<Card className="w-64 bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200">
@@ -153,7 +152,7 @@ export default function Home() {
 							</CardContent>
 						</Card>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)

@@ -1,1 +1,165 @@
-{}
+{
+    "3f5905f8-b53d-4fb6-8b88-a50e74f1042e": {
+        "id": "3f5905f8-b53d-4fb6-8b88-a50e74f1042e",
+        "players": [
+            {
+                "id": "64077b21-fe88-488b-b51d-8e46afb9b72d",
+                "name": "Benji",
+                "socketId": "KmAIYadrmceIjpntAAAN",
+                "score": 0
+            }
+        ],
+        "flippedCards": [],
+        "currentTurn": "22e3656b-c46c-4d71-b967-a60801f5a9bf",
+        "status": "waiting",
+        "title": "third game",
+        "cards": [
+            {
+                "id": 17,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 16,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 2,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 5,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 18,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 20,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 14,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 4,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 1,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 9,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 13,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 12,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 6,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 19,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 21,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 3,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 8,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 15,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 11,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 10,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 22,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 7,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            }
+        ],
+        "cardCount": 12,
+        "createdAt": 1743113967409
+    }
+}

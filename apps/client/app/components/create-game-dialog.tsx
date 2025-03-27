@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
 import {
 	Dialog,
 	DialogTrigger,
@@ -19,6 +20,7 @@ import type { GameState } from "@/types/game.types";
 type FormData = {
 	gameTitle: string;
 	username: string;
+	cardCount: number;
 };
 
 export default function CreateGameDialog() {
@@ -48,7 +50,10 @@ export default function CreateGameDialog() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button>Create a Game</Button>
+				<Button>
+					<Plus className="h-6 w-6" />
+					Create a Game
+				</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
@@ -75,7 +80,9 @@ export default function CreateGameDialog() {
 							<p className="text-red-500 text-sm">{errors.username.message}</p>
 						)}
 					</div>
-					<Button type="submit">Create Game</Button>
+					<Button type="submit">
+						Create Game
+					</Button>
 				</form>
 			</DialogContent>
 		</Dialog>

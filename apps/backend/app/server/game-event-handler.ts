@@ -44,13 +44,18 @@ export class GameEventHandler {
 
 	handleCreateGame(
 		socket: Socket,
-		{ username, gameTitle }: { username: string; gameTitle: string },
+		{
+			username,
+			gameTitle,
+			cardCount = 12,
+		}: { username: string; gameTitle: string; cardCount?: number },
 	): void {
 		const socketId = socket.id;
 		const game = this.gameController.createGame({
 			username,
 			gameTitle,
 			socketId,
+			cardCount,
 		});
 
 		const player = game.players[0];
@@ -146,7 +151,6 @@ export class GameEventHandler {
 		socket.join(gameId);
 
 		const game = this.gameController.getGame(gameId);
-		console.log("Game state", game?.getState());
 		this.io.to(gameId).emit("game-updated", game?.getState());
 	}
 

@@ -15,6 +15,18 @@ const cardData: CardData[] = [
 	{ id: 9, value: "scyther" },
 	{ id: 10, value: "seadra" },
 	{ id: 11, value: "weezing" },
+	{ id: 12, value: "tentacruel" },
+	{ id: 13, value: "graveler" },
+	{ id: 14, value: "golem" },
+	{ id: 15, value: "ponyta" },
+	{ id: 16, value: "slowpoke" },
+	{ id: 17, value: "cloyster" },
+	{ id: 18, value: "drowzee" },
+	{ id: 19, value: "lickitung" },
+	{ id: 20, value: "rhydon" },
+	{ id: 21, value: "goldeen" },
+	{ id: 22, value: "starmie" },
+	{ id: 23, value: "mr-mime" },
 ];
 
 export class Game {
@@ -25,19 +37,27 @@ export class Game {
 	private status: GameStatus;
 	private title: string;
 	private cards: Card[];
+	private cardCount: number;
+	private createdAt: number;
+	private updatedAt?: number;
+	private finishedAt?: number;
 	private lastFlippedCard?: Card;
 	private winner?: Player;
 
-	constructor(title: string, skipCardInit?: boolean) {
+	constructor(title: string, cardCount: number, skipCardInit?: boolean) {
 		this.id = crypto.randomUUID(); // Generate unique game ID
 		this.players = [];
 		this.currentTurn = "";
 		this.status = "waiting";
+		this.cardCount = cardCount;
 		this.title = title;
 		this.flippedCards = [];
 		this.cards = skipCardInit ? [] : this.initializeCards();
 		this.lastFlippedCard = undefined;
 		this.winner = undefined;
+		this.createdAt = Date.now();
+		this.updatedAt = undefined;
+		this.finishedAt = undefined;
 	}
 
 	private initializeCards(): Card[] {
@@ -61,8 +81,11 @@ export class Game {
 		const cards: Card[] = [];
 		let id = 0;
 
+		const selectedCards = [...cardData].sort(() => Math.random() - 0.5);
+		const finalCardData = selectedCards.slice(0, this.cardCount);
+
 		// Create two of each card
-		for (const baseCard of cardData) {
+		for (const baseCard of finalCardData) {
 			for (let i = 0; i < 2; i++) {
 				cards.push({
 					id: id++,
@@ -145,6 +168,7 @@ export class Game {
 
 		// If we now have 2 players, start the game
 		if (this.players.length === 2) {
+			this.updatedAt = Date.now();
 			this.status = "playing";
 		}
 
@@ -157,7 +181,7 @@ export class Game {
 		// If we're down to 1 or 0 players, reset the game state
 		if (this.players.length < 2) {
 			this.status = "waiting";
-			// this.resetCards();
+			this.updatedAt = undefined;
 		}
 	}
 
@@ -205,6 +229,7 @@ export class Game {
 			// Check if game is finished
 			if (this.cards.every((c) => c.isMatched)) {
 				this.status = "finished";
+				this.finishedAt = Date.now();
 				this.winner = this.players.reduce((a, b) =>
 					a.score > b.score ? a : b,
 				);
@@ -245,6 +270,10 @@ export class Game {
 			winner: this.winner,
 			title: this.title,
 			cards: this.cards,
+			cardCount: this.cardCount,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+			finishedAt: this.finishedAt,
 		};
 	}
 

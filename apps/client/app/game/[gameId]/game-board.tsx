@@ -12,52 +12,56 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { GameState, Player } from "@/types/game.types";
+import CountUp from "@/app/components/timer";
 
 interface GameBoardProps {
 	gameId: string;
 }
+
+type GameMode = "playing" | "viewing";
 
 export default function GameBoard({ gameId }: GameBoardProps) {
 	const [game, setGame] = useState({} as GameState);
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const playerId = searchParams.get("playerId");
+	const gameMode: GameMode = playerId ? "playing" : "viewing";
 
 	console.log("GameBoard", game);
 
 	let player: Player | undefined;
 	let otherPlayer: Player | undefined;
 
-	if (playerId) {
-		// Playing mode
+
+	if (gameMode === "playing") {
 		player = game.players?.find((player) => player.id === playerId);
 		otherPlayer = game.players?.find((player) => player.id !== playerId);
 	} else {
-		// Viewing mode
 		player = game.players?.[0];
 		otherPlayer = game.players?.[1];
 	}
+
 	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
 
 	useHeartbeat({ socket, gameId, playerId, isFinished: matchedPairs === 12 });
 
 	const handleLeaveGame = useCallback(() => {
-		if (playerId) {
+		if (gameMode === "playing") {
 			socket.emit("leave-game", { gameId, playerId });
 		} else {
 			socket.emit("unregister-socket", { gameId });
 		}
 		router.push("/");
-	}, [playerId, gameId, router]);
+	}, [gameMode, gameId, router, playerId]);
 
 	useEffect(() => {
 		if (gameId) {
 			socket.emit("request-game-state", { gameId });
-			if (!playerId) {
+			if (gameMode === "viewing") {
 				socket.emit("watch-game", { gameId });
 			}
 		}
-	}, [gameId, playerId]);
+	}, [gameId, gameMode]);
 
 	useEffect(() => {
 		const handleGameUpdated = (updatedGame: GameState) => {
@@ -122,7 +126,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 	};
 
 	const handleFlipCard = ({ id }: { id: number }) => {
-		if (playerId !== game.currentTurn) {
+		if (playerId !== game.currentTurn || game.flippedCards?.length === 2) {
 			return;
 		}
 		socket.emit("flip-card", { gameId, id, playerId });
@@ -144,7 +148,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 					<div className="flex justify-between items-center mb-2">
 						<div className="flex items-center gap-2">
 							<Timer className="h-5 w-5 text-blue-600" />
-							<span className="font-mono text-lg font-bold text-blue-700">{"TIMER"}</span>
+							{game.updatedAt ? <span className="font-mono text-lg font-bold text-blue-700"><CountUp updatedAt={game.updatedAt} /></span> : null}
 						</div>
 						<Badge variant="outline" className="bg-purple-100 text-purple-700 px-3 py-1 text-sm font-medium">
 							<Users className="h-4 w-4 mr-1" />
@@ -165,7 +169,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 						key={player?.name}
 						className={cn(
 							"p-4 transition-all duration-300",
-							player?.id === game.currentTurn
+							playerId === game.currentTurn
 								? "bg-gradient-to-r from-blue-100 to-purple-100 shadow-lg"
 								: "bg-white",
 						)}
@@ -176,7 +180,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 									<div className="font-bold text-lg text-purple-900">{player?.name}</div>
 									<div className="flex items-center gap-1">
 										<span className="text-amber-600 font-medium">Score: {player?.score}</span>
-										{player?.id === game.currentTurn && (
+										{playerId === game.currentTurn && (
 											<motion.div
 												animate={{ scale: [1, 1.2, 1] }}
 												transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
@@ -235,7 +239,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								Leave
 							</Button>
 						</div>
-						{player?.id && !otherPlayer ? (
+						{playerId && !otherPlayer ? (
 							<Badge variant="secondary" className="mt-2 bg-yellow-100 text-yellow-700 border border-yellow-200">
 								Waiting to join...
 							</Badge>
@@ -258,7 +262,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 										<p className="text-sm text-gray-600">Time: TIMER</p>
 									</div>
 									<Button
-										onClick={() => playerId ? handleStartNewGame : navigateToPlayground}
+										onClick={() => playerId ? handleStartNewGame() : navigateToPlayground()}
 										className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
 									>
 										{playerId ? "Play Again" : "Go to the Playground"}
@@ -268,7 +272,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								<>
 									<h3 className="font-bold text-purple-700">Game in Progress</h3>
 									<Button
-										onClick={() => playerId ? handleStartNewGame : navigateToPlayground}
+										onClick={() => playerId ? handleStartNewGame() : navigateToPlayground()}
 										variant="outline"
 										className="border-purple-200 text-purple-700 hover:bg-purple-50"
 									>

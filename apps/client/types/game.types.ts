@@ -19,6 +19,10 @@ export interface GameState {
 	lastFlippedCard: Card | undefined;
 	winner: Player | undefined;
 	cards: Card[];
+	cardCount: number;
+	createdAt: number;
+	updatedAt?: number;
+	finishedAt?: number;
 }
 
 export interface Card {
