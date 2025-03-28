@@ -175,5 +175,1089 @@
         "createdAt": 1743150038928,
         "updatedAt": 1743150043414,
         "finishedAt": 1743150142849
+    },
+    "aab5fef2-63cf-4e49-9003-75f41f0056d7": {
+        "id": "aab5fef2-63cf-4e49-9003-75f41f0056d7",
+        "players": [
+            {
+                "id": "0a414551-1808-4b4d-9ae4-8163ca4dcb23",
+                "name": "jack",
+                "socketId": "aBFwAR0xscJJprrdAAH_",
+                "score": 0
+            }
+        ],
+        "flippedCards": [],
+        "currentTurn": "0a414551-1808-4b4d-9ae4-8163ca4dcb23",
+        "status": "waiting",
+        "title": "hello",
+        "cards": [
+            {
+                "id": 34,
+                "value": "cubone",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 18,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 7,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 30,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 33,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 20,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 4,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 29,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 25,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 12,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 24,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 10,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 27,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 15,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 19,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 2,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 1,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 6,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 14,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 26,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 22,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 9,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 31,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 21,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 35,
+                "value": "cubone",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 5,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 8,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 13,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 32,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 17,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 28,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 3,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 11,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 16,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            }
+        ],
+        "cardCount": 18,
+        "createdAt": 1743167274200
+    },
+    "5a37f712-4ae1-4b38-8bd4-28d5f475a985": {
+        "id": "5a37f712-4ae1-4b38-8bd4-28d5f475a985",
+        "players": [
+            {
+                "id": "990a0df2-8f54-461f-9470-6a29cc870512",
+                "name": "jack",
+                "socketId": "T_lvm9WxSKfeSHAZAAIH",
+                "score": 0
+            }
+        ],
+        "flippedCards": [],
+        "currentTurn": "990a0df2-8f54-461f-9470-6a29cc870512",
+        "status": "waiting",
+        "title": "hello",
+        "cards": [
+            {
+                "id": 26,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 20,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 15,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 5,
+                "value": "drowzee",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 31,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 25,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 28,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 2,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 30,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 44,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 41,
+                "value": "cubone",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 37,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 16,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 7,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 10,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 38,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 14,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 21,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 9,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 46,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 22,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 3,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 1,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 29,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 36,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 43,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 6,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 24,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 34,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 13,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 17,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 8,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 39,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 32,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 11,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 42,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 4,
+                "value": "drowzee",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 27,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 19,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 35,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 45,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 12,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 18,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 47,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 40,
+                "value": "cubone",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 33,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            }
+        ],
+        "cardCount": 24,
+        "createdAt": 1743169625270
+    },
+    "2718cae2-b769-448e-acb5-f30556020d1a": {
+        "id": "2718cae2-b769-448e-acb5-f30556020d1a",
+        "players": [
+            {
+                "id": "fa44fde5-64c4-45d2-847f-c53738d9b710",
+                "name": "jack",
+                "socketId": "T_lvm9WxSKfeSHAZAAIH",
+                "score": 0
+            }
+        ],
+        "flippedCards": [],
+        "currentTurn": "fa44fde5-64c4-45d2-847f-c53738d9b710",
+        "status": "waiting",
+        "title": "hello",
+        "cards": [
+            {
+                "id": 26,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 35,
+                "value": "drowzee",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 29,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 14,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 13,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 1,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 19,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 8,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 22,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 33,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 31,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 10,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 12,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 6,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 17,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 28,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 32,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 5,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 15,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 7,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 21,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 4,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 9,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 27,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 11,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 3,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 20,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 25,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 24,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 30,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 16,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 34,
+                "value": "drowzee",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 2,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 18,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            }
+        ],
+        "cardCount": 18,
+        "createdAt": 1743169643773
+    },
+    "fd9b1ec5-f7ba-42d2-8770-19c2d25d3706": {
+        "id": "fd9b1ec5-f7ba-42d2-8770-19c2d25d3706",
+        "players": [
+            {
+                "id": "5326182f-d9e6-4faa-bfe8-f558ceb7a467",
+                "name": "john",
+                "socketId": "vSdife9E2CI77AHLAAI5",
+                "score": 0
+            }
+        ],
+        "flippedCards": [],
+        "currentTurn": "5326182f-d9e6-4faa-bfe8-f558ceb7a467",
+        "status": "waiting",
+        "title": "hello",
+        "cards": [
+            {
+                "id": 24,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 13,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 10,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 15,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 1,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 12,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 2,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 35,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 42,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 45,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "ponyta",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 40,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 20,
+                "value": "cubone",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 30,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 34,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 28,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 17,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 32,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 47,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 21,
+                "value": "cubone",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 46,
+                "value": "weezing",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 33,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 26,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 14,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 36,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 27,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 4,
+                "value": "drowzee",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 19,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 3,
+                "value": "tentacruel",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 6,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 29,
+                "value": "rhydon",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 41,
+                "value": "golem",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 25,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 7,
+                "value": "cloyster",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 44,
+                "value": "chansey",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 37,
+                "value": "mr-mime",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 8,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 11,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 22,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 9,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 31,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 38,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 39,
+                "value": "clefairy",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 5,
+                "value": "drowzee",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 16,
+                "value": "graveler",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 43,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 18,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            }
+        ],
+        "cardCount": 24,
+        "createdAt": 1743169682835
     }
 }
