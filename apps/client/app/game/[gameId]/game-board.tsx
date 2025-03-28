@@ -43,7 +43,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 
 	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
 
-	useHeartbeat({ socket, gameId, playerId, isFinished: matchedPairs === 12 });
+	useHeartbeat({ socket, gameId, playerId, isFinished: game.status === "finished" });
 
 	const handleLeaveGame = useCallback(() => {
 		if (gameMode === "playing") {
@@ -247,7 +247,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 					</Card>
 					<Card className="p-4 bg-white md:col-span-1 md:col-start-2">
 						<div className="flex flex-col items-center justify-center gap-2">
-							{matchedPairs === 12 ? (
+							{game.status === "finished" ? (
 								<>
 									<div className="text-center mb-2">
 										<motion.div
@@ -304,7 +304,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 
 					</AnimatePresence>
 				</div>
-				{matchedPairs === 12 && (
+				{game.status === "finished" && (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}

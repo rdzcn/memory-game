@@ -21,18 +21,31 @@ export function GameCard({ game }: { game: GameState }) {
 		}
 	}
 
-	// const getDifficultyColor = (difficulty: string) => {
-	// 	switch (difficulty) {
-	// 		case "easy":
-	// 			return "bg-green-100 text-green-800"
-	// 		case "medium":
-	// 			return "bg-amber-100 text-amber-800"
-	// 		case "hard":
-	// 			return "bg-purple-100 text-purple-800"
-	// 		default:
-	// 			return "bg-blue-100 text-blue-800"
-	// 	}
-	// }
+	const getDifficultyColor = (cardCount: number) => {
+		switch (cardCount) {
+			case 12:
+				return "bg-green-100 text-green-800"
+			case 18:
+				return "bg-amber-100 text-amber-800"
+			case 24:
+				return "bg-purple-100 text-purple-800"
+			default:
+				return "bg-blue-100 text-blue-800"
+		}
+	}
+
+	const getDifficultyLabel = (cardCount: number) => {
+		switch (cardCount) {
+			case 12:
+				return "Easy"
+			case 18:
+				return "Medium"
+			case 24:
+				return "Hard"
+			default:
+				return "Unknown"
+		}
+	}
 
 	return (
 		<Card className="overflow-hidden border-2 border-purple-200 transition-all duration-200 hover:shadow-lg hover:border-purple-300">
@@ -49,9 +62,9 @@ export function GameCard({ game }: { game: GameState }) {
 						<Users className="h-4 w-4 text-purple-500 mr-1" />
 						<span className="text-sm">Players: {game.players.length}</span>
 					</div>
-					{/* <Badge variant="outline" className={getDifficultyColor(game.difficulty)}>
-						{game.difficulty}
-					</Badge> */}
+					<Badge variant="outline" className={getDifficultyColor(game.cardCount)}>
+						{getDifficultyLabel(game.cardCount)}
+					</Badge>
 				</div>
 				{game.status === "finished" && (
 					<div className="flex items-center mt-2">
