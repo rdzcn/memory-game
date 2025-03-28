@@ -37,11 +37,11 @@ export function GameCard({ game }: { game: GameState }) {
 	const getDifficultyLabel = (cardCount: number) => {
 		switch (cardCount) {
 			case 12:
-				return "Easy"
+				return "Easy (12 pairs)"
 			case 18:
-				return "Medium"
+				return "Medium (18 pairs)"
 			case 24:
-				return "Hard"
+				return "Hard (24 pairs)"
 			default:
 				return "Unknown"
 		}
@@ -49,8 +49,8 @@ export function GameCard({ game }: { game: GameState }) {
 
 	return (
 		<Card className="overflow-hidden border-2 border-purple-200 transition-all duration-200 hover:shadow-lg hover:border-purple-300">
-			<CardHeader className="bg-gradient-to-r from-purple-100 to-purple-50 pb-2">
-				<div className="flex justify-between items-start">
+			<CardHeader className="bg-gradient-to-r from-purple-100 to-purple-50">
+				<div className="flex justify-between items-center">
 					<CardTitle className="text-purple-800">{game.title}</CardTitle>
 					<Badge className={getStatusColor(game.status)}>{game.status}</Badge>
 				</div>
@@ -73,14 +73,10 @@ export function GameCard({ game }: { game: GameState }) {
 					</div>
 				)}
 			</CardContent>
-			<CardFooter className="bg-purple-50 pt-2">
-				{/* <Button
-					variant="outline"
-					className="w-full border-purple-300 text-purple-700 hover:bg-purple-100 hover:text-purple-800"
-				>
-					{game.status === "waiting" ? "Join game" : "View Game"}
-				</Button> */}
-				{game.status === "waiting" ? <JoinGameDialog gameId={game.id} /> : <Button onClick={() => router.push(`/game/${game.id}`)}>View Game</Button>}
+			<CardFooter className="bg-purple-50">
+				<div className="flex justify-between items-center pt-4">
+					{game.status === "waiting" ? <JoinGameDialog gameId={game.id} /> : <Button onClick={() => router.push(`/game/${game.id}`)}>View Game</Button>}
+				</div>
 			</CardFooter>
 		</Card>
 	)
