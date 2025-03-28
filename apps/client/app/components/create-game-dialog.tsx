@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import socket from "@/requests/socketHandler";
 import type { GameState } from "@/types/game.types";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type FormData = {
 	gameTitle: string;
@@ -29,8 +30,9 @@ export default function CreateGameDialog() {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
-	} = useForm<FormData>();
+	} = useForm<FormData>({ defaultValues: { cardCount: 12 } });
 	const router = useRouter();
 
 	const onSubmit = async (data: FormData) => {
@@ -79,6 +81,27 @@ export default function CreateGameDialog() {
 						{errors.username && (
 							<p className="text-red-500 text-sm">{errors.username.message}</p>
 						)}
+					</div>
+					<div className="space-y-2">
+						<Label>Choose Difficulty Level</Label>
+						<RadioGroup
+							defaultValue="12"
+							onValueChange={(value) => setValue("cardCount", Number(value))}
+							className="flex gap-4"
+						>
+							<div className="flex items-center space-x-2">
+								<RadioGroupItem value="12" id="card-12" />
+								<Label htmlFor="card-12">Easy (12 pairs)</Label>
+							</div>
+							<div className="flex items-center space-x-2">
+								<RadioGroupItem value="18" id="card-18" />
+								<Label htmlFor="card-18">Medium (18 pairs)</Label>
+							</div>
+							<div className="flex items-center space-x-2">
+								<RadioGroupItem value="24" id="card-24" />
+								<Label htmlFor="card-24">Hard (24 pairs)</Label>
+							</div>
+						</RadioGroup>
 					</div>
 					<Button type="submit">
 						Create Game
