@@ -1,0 +1,24 @@
+{
+	"name": "@memory-game/database",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsc",
+		"db:generate": "prisma generate",
+		"db:push": "prisma db push",
+		"dev": "tsc -w"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@prisma/client": "^6.5.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20",
+		"prisma": "^6.5.0",
+		"typescript": "^5.8.2"
+	}
+}
