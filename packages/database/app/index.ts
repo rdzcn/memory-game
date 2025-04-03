@@ -1,35 +1,71 @@
 import { PrismaClient } from "@prisma/client";
-import type { GameState } from "./types/game.types";
+import dotenv from "dotenv";
+import type { GameState, Player } from "./types/game.types";
 
+dotenv.config();
 const prisma = new PrismaClient();
 
 // Helper functions
-export async function saveGame(gameState: GameState) {
-	return await prisma.game.create({
-		data: {
-			gameId: gameState.id,
-			title: gameState.title,
-			player1Name: gameState.players[0]?.name || "",
-			player2Name: gameState.players[1]?.name || "",
-			player1Score: gameState.players[0]?.score || 0,
-			player2Score: gameState.players[1]?.score || 0,
-			winner: gameState.winner?.name || "",
-			cardCount: gameState.cardCount,
-			createdAt: gameState.createdAt,
-			updatedAt: gameState.updatedAt || gameState.createdAt,
-			finishedAt: gameState.finishedAt || gameState.createdAt,
-		},
-	});
+async function saveGame(gameState: GameState) {
+	console.log("Saving game to database...");
+	try {
+		const {
+			id,
+			title,
+			status,
+			cardCount,
+			players,
+			winner,
+			createdAt,
+			updatedAt,
+			finishedAt,
+		} = gameState;
+
+		// Create game and connect players in a transaction
+		const savedGame = await prisma.game.create({
+			data: {
+				id,
+				title,
+				status,
+				cardCount,
+				winnerId: winner?.id,
+				createdAt: new Date(createdAt),
+				updatedAt: updatedAt ? new Date(updatedAt) : undefined,
+				finishedAt: finishedAt ? new Date(finishedAt) : undefined,
+				players: {
+					create: players.map((player: Player) => ({
+						id: player.id,
+						name: player.name,
+						score: player.score,
+					})),
+				},
+			},
+			include: {
+				players: true,
+			},
+		});
+
+		console.log("Game saved successfully to database");
+		return savedGame;
+	} catch (error) {
+		console.error("Error saving game:", error);
+		throw error;
+	}
 }
 
-export async function getGameById(gameId: string) {
+// Update to use string IDs
+async function getGameById(id: string) {
 	return await prisma.game.findUnique({
-		where: { gameId },
+		where: { id },
+		include: { players: true },
 	});
 }
 
-export async function getAllGames() {
+async function getAllGames() {
 	return await prisma.game.findMany({
+		include: { players: true },
 		orderBy: { createdAt: "desc" },
 	});
 }
+
+export { prisma, saveGame, getGameById, getAllGames };

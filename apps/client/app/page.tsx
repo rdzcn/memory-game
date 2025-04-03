@@ -1,23 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import socket from "@/requests/socketHandler";
 import {
 	Card,
 	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
 } from "@/components/ui/card";
 import type { GameState } from "@/types/game.types";
 import CreateGameDialog from "./components/create-game-dialog";
-import JoinGameDialog from "./components/join-game-dialog";
 import { GameCard } from "./components/game-card";
 import { Clock, Gamepad2, Star, Trophy, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { set } from "react-hook-form";
 
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);

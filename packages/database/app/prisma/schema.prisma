@@ -1,23 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Game {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  gameId       String    @unique
-  title        String
-  player1Name  String
-  player2Name  String
-  player1Score Int
-  player2Score Int
-  winner       String
-  cardCount    Int
-  createdAt    Float
-  updatedAt    Float
-  finishedAt   Float
+  id          String    @id @default(uuid())
+  title       String
+  status      String    // "waiting" | "playing" | "finished"
+  players     Player[]
+  cardCount   Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  finishedAt  DateTime?
+  winnerId    String?   // Store the ID of the winner
+}
+
+model Player {
+  id        String  @id @default(uuid())
+  name      String
+  score     Int     @default(0)
+  
+  // Relationships
+  game      Game    @relation(fields: [gameId], references: [id])
+  gameId    String
 }

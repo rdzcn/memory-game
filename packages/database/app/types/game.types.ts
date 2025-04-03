@@ -4,9 +4,6 @@ export interface Player {
 	id: string;
 	name: string;
 	score: number;
-	isReady?: boolean;
-	isOnline?: boolean;
-	socketId?: string;
 }
 
 export interface GameState {

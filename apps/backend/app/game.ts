@@ -109,6 +109,12 @@ export class Game {
 		this.status = state.status;
 		this.title = state.title;
 		this.flippedCards = state.flippedCards;
+		this.winner = state.winner;
+		this.createdAt = state.createdAt;
+		this.updatedAt = state.updatedAt;
+		this.finishedAt = state.finishedAt;
+		this.cardCount = state.cardCount;
+		this.lastFlippedCard = state.lastFlippedCard;
 
 		// If cards aren't in the saved state, initialize new ones
 		if (state.cards && state.cards.length > 0) {
@@ -152,6 +158,15 @@ export class Game {
 		// Ensure we have a valid flippedCards array
 		if (!Array.isArray(this.flippedCards)) {
 			this.flippedCards = [];
+		}
+	}
+
+	private async saveFinishedGame(): Promise<void> {
+		console.log("Saving finished game to database...");
+		try {
+			await saveGame(this.getState());
+		} catch (error) {
+			console.error("Error saving game:", error);
 		}
 	}
 
@@ -234,6 +249,8 @@ export class Game {
 				this.winner = this.players.reduce((a, b) =>
 					a.score > b.score ? a : b,
 				);
+				// save the game in the database
+				this.saveFinishedGame();
 			}
 		}
 		this.lastFlippedCard = undefined;
