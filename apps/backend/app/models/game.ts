@@ -31,7 +31,7 @@ export interface IGameState extends Document {
 	cards: ICard[];
 	cardCount: number;
 	createdAt: number;
-	updatedAt?: number;
+	startedAt?: number;
 	finishedAt?: number;
 }
 
@@ -76,7 +76,7 @@ const GameSchema = new Schema<IGameState>({
 	cards: [CardSchema],
 	cardCount: { type: Number, required: true },
 	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number },
+	startedAt: { type: Number },
 	finishedAt: { type: Number },
 });
 

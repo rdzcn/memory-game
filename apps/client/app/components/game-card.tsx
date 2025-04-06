@@ -73,10 +73,10 @@ export function GameCard({ game }: { game: GameState }) {
 						<span className="text-sm text-amber-700">Winner: {game.winner?.name}</span>
 					</div>
 				)}
-				{game.finishedAt && game.updatedAt ? (
+				{game.finishedAt && game.startedAt ? (
 					<div className="flex items-center mt-2">
 						<Timer className="h-4 w-4 text-amber-500 mr-1" />
-						<span className="text-sm text-amber-700">{calculateGameDuration(game.updatedAt, game.finishedAt)}</span>
+						<span className="text-sm text-amber-700">{calculateGameDuration(game.startedAt, game.finishedAt)}</span>
 					</div>
 				) : null}
 			</CardContent>

@@ -17,8 +17,9 @@ async function saveGame(gameState: GameState) {
 			players,
 			winner,
 			createdAt,
-			updatedAt,
+			startedAt,
 			finishedAt,
+			gameScore,
 		} = gameState;
 
 		// Create game and connect players in a transaction
@@ -30,8 +31,9 @@ async function saveGame(gameState: GameState) {
 				cardCount,
 				winnerId: winner?.id,
 				createdAt: new Date(createdAt),
-				updatedAt: updatedAt ? new Date(updatedAt) : undefined,
+				startedAt: startedAt ? new Date(startedAt) : undefined,
 				finishedAt: finishedAt ? new Date(finishedAt) : undefined,
+				gameScore,
 				players: {
 					create: players.map((player: Player) => ({
 						id: player.id,

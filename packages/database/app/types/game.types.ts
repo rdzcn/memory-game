@@ -18,8 +18,10 @@ export interface GameState {
 	cards: Card[];
 	cardCount: number;
 	createdAt: number;
-	updatedAt?: number;
+	startedAt?: number;
 	finishedAt?: number;
+	gameScore: number;
+	totalMoves: number;
 }
 
 export interface Card {

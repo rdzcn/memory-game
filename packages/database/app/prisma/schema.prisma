@@ -17,7 +17,7 @@ model Game {
   players     Player[]
   cardCount   Int
   createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
+  startedAt   DateTime? @startedAt
   finishedAt  DateTime?
   winnerId    String?   // Store the ID of the winner
 }

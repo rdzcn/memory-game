@@ -148,7 +148,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 					<div className="flex justify-between items-center mb-2">
 						<div className="flex items-center gap-2">
 							<Timer className="h-5 w-5 text-blue-600" />
-							{game.updatedAt ? <span className="font-mono text-lg font-bold text-blue-700"><CountUp updatedAt={game.updatedAt} /></span> : null}
+							{game.startedAt ? <span className="font-mono text-lg font-bold text-blue-700"><CountUp startedAt={game.startedAt} /></span> : null}
 						</div>
 						<Badge variant="outline" className="bg-purple-100 text-purple-700 px-3 py-1 text-sm font-medium">
 							<Users className="h-4 w-4 mr-1" />

@@ -159,7 +159,7 @@ export class GameEventHandler {
 	}
 
 	handleDisconnect(socket: Socket): void {
-		console.log("User disconnected", socket.id);
+		console.log("User disconnected: GAME EVENT HANDLER", socket.id);
 		this.heartbeatManager.removeConnection(socket.id);
 		this.io.emit("user-disconnected", socket.id);
 	}
