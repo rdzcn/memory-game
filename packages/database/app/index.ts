@@ -20,6 +20,7 @@ async function saveGame(gameState: GameState) {
 			startedAt,
 			finishedAt,
 			gameScore,
+			totalMoves,
 		} = gameState;
 
 		// Create game and connect players in a transaction
@@ -34,6 +35,7 @@ async function saveGame(gameState: GameState) {
 				startedAt: startedAt ? new Date(startedAt) : undefined,
 				finishedAt: finishedAt ? new Date(finishedAt) : undefined,
 				gameScore,
+				totalMoves,
 				players: {
 					create: players.map((player: Player) => ({
 						id: player.id,
@@ -70,4 +72,15 @@ async function getAllGames() {
 	});
 }
 
-export { prisma, saveGame, getGameById, getAllGames };
+async function getHighestScoreGame() {
+	return await prisma.game.findFirst({
+		orderBy: {
+			gameScore: "desc",
+		},
+		include: {
+			players: true,
+		},
+	});
+}
+
+export { prisma, saveGame, getGameById, getAllGames, getHighestScoreGame };

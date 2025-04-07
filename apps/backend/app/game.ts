@@ -167,7 +167,7 @@ export class Game {
 		}
 	}
 
-	private calculateScore(): number {
+	private calculateGameScore(): number {
 		const baseScore = 1000;
 		const difficultyMultiplier = this.cardCount / 12;
 		const optimalMoves = this.cardCount * 2;
@@ -240,6 +240,7 @@ export class Game {
 		const card = this.cards[cardIndex];
 		card.isFlipped = true;
 		this.flippedCards.push(card);
+		this.totalMoves++;
 
 		// If this is the first card flipped
 		if (!this.lastFlippedCard) {
@@ -269,7 +270,7 @@ export class Game {
 				this.winner = this.players.reduce((a, b) =>
 					a.score > b.score ? a : b,
 				);
-				this.gameScore = this.calculateScore();
+				this.gameScore = this.calculateGameScore();
 
 				// save the game in the database
 				this.saveFinishedGame();
