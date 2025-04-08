@@ -1,8 +1,8 @@
 "use client";
 
-import { use, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Trophy, Timer, Users, LogOut, Sparkles, Gamepad2 } from "lucide-react";
+import { Trophy, Timer, LogOut, Sparkles, Gamepad2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import socket from "@/requests/socketHandler";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,12 @@ interface GameBoardProps {
 }
 
 type GameMode = "playing" | "viewing";
+
+const memoryCardClasses = (cardCount: number) => cn(
+	"grid grid-cols-6 gap-2 md:grid-cols-6 md:gap-4 w-fit mx-auto",
+	cardCount === 16 && "md:grid-cols-8",
+	cardCount === 24 && "md:grid-cols-12",
+)
 
 export default function GameBoard({ gameId }: GameBoardProps) {
 	const [game, setGame] = useState({} as GameState);
@@ -132,36 +138,27 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 		socket.emit("flip-card", { gameId, id, playerId });
 	};
 
-	const currentPlayerName = playerId === game.currentTurn ? player?.name : otherPlayer?.name;
-
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-purple-50 to-blue-50 p-4 md:p-8">
-			<div className="max-w-5xl mx-auto">
-				<div className="mb-6 text-center">
+			<div className="max-w-6xl mx-auto">
+				<div className="mb-4 text-center">
 					<h1 className="text-3xl md:text-4xl font-bold text-purple-700 mb-2 flex items-center justify-center gap-2">
 						<Gamepad2 className="h-8 w-8" />
 						Memory Match
 					</h1>
 					<p className="text-purple-600">Find all the matching pairs!</p>
 				</div>
-				<div className="mb-6">
-					<div className="flex justify-between items-center mb-2">
-						<div className="flex items-center gap-2">
-							<Timer className="h-5 w-5 text-blue-600" />
-							{game.startedAt ? <span className="font-mono text-lg font-bold text-blue-700"><CountUp startedAt={game.startedAt} /></span> : null}
-						</div>
-						<Badge variant="outline" className="bg-purple-100 text-purple-700 px-3 py-1 text-sm font-medium">
-							<Users className="h-4 w-4 mr-1" />
-							<span>Current Turn: {currentPlayerName}</span>
-						</Badge>
-						<div className="flex items-center gap-2">
-							<Trophy className="h-5 w-5 text-amber-500" />
-							<span className="font-bold text-amber-700">
-								Pairs: {matchedPairs}/{game.cards?.length / 2}
-							</span>
-						</div>
+				<div className="flex justify-between items-center mb-2">
+					<div className="flex items-center gap-2">
+						<Timer className="h-5 w-5 text-blue-600" />
+						{game.startedAt ? <span className="font-mono text-lg font-bold text-blue-700"><CountUp startedAt={game.startedAt} /></span> : <span className="font-mono text-lg font-bold text-blue-700">00:00</span>}
 					</div>
-
+					<div className="flex items-center gap-2">
+						<Trophy className="h-5 w-5 text-amber-500" />
+						<span className="font-bold text-amber-700">
+							Pairs: {matchedPairs}/{game.cards?.length / 2}
+						</span>
+					</div>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 					{/* Player 1 */}
@@ -202,11 +199,49 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 							</Button>
 						</div>
 					</Card>
+					{/* Game Mode */}
+					<Card className="p-4 bg-white">
+						<div className="flex flex-col items-center justify-center gap-2">
+							{game.status === "finished" ? (
+								<>
+									<div className="text-center mb-2">
+										<motion.div
+											initial={{ scale: 0 }}
+											animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
+											transition={{ duration: 0.5 }}
+											className="text-4xl mb-1"
+										>
+											🎉
+										</motion.div>
+										<h3 className="font-bold text-green-600 text-lg">Game Complete!</h3>
+										<p className="text-sm text-gray-600">Time: TIMER</p>
+									</div>
+									<Button
+										onClick={() => playerId ? handleStartNewGame() : navigateToPlayground()}
+										className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+									>
+										{playerId ? "Play Again" : "Go to the Playground"}
+									</Button>
+								</>
+							) : (
+								<>
+									<h3 className="font-bold text-purple-700">Game in Progress</h3>
+									<Button
+										onClick={() => playerId ? handleStartNewGame() : navigateToPlayground()}
+										variant="outline"
+										className="border-purple-200 text-purple-700 hover:bg-purple-50"
+									>
+										{playerId ? "Restart Game" : "Go to the Playground"}
+									</Button>
+								</>
+							)}
+						</div>
+					</Card>
 					{/* Player 2 */}
 					<Card
 						key={otherPlayer?.name}
 						className={cn(
-							"p-4 transition-all duration-300 md:col-span-1 md:col-start-3",
+							"p-4 transition-all duration-300",
 							otherPlayer?.id === game.currentTurn
 								? "bg-gradient-to-r from-blue-100 to-purple-100 shadow-lg"
 								: "bg-white",
@@ -245,45 +280,9 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 							</Badge>
 						) : null}
 					</Card>
-					<Card className="p-4 bg-white md:col-span-1 md:col-start-2">
-						<div className="flex flex-col items-center justify-center gap-2">
-							{game.status === "finished" ? (
-								<>
-									<div className="text-center mb-2">
-										<motion.div
-											initial={{ scale: 0 }}
-											animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
-											transition={{ duration: 0.5 }}
-											className="text-4xl mb-1"
-										>
-											🎉
-										</motion.div>
-										<h3 className="font-bold text-green-600 text-lg">Game Complete!</h3>
-										<p className="text-sm text-gray-600">Time: TIMER</p>
-									</div>
-									<Button
-										onClick={() => playerId ? handleStartNewGame() : navigateToPlayground()}
-										className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
-									>
-										{playerId ? "Play Again" : "Go to the Playground"}
-									</Button>
-								</>
-							) : (
-								<>
-									<h3 className="font-bold text-purple-700">Game in Progress</h3>
-									<Button
-										onClick={() => playerId ? handleStartNewGame() : navigateToPlayground()}
-										variant="outline"
-										className="border-purple-200 text-purple-700 hover:bg-purple-50"
-									>
-										{playerId ? "Restart Game" : "Go to the Playground"}
-									</Button>
-								</>
-							)}
-						</div>
-					</Card>
+
 				</div>
-				<div className="grid grid-cols-6 gap-2 md:grid-cols-6 md:gap-8 w-fit mx-auto">
+				<div className={memoryCardClasses(game.cardCount)}>
 					<AnimatePresence>
 						{game.cards?.map((card, index) => (
 							<motion.div

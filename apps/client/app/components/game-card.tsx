@@ -26,7 +26,7 @@ export function GameCard({ game }: { game: GameState }) {
 		switch (cardCount) {
 			case 12:
 				return "bg-green-100 text-green-800"
-			case 18:
+			case 16:
 				return "bg-amber-100 text-amber-800"
 			case 24:
 				return "bg-red-100 text-red-800"
@@ -39,8 +39,8 @@ export function GameCard({ game }: { game: GameState }) {
 		switch (cardCount) {
 			case 12:
 				return "Easy (12 pairs)"
-			case 18:
-				return "Medium (18 pairs)"
+			case 16:
+				return "Medium (16 pairs)"
 			case 24:
 				return "Hard (24 pairs)"
 			default:
