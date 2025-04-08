@@ -177,7 +177,7 @@ export class Game {
 		const timeFactor = durationInMs / 1000;
 
 		const rawScore =
-			(baseScore * difficultyMultiplier * optimalityFactor) / timeFactor;
+			(baseScore * difficultyMultiplier * optimalityFactor * 10) / timeFactor;
 		return Math.round(rawScore);
 	}
 
