@@ -94,8 +94,8 @@ export default function CreateGameDialog() {
 								<Label htmlFor="card-12">Easy (12 pairs)</Label>
 							</div>
 							<div className="flex items-center space-x-2">
-								<RadioGroupItem value="18" id="card-18" />
-								<Label htmlFor="card-18">Medium (18 pairs)</Label>
+								<RadioGroupItem value="16" id="card-16" />
+								<Label htmlFor="card-16">Medium (16 pairs)</Label>
 							</div>
 							<div className="flex items-center space-x-2">
 								<RadioGroupItem value="24" id="card-24" />

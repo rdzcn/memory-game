@@ -14,12 +14,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);
+	const [onlineUsers, setOnlineUsers] = useState(0);
+	const [highestScoreGame, setHighestScoreGame] = useState<GameState | null>(null);
 	const [activeTab, setActiveTab] = useState("all")
 	const completedGames = games.filter((game) => game.status === "finished");
-	const totalPlayers = games.reduce((acc, game) => acc + game.players.length, 0);
 
 	useEffect(() => {
 		socket.emit("get-games");
+		socket.emit("get-highest-score-game");
 	}, []);
 
 	useEffect(() => {
@@ -27,10 +29,19 @@ export default function Home() {
 			setGames(games);
 		};
 
+		socket.on("highest-score-game", (game: GameState) => {
+			setHighestScoreGame(game);
+		});
 		socket.on("games", setGamesData);
+		socket.on("user-count", ({ count }: { count: number }) => {
+			console.log("User count updated:", count);
+			setOnlineUsers(count);
+		});
 
 		return () => {
 			socket.off("games");
+			socket.off("user-count");
+			socket.off("highest-score-game");
 		};
 	}, []);
 
@@ -52,7 +63,7 @@ export default function Home() {
 								<Users className="h-6 w-6 text-blue-500 mr-2" />
 								<div>
 									<p className="text-sm text-blue-700">Total Players</p>
-									<p className="text-xl font-bold text-blue-800">{totalPlayers}</p>
+									<p className="text-xl font-bold text-blue-800">{onlineUsers}</p>
 								</div>
 							</CardContent>
 						</Card>
@@ -72,7 +83,7 @@ export default function Home() {
 								<Star className="h-6 w-6 text-amber-500 mr-2" />
 								<div>
 									<p className="text-sm text-amber-700">High Score</p>
-									<p className="text-xl font-bold text-amber-800">42</p>
+									<p className="text-xl font-bold text-amber-800">{highestScoreGame?.gameScore || "-"}</p>
 								</div>
 							</CardContent>
 						</Card>

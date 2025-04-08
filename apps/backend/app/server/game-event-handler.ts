@@ -1,6 +1,7 @@
 import type { Server, Socket } from "socket.io";
 import type GamesController from "../controllers/games.controller";
 import { HeartbeatManager } from "./heartbeat";
+import { getHighestScoreGame } from "@memory-game/database";
 
 export class GameEventHandler {
 	private heartbeatManager: HeartbeatManager;
@@ -25,9 +26,10 @@ export class GameEventHandler {
 		);
 		socket.on("heartbeat", (data) => this.handleHeartbeat(socket, data));
 		socket.on("start-game", (data) => this.handleStartGame(socket, data));
-		socket.on("flip-card", (data) => this.handleFlipCard(socket, data));
-		socket.on("switch-turn", (data) => this.handleSwitchTurn(socket, data));
+		socket.on("flip-card", (data) => this.handleFlipCard(data));
+		socket.on("switch-turn", (data) => this.handleSwitchTurn(data));
 		socket.on("watch-game", (data) => this.handleWatchGame(socket, data));
+		socket.on("get-highest-score-game", () => this.handleGetHighestScoreGame());
 		socket.on("disconnect", () => this.handleDisconnect(socket));
 		socket.on("request-game-state", ({ gameId }) => {
 			const game = this.gameController.getGame(gameId);
@@ -111,10 +113,11 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game);
 	}
 
-	handleFlipCard(
-		socket: Socket,
-		{ gameId, playerId, id }: { gameId: string; id: number; playerId: string },
-	): void {
+	async handleFlipCard({
+		gameId,
+		playerId,
+		id,
+	}: { gameId: string; id: number; playerId: string }): Promise<void> {
 		const gameState = this.gameController.flipCard({
 			gameId,
 			id,
@@ -122,13 +125,17 @@ export class GameEventHandler {
 		});
 
 		if (gameState?.status === "finished") {
+			const highestScoreGame = await getHighestScoreGame();
+			if (highestScoreGame?.id === gameState.id) {
+				this.io.emit("highest-score-game", highestScoreGame);
+			}
 			this.heartbeatManager.setGameFinished(true);
 		}
 
 		this.io.to(gameId).emit("game-updated", gameState);
 	}
 
-	handleSwitchTurn(socket: Socket, { gameId }: { gameId: string }): void {
+	handleSwitchTurn({ gameId }: { gameId: string }): void {
 		const game = this.gameController.switchTurn({ gameId });
 
 		this.io.to(gameId).emit("turn-switched", game);
@@ -154,12 +161,17 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game?.getState());
 	}
 
+	async handleGetHighestScoreGame(): Promise<void> {
+		const highestScoreGame = await getHighestScoreGame();
+		this.io.emit("highest-score-game", highestScoreGame);
+	}
+
 	handleUnregisterSocket(socket: Socket, { gameId }: { gameId: string }): void {
 		socket.leave(gameId);
 	}
 
 	handleDisconnect(socket: Socket): void {
-		console.log("User disconnected", socket.id);
+		console.log("User disconnected: GAME EVENT HANDLER", socket.id);
 		this.heartbeatManager.removeConnection(socket.id);
 		this.io.emit("user-disconnected", socket.id);
 	}

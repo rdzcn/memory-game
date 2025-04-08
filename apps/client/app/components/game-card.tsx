@@ -26,7 +26,7 @@ export function GameCard({ game }: { game: GameState }) {
 		switch (cardCount) {
 			case 12:
 				return "bg-green-100 text-green-800"
-			case 18:
+			case 16:
 				return "bg-amber-100 text-amber-800"
 			case 24:
 				return "bg-red-100 text-red-800"
@@ -39,8 +39,8 @@ export function GameCard({ game }: { game: GameState }) {
 		switch (cardCount) {
 			case 12:
 				return "Easy (12 pairs)"
-			case 18:
-				return "Medium (18 pairs)"
+			case 16:
+				return "Medium (16 pairs)"
 			case 24:
 				return "Hard (24 pairs)"
 			default:
@@ -73,10 +73,10 @@ export function GameCard({ game }: { game: GameState }) {
 						<span className="text-sm text-amber-700">Winner: {game.winner?.name}</span>
 					</div>
 				)}
-				{game.finishedAt && game.updatedAt ? (
+				{game.finishedAt && game.startedAt ? (
 					<div className="flex items-center mt-2">
 						<Timer className="h-4 w-4 text-amber-500 mr-1" />
-						<span className="text-sm text-amber-700">{calculateGameDuration(game.updatedAt, game.finishedAt)}</span>
+						<span className="text-sm text-amber-700">{calculateGameDuration(game.startedAt, game.finishedAt)}</span>
 					</div>
 				) : null}
 			</CardContent>

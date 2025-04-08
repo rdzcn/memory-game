@@ -5,7 +5,7 @@ CREATE TABLE "Game" (
     "status" TEXT NOT NULL,
     "cardCount" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
+    "startedAt" TIMESTAMP(3),
     "finishedAt" TIMESTAMP(3),
     "winnerId" TEXT,
 

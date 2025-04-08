@@ -40,10 +40,12 @@ export class Game {
 	private cards: Card[];
 	private cardCount: number;
 	private createdAt: number;
-	private updatedAt?: number;
+	private gameScore: number;
+	private startedAt?: number;
 	private finishedAt?: number;
 	private lastFlippedCard?: Card;
 	private winner?: Player;
+	private totalMoves: number;
 
 	constructor(title: string, cardCount: number, skipCardInit?: boolean) {
 		this.id = crypto.randomUUID(); // Generate unique game ID
@@ -57,8 +59,10 @@ export class Game {
 		this.lastFlippedCard = undefined;
 		this.winner = undefined;
 		this.createdAt = Date.now();
-		this.updatedAt = undefined;
+		this.startedAt = undefined;
 		this.finishedAt = undefined;
+		this.gameScore = 0;
+		this.totalMoves = 0;
 	}
 
 	private initializeCards(): Card[] {
@@ -111,10 +115,12 @@ export class Game {
 		this.flippedCards = state.flippedCards;
 		this.winner = state.winner;
 		this.createdAt = state.createdAt;
-		this.updatedAt = state.updatedAt;
+		this.startedAt = state.startedAt;
 		this.finishedAt = state.finishedAt;
 		this.cardCount = state.cardCount;
 		this.lastFlippedCard = state.lastFlippedCard;
+		this.gameScore = state.gameScore;
+		this.totalMoves = state.totalMoves;
 
 		// If cards aren't in the saved state, initialize new ones
 		if (state.cards && state.cards.length > 0) {
@@ -161,6 +167,20 @@ export class Game {
 		}
 	}
 
+	private calculateGameScore(): number {
+		const baseScore = 1000;
+		const difficultyMultiplier = this.cardCount / 12;
+		const optimalMoves = this.cardCount * 2;
+		const optimalityFactor = optimalMoves / this.totalMoves;
+		const durationInMs =
+			this.finishedAt && this.startedAt ? this.finishedAt - this.startedAt : 0;
+		const timeFactor = durationInMs / 1000;
+
+		const rawScore =
+			(baseScore * difficultyMultiplier * optimalityFactor) / timeFactor;
+		return Math.round(rawScore);
+	}
+
 	private async saveFinishedGame(): Promise<void> {
 		console.log("Saving finished game to database...");
 		try {
@@ -184,7 +204,7 @@ export class Game {
 
 		// If we now have 2 players, start the game
 		if (this.players.length === 2) {
-			this.updatedAt = Date.now();
+			this.startedAt = Date.now();
 			this.status = "playing";
 		}
 
@@ -197,7 +217,7 @@ export class Game {
 		// If we're down to 1 or 0 players, reset the game state
 		if (this.players.length < 2) {
 			this.status = "waiting";
-			this.updatedAt = undefined;
+			this.startedAt = undefined;
 		}
 	}
 
@@ -220,6 +240,7 @@ export class Game {
 		const card = this.cards[cardIndex];
 		card.isFlipped = true;
 		this.flippedCards.push(card);
+		this.totalMoves++;
 
 		// If this is the first card flipped
 		if (!this.lastFlippedCard) {
@@ -249,6 +270,8 @@ export class Game {
 				this.winner = this.players.reduce((a, b) =>
 					a.score > b.score ? a : b,
 				);
+				this.gameScore = this.calculateGameScore();
+
 				// save the game in the database
 				this.saveFinishedGame();
 			}
@@ -290,8 +313,10 @@ export class Game {
 			cards: this.cards,
 			cardCount: this.cardCount,
 			createdAt: this.createdAt,
-			updatedAt: this.updatedAt,
+			startedAt: this.startedAt,
 			finishedAt: this.finishedAt,
+			totalMoves: this.totalMoves,
+			gameScore: this.gameScore,
 		};
 	}
 

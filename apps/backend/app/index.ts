@@ -29,10 +29,25 @@ const io = new SocketIOServer(server, {
 const gamesController = new GamesController();
 const gameEventHandler = new GameEventHandler(io, gamesController);
 
+// Track active connections
+// Not accuracte currently as it registeres the same user twice when the page refreshes
+// It should be fixed in the future
+let onlineUsers = 0;
+
 // WebSocket connection
 io.on("connection", (socket) => {
 	console.log("User connected", socket.id);
+	onlineUsers++;
+	console.log("Number of online users:", onlineUsers);
 	gameEventHandler.handleConnection(socket);
+	io.emit("user-count", { count: onlineUsers });
+
+	socket.on("disconnect", () => {
+		console.log("User disconnected", socket.id);
+		onlineUsers--;
+		console.log("Number of online users:", onlineUsers);
+		io.emit("user-count", { count: onlineUsers });
+	});
 
 	socket.on("error", (err) => {
 		console.error("Socket error:", err);

@@ -67,12 +67,12 @@ const GameRepository = {
 
 		const multi = redisClient.multi();
 
-		for (const [gameId, updateData] of Object.entries(updates)) {
+		for (const [gameId, startedAt] of Object.entries(updates)) {
 			const existingGameJson: string | null | undefined =
 				await redisClient.hGet(this.GAMES_HASH_KEY, gameId);
 			if (existingGameJson) {
 				const existingGame = JSON.parse(existingGameJson);
-				const updatedGame = { ...existingGame, ...updateData };
+				const updatedGame = { ...existingGame, ...startedAt };
 				multi.hSet(this.GAMES_HASH_KEY, gameId, JSON.stringify(updatedGame));
 			}
 		}
