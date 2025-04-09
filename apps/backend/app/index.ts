@@ -7,7 +7,7 @@ import { errorHandler } from "./middleware";
 import GamesController from "./controllers/games.controller";
 import { GameEventHandler } from "./server/game-event-handler";
 
-const PORT = 4040;
+const PORT = process.env.PORT || 4040;
 
 const app = express();
 app.use(express.static("public"));
@@ -59,6 +59,6 @@ app.get("/", (req, res) => {
 	res.send("Hello, Express!");
 });
 
-server.listen(PORT, "0.0.0.0", () => {
+server.listen(PORT, () => {
 	console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
