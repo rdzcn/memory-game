@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "cross-env DATABASE_URL=$DATABASE_URL pnpm --filter=@memory-game/database build && tsc",
+		"build": "pnpm --filter=@memory-game/database build && tsc",
 		"start": "pnpm --filter=@memory-game/database exec prisma migrate deploy && node dist/index.js",
 		"dev": "ts-node-dev app/index.ts"
 	},
