@@ -5,12 +5,12 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"dev:migrate": "dotenv -e .env -- prisma migrate dev --name init && prisma generate",
-		"prod:migrate": "prisma generate && prisma migrate deploy",
-		"generate": "dotenv -e .env -- prisma generate",
-		"migrate": "prisma migrate deploy && prisma generate",
 		"build": "tsc",
-		"dev": "tsc -w"
+		"dev": "tsc -w",
+		"db:generate": "prisma generate",
+		"db:migrate:dev": "prisma migrate dev",
+		"db:migrate:deploy": "prisma migrate deploy",
+		"db:seed": "ts-node ./seed.ts"
 	},
 	"keywords": [],
 	"author": "",

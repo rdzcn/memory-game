@@ -4,9 +4,10 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "pnpm --filter=@memory-game/database build && tsc",
-		"start": "pnpm --filter=@memory-game/database run prod:migrate && node dist/index.js",
-		"dev": "ts-node-dev app/index.ts"
+		"build": "tsc",
+		"dev": "ts-node-dev --respawn --transpile-only app/index.ts",
+		"start": "node dist/index.js",
+		"db:migrate:deploy": "cd ../../packages/database && pnpm db:migrate:deploy"
 	},
 	"keywords": [],
 	"author": "",
