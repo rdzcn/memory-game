@@ -1,11 +1,11 @@
-import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
+dotenv.config();
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
+
+const prisma = new PrismaClient().$extends(withAccelerate());
 import type { GameState, Player } from "./types/game.types";
 
-dotenv.config();
-const prisma = new PrismaClient();
-
-// Helper functions
 async function saveGame(gameState: GameState) {
 	console.log("Saving game to database...");
 	try {

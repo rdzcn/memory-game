@@ -1,20 +1,20 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { Server as SocketIOServer } from "socket.io";
 import { createServer } from "node:http";
 import cors from "cors";
-import dotenv from "dotenv";
 import { errorHandler } from "./middleware";
 import GamesController from "./controllers/games.controller";
 import { GameEventHandler } from "./server/game-event-handler";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4040;
 
 const app = express();
 app.use(express.static("public"));
 app.use(cors());
 app.use(express.json());
 app.use(errorHandler);
-dotenv.config();
 
 const server = createServer(app);
 
@@ -54,11 +54,10 @@ io.on("connection", (socket) => {
 	});
 });
 
-// Routes
 app.get("/", (req, res) => {
-	res.send("Hello, Express!");
+	res.send("✅ Health check OK");
 });
 
 server.listen(PORT, () => {
-	console.log(`🚀 Server is running on http://localhost:${PORT}`);
+	console.log(`🚀 Server is running on port ${PORT}`);
 });

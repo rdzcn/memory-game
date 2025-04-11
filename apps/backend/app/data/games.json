@@ -1,1 +1,181 @@
-{}
+{
+    "8bcb60dc-fa2d-43ec-b880-906bc8703772": {
+        "id": "8bcb60dc-fa2d-43ec-b880-906bc8703772",
+        "players": [
+            {
+                "id": "59e4dcdc-3300-43fd-bbd6-88d10f5e4974",
+                "name": "jack",
+                "socketId": "ekauZK-hvw7Bq0PPAAAR",
+                "score": 6
+            },
+            {
+                "id": "8a797db3-b978-476a-b302-634523810793",
+                "name": "jill",
+                "socketId": "i_a25KtO-6UoJbQ1AAAN",
+                "score": 6
+            }
+        ],
+        "flippedCards": [],
+        "currentTurn": "8a797db3-b978-476a-b302-634523810793",
+        "status": "finished",
+        "winner": {
+            "id": "8a797db3-b978-476a-b302-634523810793",
+            "name": "jill",
+            "socketId": "i_a25KtO-6UoJbQ1AAAN",
+            "score": 6
+        },
+        "title": "hello",
+        "cards": [
+            {
+                "id": 3,
+                "value": "weezing",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 14,
+                "value": "goldeen",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 2,
+                "value": "weezing",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 9,
+                "value": "starmie",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 15,
+                "value": "goldeen",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 13,
+                "value": "cubone",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 20,
+                "value": "caterpie",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 23,
+                "value": "squirtle",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 10,
+                "value": "farfetchd",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 1,
+                "value": "cloyster",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 0,
+                "value": "cloyster",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 19,
+                "value": "hitmonchan",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 8,
+                "value": "starmie",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 11,
+                "value": "farfetchd",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 18,
+                "value": "hitmonchan",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 5,
+                "value": "clefairy",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 21,
+                "value": "caterpie",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 7,
+                "value": "drowzee",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 16,
+                "value": "bulbasaur",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 17,
+                "value": "bulbasaur",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 22,
+                "value": "squirtle",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 6,
+                "value": "drowzee",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 4,
+                "value": "clefairy",
+                "isFlipped": true,
+                "isMatched": true
+            },
+            {
+                "id": 12,
+                "value": "cubone",
+                "isFlipped": true,
+                "isMatched": true
+            }
+        ],
+        "cardCount": 12,
+        "createdAt": 1744290012786,
+        "startedAt": 1744290017551,
+        "finishedAt": 1744290088984,
+        "totalMoves": 46,
+        "gameScore": 73
+    }
+}
