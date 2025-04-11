@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "pnpm --filter=@memory-game/database build && tsc",
-		"start": "node dist/index.js",
+		"start": "pnpm --filter=@memory-game/database run prod:migrate && node dist/index.js",
 		"dev": "ts-node-dev app/index.ts"
 	},
 	"keywords": [],
