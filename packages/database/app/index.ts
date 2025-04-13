@@ -1,10 +1,33 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { PrismaClient } from "@prisma/client/edge";
-import { withAccelerate } from "@prisma/extension-accelerate";
 
-const prisma = new PrismaClient().$extends(withAccelerate());
 import type { GameState, Player } from "./types/game.types";
+
+import { PrismaClient } from "@prisma/client";
+
+const prismaClientSingleton = () => {
+	const client = new PrismaClient();
+
+	// Only use Accelerate in production
+	if (
+		process.env.NODE_ENV === "production" &&
+		process.env.PRISMA_ACCELERATE_URL
+	) {
+		const { withAccelerate } = require("@prisma/extension-accelerate");
+		return client.$extends(withAccelerate());
+	}
+
+	return client;
+};
+
+// Use global to prevent multiple instances in development
+const globalForPrisma = globalThis as unknown as {
+	prisma: ReturnType<typeof prismaClientSingleton> | undefined;
+};
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 async function saveGame(gameState: GameState) {
 	console.log("Saving game to database...");
