@@ -9,5 +9,5 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DATABASE_URL
+      - key: PRISMA_ACCELERATE_URL
         sync: false 
