@@ -25,7 +25,6 @@ socket.on("disconnect", () => {
 
 socket.on("connect_error", (error) => {
 	console.error("Connection error:", error);
-	console.error("process.env", JSON.stringify(process.env, null, 2));
 });
 
 export default socket;
