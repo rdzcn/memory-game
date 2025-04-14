@@ -3,7 +3,7 @@ services:
     name: memory-game-backend
     env: node
     rootDir: apps/backend
-    buildCommand: cd ../.. && pnpm install --frozen-lockfile && pnpm turbo build --filter=backend... && pnpm turbo db:migrate:deploy --filter=database
+    buildCommand: cd ../.. && pnpm install --frozen-lockfile && pnpm turbo build --filter=backend... && pnpm turbo db:migrate:deploy --filter=@memory-game/database
     startCommand: cd ../.. && pnpm start --filter=backend
     autoDeploy: true
     envVars:
