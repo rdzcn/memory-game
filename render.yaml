@@ -6,10 +6,9 @@ services:
     buildCommand: |
       cd ../.. &&
       pnpm install --frozen-lockfile &&
-      # Set DATABASE_URL to DIRECT_URL specifically for migrations
-      DATABASE_URL="$DIRECT_URL" pnpm turbo db:migrate:deploy --filter=@memory-game/database &&
-      pnpm turbo build --filter=backend...
-    startCommand: cd ../.. && pnpm start --filter=backend
+      DATABASE_URL="$DIRECT_URL" pnpm turbo run db:migrate:deploy --filter=@memory-game/database... &&
+      pnpm turbo build --filter=@memory-game/backend...
+    startCommand: NODE_ENV=production pnpm start --filter=@memory-game/backend
     autoDeploy: true
     envVars:
       - key: NODE_ENV
