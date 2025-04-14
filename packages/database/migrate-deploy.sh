@@ -2,21 +2,28 @@
 
 echo "--- Starting database migration script ---"
 
-# Check if DIRECT_URL is set
+# Ensure DIRECT_URL is populated
 if [ -z "$DIRECT_URL" ]; then
-  echo "Error: DIRECT_URL environment variable is not set."
-  exit 1
+  echo "DIRECT_URL is empty. Attempting to read from Render env..."
+  DIRECT_URL_ENV=$(printenv DIRECT_URL)
+
+  if [ -z "$DIRECT_URL_ENV" ]; then
+    echo "Error: DIRECT_URL is still empty after printenv fallback."
+    exit 1
+  fi
+
+  export DIRECT_URL="$DIRECT_URL_ENV"
 fi
 
 echo "DIRECT_URL is: $DIRECT_URL"
 
-# Set DATABASE_URL to DIRECT_URL for migrations
+# Set DATABASE_URL for Prisma
 export DATABASE_URL="$DIRECT_URL"
 echo "DATABASE_URL set to: $DATABASE_URL"
 
-# Check if DATABASE_URL is set (after export)
+# Final check before running migration
 if [ -z "$DATABASE_URL" ]; then
-  echo "Error: DATABASE_URL environment variable is not set after export."
+  echo "Error: DATABASE_URL is not set."
   exit 1
 fi
 
@@ -27,7 +34,7 @@ if [ $? -eq 0 ]; then
   echo "--- Prisma Migrate Deploy completed successfully ---"
 else
   echo "--- Prisma Migrate Deploy FAILED ---"
-  exit 1 # Exit with a non-zero status code if migration fails
+  exit 1
 fi
 
 echo "--- Database migration script finished ---"

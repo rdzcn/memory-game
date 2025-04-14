@@ -13,7 +13,7 @@
 			"dependsOn": ["^db:generate"]
 		},
 		"db:generate": {
-			"cache": false
+			"outputs": ["node_modules/.prisma", "node_modules/@prisma/client"]
 		},
 		"db:migrate:dev": {
 			"cache": false,
@@ -21,7 +21,8 @@
 		},
 		"db:migrate:deploy": {
 			"cache": false,
-			"dependsOn": ["^db:generate"]
+			"dependsOn": ["^db:generate"],
+			"outputs": []
 		},
 		"db:seed": {
 			"cache": false,
