@@ -9,20 +9,20 @@
 		"dev": "tsc -w",
 		"db:generate": "prisma generate",
 		"db:migrate:dev": "prisma migrate dev",
-		"db:migrate:deploy": "./migrate-deploy.sh",
+		"db:migrate:deploy": "export DATABASE_URL=\"$DIRECT_URL\" && npx prisma migrate deploy",
 		"db:seed": "ts-node ./seed.ts"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@prisma/client": "^6.5.0",
+		"@prisma/client": "6.5.0",
 		"@prisma/extension-accelerate": "^1.3.0",
 		"dotenv": "^16.4.7"
 	},
 	"devDependencies": {
 		"@types/node": "^20",
-		"prisma": "^6.5.0",
+		"prisma": "6.5.0",
 		"typescript": "^5.8.2"
 	},
 	"prisma": {
