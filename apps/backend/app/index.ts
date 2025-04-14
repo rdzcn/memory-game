@@ -58,6 +58,14 @@ app.get("/", (req, res) => {
 	res.send("✅ Health check OK");
 });
 
+app.get("/debug", (req, res) => {
+	res.json({
+		headers: req.headers,
+		origin: req.get("origin"),
+		cors: "ok",
+	});
+});
+
 server.listen(PORT, () => {
 	console.log(`🚀 Server is running on port ${PORT}`);
 });
