@@ -19,7 +19,7 @@ jobs:
       - name: Add SSH known hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan ${{ secrets.NETCUP_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p 2222 ${{ secrets.NETCUP_HOST }} >> ~/.ssh/known_hosts
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -100,8 +100,8 @@ jobs:
           EOL
 
           chmod +x deploy.sh
-          scp -r deploy/* ${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/deploy/
-          ssh ${SSH_USER}@${NETCUP_HOST} "cd ${APP_DIR} && bash deploy.sh"
+          scp -P 2222 -r deploy/* ${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/deploy/
+          ssh -p 2222 ${SSH_USER}@${NETCUP_HOST} "cd ${APP_DIR} && bash deploy.sh"
 
       - name: Verify deployment
         env:
