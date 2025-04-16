@@ -100,7 +100,7 @@ jobs:
           EOL
 
           chmod +x deploy.sh
-          scp -P 2222 -r deploy ${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/deploy/
+          scp -P 2222 -r "./deploy" "${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/deploy/"
           ssh -p 2222 ${SSH_USER}@${NETCUP_HOST} "cd ${APP_DIR} && bash deploy.sh"
 
       - name: Verify deployment
