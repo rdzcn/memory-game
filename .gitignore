@@ -135,3 +135,6 @@ dist
 .turbo
 
 supabase/*
+
+# server setup
+server-setup.sh

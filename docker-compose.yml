@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: memory-game-backend
+    restart: always
+    ports:
+      - "4040:4040"
+    environment:
+      - NODE_ENV=production
+      - PORT=4040
+      - DATABASE_URL=${DATABASE_URL}
+      - DIRECT_URL=${DIRECT_URL}
+      - PRISMA_ACCELERATE_URL=${PRISMA_ACCELERATE_URL}
+    volumes:
+      - ./apps/backend/data:/app/apps/backend/data
+    networks:
+      default:
+        name: memory-game-net

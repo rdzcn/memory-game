@@ -1,0 +1,112 @@
+name: Deploy to Netcup
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan ${{ secrets.NETCUP_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build backend
+        run: pnpm --filter @memory-game/backend build
+
+      - name: Verify build output
+        run: test -d apps/backend/dist || (echo "Build failed - dist directory not found" && exit 1)
+
+      - name: Deploy to Netcup
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          NETCUP_HOST: ${{ secrets.NETCUP_HOST }}
+          APP_DIR: ${{ secrets.APP_DIR }}
+        run: |
+          mkdir -p deploy/apps/backend
+          cp docker-compose.yml deploy/
+          cp Dockerfile deploy/ # Make sure to include Dockerfile
+          cp -r apps/backend/* deploy/apps/backend/
+          cp pnpm-lock.yaml pnpm-workspace.yaml package.json deploy/
+
+          cat > deploy.sh << 'EOL'
+          #!/bin/bash
+          set -e
+          echo "Deploying on remote host..."
+          cd ${APP_DIR}
+          
+          # Stop existing containers
+          docker-compose down || true
+          
+          # Backup the previous deployment (just in case)
+          if [ -d apps/backend ]; then
+            mkdir -p backup
+            mv apps/backend backup/backend-$(date +%Y%m%d%H%M%S)
+            # Keep only the last 3 backups
+            ls -td backup/backend-* | tail -n +4 | xargs rm -rf
+          fi
+          
+          # Prepare directories
+          mkdir -p apps
+          mv deploy/apps/backend apps/backend
+          mv deploy/docker-compose.yml .
+          mv deploy/Dockerfile .
+          mv deploy/package.json .
+          mv deploy/pnpm-workspace.yaml .
+          mv deploy/pnpm-lock.yaml .
+          
+          # Build and start containers with output to log file
+          echo "Starting containers..."
+          docker-compose up --build -d
+          
+          # Clean up deployment files
+          rm -rf deploy
+          
+          echo "✅ Deployment complete!"
+          EOL
+
+          chmod +x deploy.sh
+          scp -r deploy/* ${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/deploy/
+          ssh ${SSH_USER}@${NETCUP_HOST} "cd ${APP_DIR} && bash deploy.sh"
+
+      - name: Verify deployment
+        env:
+          NETCUP_HOST: ${{ secrets.NETCUP_HOST }}
+        run: |
+          echo "Waiting for application to initialize..."
+          sleep 15  # Give application time to start up properly
+          
+          # Try health check endpoint (assumes you have a /health endpoint)
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://$NETCUP_HOST:4040/health || echo "failed")
+          
+          if [ "$STATUS" = "200" ]; then
+            echo "✅ Deployment verified successfully!"
+          else
+            echo "⚠️ Warning: Health check returned status $STATUS instead of 200"
+            echo "The deployment might still be in progress or there might be an issue."
+            # Don't fail the workflow, but provide warning
+          fi
