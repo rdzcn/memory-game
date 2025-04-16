@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: memory-game-backend
+    restart: always
+    ports:
+      - "4040:4040"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=4040
+    volumes:
+      - ./apps/backend/data:/app/apps/backend/data
+    networks:
+      default:
+        name: memory-game-net

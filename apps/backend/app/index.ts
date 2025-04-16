@@ -58,6 +58,12 @@ app.get("/", (req, res) => {
 	res.send("✅ Health check OK");
 });
 
+app.get("/health", (req, res) => {
+	// TODO: Add actual health check logic here
+	// database connection
+	res.status(200).json({ status: "ok" });
+});
+
 app.get("/debug", (req, res) => {
 	res.json({
 		headers: req.headers,
