@@ -36,7 +36,7 @@ jobs:
         run: pnpm install
 
       - name: Build backend
-        run: pnpm --filter @memory-game/backend build
+        run: pnpm build --filter @memory-game/backend...
 
       - name: Verify build output
         run: test -d apps/backend/dist || (echo "Build failed - dist directory not found" && exit 1)
