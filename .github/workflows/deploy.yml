@@ -46,6 +46,9 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           NETCUP_HOST: ${{ secrets.NETCUP_HOST }}
           APP_DIR: ${{ secrets.APP_DIR }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+          PRISMA_ACCELERATE_URL: ${{ secrets.PRISMA_ACCELERATE_URL }}
         run: |
           mkdir -p deploy/apps/backend
           cp docker-compose.yml deploy/
@@ -58,6 +61,13 @@ jobs:
           set -e
           echo "Deploying on remote host..."
           cd ${APP_DIR}
+
+          cat > .env << EOF
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          DIRECT_URL=${{ secrets.DIRECT_URL }}
+          PRISMA_ACCELERATE_URL=${{ secrets.PRISMA_ACCELERATE_URL }}
+          EOF
+          echo "Environment variables set."
           
           # Stop existing containers
           docker-compose down || true

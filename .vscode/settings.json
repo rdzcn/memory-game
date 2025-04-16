@@ -30,5 +30,8 @@
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "biome.enabled": true
+  "biome.enabled": true,
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

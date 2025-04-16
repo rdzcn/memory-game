@@ -9,12 +9,11 @@ services:
     restart: always
     ports:
       - "4040:4040"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
       - PORT=4040
-      - DATABASE_URL=${DATABASE_URL}
-      - DIRECT_URL=${DIRECT_URL}
-      - PRISMA_ACCELERATE_URL=${PRISMA_ACCELERATE_URL}
     volumes:
       - ./apps/backend/data:/app/apps/backend/data
     networks:
