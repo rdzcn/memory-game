@@ -58,14 +58,9 @@ jobs:
           cp -r apps/backend/dist deploy/apps/backend/
           cp -r apps/backend/package.json deploy/apps/backend/
           
-          # If you need Prisma files
-          if [ -d apps/backend/prisma ]; then
-            cp -r apps/backend/prisma deploy/apps/backend/
-          fi
-          
           # Copy Dockerfile and project files
           cp apps/backend/Dockerfile deploy/apps/backend/
-          cp package.json pnpm-workspace.yaml pnpm-lock.yaml deploy/
+          cp package.json turbo.json pnpm-workspace.yaml pnpm-lock.yaml deploy/
 
           # Create a .dockerignore file
           cat > deploy/apps/backend/.dockerignore << EOL
@@ -150,6 +145,10 @@ jobs:
           
           if [ -f deploy/pnpm-lock.yaml ]; then
             mv deploy/pnpm-lock.yaml .
+          fi
+
+          if [ -f deploy/turbo.json ]; then
+            mv deploy/turbo.json .
           fi
 
           # Build and start containers with timeout
