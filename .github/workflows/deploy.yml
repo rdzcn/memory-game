@@ -52,7 +52,7 @@ jobs:
         run: |
           mkdir -p deploy/apps/backend
           cp docker-compose.yml deploy/
-          cp Dockerfile deploy/ # Make sure to include Dockerfile
+          cp apps/backend/Dockerfile deploy/ # Make sure to include Dockerfile
           cp -r apps/backend/* deploy/apps/backend/
           cp pnpm-lock.yaml pnpm-workspace.yaml package.json deploy/
 
