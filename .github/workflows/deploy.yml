@@ -52,13 +52,14 @@ jobs:
         run: |
           mkdir -p deploy/apps/backend
           cp docker-compose.yml deploy/
-          cp apps/backend/Dockerfile deploy/ # Make sure to include Dockerfile
+          cp apps/backend/Dockerfile deploy/
           cp -r apps/backend/* deploy/apps/backend/
           cp pnpm-lock.yaml pnpm-workspace.yaml package.json deploy/
 
+          # Move deploy.sh script to the deploy folder before SCP
           cat > deploy.sh << 'EOL'
           #!/bin/bash
-          set -e
+          set -euo pipefail  # Improved error handling
           echo "Deploying on remote host..."
           cd ${APP_DIR}
 
@@ -68,18 +69,18 @@ jobs:
           PRISMA_ACCELERATE_URL=${{ secrets.PRISMA_ACCELERATE_URL }}
           EOF
           echo "Environment variables set."
-          
+
           # Stop existing containers
           docker-compose down || true
-          
+
           # Backup the previous deployment (just in case)
           if [ -d apps/backend ]; then
             mkdir -p backup
             mv apps/backend backup/backend-$(date +%Y%m%d%H%M%S)
             # Keep only the last 3 backups
-            ls -td backup/backend-* | tail -n +4 | xargs rm -rf
+            ls -td backup/backend-* | tail -n +4 | xargs --no-run-if-empty rm -rf
           fi
-          
+
           # Prepare directories
           mkdir -p apps
           mv deploy/apps/backend apps/backend
@@ -88,35 +89,40 @@ jobs:
           mv deploy/package.json .
           mv deploy/pnpm-workspace.yaml .
           mv deploy/pnpm-lock.yaml .
-          
-          # Build and start containers with output to log file
+
+          # Build and start containers with timeout
           echo "Starting containers..."
-          docker-compose up --build -d
-          
+          timeout 300 docker-compose up --build -d
+
           # Clean up deployment files
           rm -rf deploy
-          
+
           echo "✅ Deployment complete!"
           EOL
 
           chmod +x deploy.sh
-          scp -P 2222 -r "./deploy" "${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/deploy/"
+          scp -P 2222 -r deploy ${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/
           ssh -p 2222 ${SSH_USER}@${NETCUP_HOST} "cd ${APP_DIR} && bash deploy.sh"
+
+          # Clean up local deployment files
+          rm -rf deploy
 
       - name: Verify deployment
         env:
           NETCUP_HOST: ${{ secrets.NETCUP_HOST }}
         run: |
           echo "Waiting for application to initialize..."
-          sleep 15  # Give application time to start up properly
-          
-          # Try health check endpoint (assumes you have a /health endpoint)
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://$NETCUP_HOST:4040/health || echo "failed")
-          
-          if [ "$STATUS" = "200" ]; then
-            echo "✅ Deployment verified successfully!"
-          else
-            echo "⚠️ Warning: Health check returned status $STATUS instead of 200"
-            echo "The deployment might still be in progress or there might be an issue."
-            # Don't fail the workflow, but provide warning
-          fi
+          ATTEMPTS=10
+          DELAY=15
+          for (( i=1; i<=$ATTEMPTS; i++ )); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://$NETCUP_HOST:4040/health || echo "failed")
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ Deployment verified successfully!"
+              exit 0
+            fi
+            echo "Attempt $i/$ATTEMPTS failed. Retrying in $DELAY seconds..."
+            sleep $DELAY
+          done
+
+          echo "❌ Deployment failed: Health check did not return status 200 after $ATTEMPTS attempts."
+          exit 1
