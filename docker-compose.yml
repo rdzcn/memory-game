@@ -16,6 +16,3 @@ services:
       - PORT=4040
     volumes:
       - ./apps/backend/data:/app/apps/backend/data
-    networks:
-      default:
-        name: memory-game-net
