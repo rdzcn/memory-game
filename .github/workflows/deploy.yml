@@ -50,13 +50,24 @@ jobs:
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
           PRISMA_ACCELERATE_URL: ${{ secrets.PRISMA_ACCELERATE_URL }}
         run: |
+          # Create deployment directory structure
           mkdir -p deploy/apps/backend
-          cp docker-compose.yml deploy/
-          cp apps/backend/Dockerfile deploy/
-          cp -r apps/backend/* deploy/apps/backend/
-          cp pnpm-lock.yaml pnpm-workspace.yaml package.json deploy/
 
-          # Move deploy.sh script to the deploy folder before SCP
+          # Copy only necessary files, not node_modules
+          cp docker-compose.yml deploy/
+          cp -r apps/backend/dist deploy/apps/backend/
+          cp -r apps/backend/package.json deploy/apps/backend/
+          
+          # If you need Prisma files
+          if [ -d apps/backend/prisma ]; then
+            cp -r apps/backend/prisma deploy/apps/backend/
+          fi
+          
+          # Copy Dockerfile and project files
+          cp apps/backend/Dockerfile deploy/apps/backend/
+          cp package.json pnpm-workspace.yaml pnpm-lock.yaml deploy/
+
+          # Create deploy script
           cat > deploy.sh << 'EOL'
           #!/bin/bash
           set -euo pipefail  # Improved error handling
@@ -84,11 +95,23 @@ jobs:
           # Prepare directories
           mkdir -p apps
           mv deploy/apps/backend apps/backend
-          mv deploy/docker-compose.yml .
-          mv deploy/Dockerfile .
-          mv deploy/package.json .
-          mv deploy/pnpm-workspace.yaml .
-          mv deploy/pnpm-lock.yaml .
+          
+          # Move root level files
+          if [ -f deploy/docker-compose.yml ]; then
+            mv deploy/docker-compose.yml .
+          fi
+          
+          if [ -f deploy/package.json ]; then
+            mv deploy/package.json .
+          fi
+          
+          if [ -f deploy/pnpm-workspace.yaml ]; then
+            mv deploy/pnpm-workspace.yaml .
+          fi
+          
+          if [ -f deploy/pnpm-lock.yaml ]; then
+            mv deploy/pnpm-lock.yaml .
+          fi
 
           # Build and start containers with timeout
           echo "Starting containers..."
@@ -101,11 +124,17 @@ jobs:
           EOL
 
           chmod +x deploy.sh
-          scp -P 2222 -r deploy ${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/
+          
+          # Debug output to verify contents before transfer
+          echo "Files ready for deployment:"
+          find deploy -type f | sort
+          
+          # Deploy to remote server
+          scp -P 2222 -r deploy deploy.sh ${SSH_USER}@${NETCUP_HOST}:${APP_DIR}/
           ssh -p 2222 ${SSH_USER}@${NETCUP_HOST} "cd ${APP_DIR} && bash deploy.sh"
 
           # Clean up local deployment files
-          rm -rf deploy
+          rm -rf deploy deploy.sh
 
       - name: Verify deployment
         env:
