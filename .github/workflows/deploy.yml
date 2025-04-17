@@ -52,16 +52,22 @@ jobs:
         run: |
           # Create deployment directory structure
           mkdir -p deploy/apps/backend
+          mkdir -p deploy/packages/database/app  # Add this line
 
           # Copy only necessary files, not node_modules
           cp docker-compose.yml deploy/
           cp -r apps/backend/dist deploy/apps/backend/
           cp -r apps/backend/package.json deploy/apps/backend/
           
+          # Copy database package files (add these lines)
+          cp -r packages/database/dist deploy/packages/database/
+          cp -r packages/database/package.json deploy/packages/database/
+          cp -r packages/database/app/prisma deploy/packages/database/app/
+          
           # Copy Dockerfile and project files
           cp apps/backend/Dockerfile deploy/apps/backend/
           cp package.json turbo.json pnpm-workspace.yaml pnpm-lock.yaml deploy/
-
+          
           # Create a .dockerignore file
           cat > deploy/apps/backend/.dockerignore << EOL
           # Dependencies
