@@ -103,13 +103,13 @@ jobs:
           cat > deploy.sh << EOL
           #!/bin/bash
           set -euo pipefail  # Improved error handling
-          
+
           # Explicitly set the deployment directory
           APP_DIR="${APP_DIR}"
           DATABASE_URL="${DATABASE_URL}"
           DIRECT_URL="${DIRECT_URL}"
           PRISMA_ACCELERATE_URL="${PRISMA_ACCELERATE_URL}"
-          
+
           echo "Deploying on remote host..."
           cd \${APP_DIR}
 
@@ -132,23 +132,36 @@ jobs:
             ls -td backup/backend-* | tail -n +4 | xargs --no-run-if-empty rm -rf
           fi
 
+          # Also backup database package if it exists
+          if [ -d packages/database ]; then
+            mkdir -p backup
+            mv packages/database backup/database-\$(date +%Y%m%d%H%M%S)
+            # Keep only the last 3 backups
+            ls -td backup/database-* | tail -n +4 | xargs --no-run-if-empty rm -rf
+          fi
+
           # Prepare directories
-          mkdir -p apps
-          mv deploy/apps/backend apps/backend
-          
+          mkdir -p apps packages
+
+          # Move the backend
+          mv deploy/apps/backend apps/
+
+          # Move the database package
+          mv deploy/packages/database packages/
+
           # Move root level files
           if [ -f deploy/docker-compose.yml ]; then
             mv deploy/docker-compose.yml .
           fi
-          
+
           if [ -f deploy/package.json ]; then
             mv deploy/package.json .
           fi
-          
+
           if [ -f deploy/pnpm-workspace.yaml ]; then
             mv deploy/pnpm-workspace.yaml .
           fi
-          
+
           if [ -f deploy/pnpm-lock.yaml ]; then
             mv deploy/pnpm-lock.yaml .
           fi
