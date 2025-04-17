@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import type { Card, CardData, GameState, Player } from "./types/game.types";
 import { saveGame } from "@memory-game/database";
 
