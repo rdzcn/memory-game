@@ -1,24 +1,15 @@
-# Use a smaller image with optional dependency support
 FROM node:18-alpine
 
-# Enable corepack for pnpm
-RUN corepack enable && corepack prepare pnpm@9.14.1 --activate
-
-# Set working directory to monorepo root
 WORKDIR /app
 
-# Copy everything (monorepo layout must stay intact)
-COPY . .
+COPY apps/backend/dist ./apps/backend/dist
+COPY apps/backend/package.json ./apps/backend/
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install all deps in the workspace
-RUN pnpm install --frozen-lockfile
+RUN corepack enable && corepack prepare pnpm@9.14.1 --activate
 
-# Build only the backend (resolves internal deps like @memory-game/database)
-RUN pnpm build --filter @memory-game/backend...
+# Install only production deps
+RUN pnpm install --prod
 
-# Expose backend port
 EXPOSE 4040
-
-# Run backend
 CMD ["node", "apps/backend/dist/index.js"]
-
