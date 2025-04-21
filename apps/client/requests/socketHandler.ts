@@ -1,11 +1,11 @@
 import { io } from "socket.io-client";
 
-// const url =
-// 	process.env.NODE_ENV === "development"
-// 		? "http://localhost:4040"
-// 		: "http://v2202504265540330065.luckysrv.de:4040";
+const url =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:4040"
+		: "https://api.memorygameclub.com";
 
-const url = "http://v2202504265540330065.luckysrv.de:4040";
+// const url = "http://v2202504265540330065.luckysrv.de:4040";
 
 const socket = io(url, {
 	path: "/socket.io",
