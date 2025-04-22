@@ -21,8 +21,11 @@ importers:
 
   apps/backend:
     dependencies:
+      '@memory-game/common':
+        specifier: workspace:*
+        version: link:../../packages/common
       '@memory-game/database':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/database
       cors:
         specifier: ^2.8.5
@@ -58,6 +61,9 @@ importers:
 
   apps/client:
     dependencies:
+      '@memory-game/common':
+        specifier: workspace:*
+        version: link:../../packages/common
       '@radix-ui/react-dialog':
         specifier: ^1.1.5
         version: 1.1.5(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -129,8 +135,17 @@ importers:
         specifier: ^5
         version: 5.7.3
 
+  packages/common:
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.8.2
+
   packages/database:
     dependencies:
+      '@memory-game/common':
+        specifier: workspace:*
+        version: link:../common
       '@prisma/client':
         specifier: 6.5.0
         version: 6.5.0(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
