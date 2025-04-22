@@ -5,7 +5,7 @@ const url =
 		? "http://localhost:4040"
 		: "https://api.memorygameclub.com";
 
-// const url = "http://v2202504265540330065.luckysrv.de:4040";
+// const url = "https://api.memorygameclub.com";
 
 const socket = io(url, {
 	path: "/socket.io",

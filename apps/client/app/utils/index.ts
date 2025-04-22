@@ -1,7 +1,10 @@
 export function calculateGameDuration(
-	startedAt: number,
-	finishedAt: number,
+	startedAt: number | undefined,
+	finishedAt: number | undefined,
 ): string {
+	if (!startedAt || !finishedAt) {
+		return "Game not finished yet";
+	}
 	const durationInMilliseconds = finishedAt - startedAt;
 	const durationInMinutes = Math.floor(durationInMilliseconds / 60000);
 	const remainingSeconds = Math.floor((durationInMilliseconds % 60000) / 1000);

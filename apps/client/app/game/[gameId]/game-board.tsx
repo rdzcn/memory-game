@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { GameState, Player } from "@/types/game.types";
 import CountUp from "@/app/components/timer";
+import { calculateGameDuration } from "@/app/utils";
 
 interface GameBoardProps {
 	gameId: string;
@@ -327,11 +328,11 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 								🏆
 							</motion.div>
 							<h2 className="text-2xl font-bold text-purple-700 mb-2">Congratulations!</h2>
-							<p className="text-gray-600 mb-4">You completed the game in TIMER!</p>
+							<p className="text-gray-600 mb-4">{`${calculateGameDuration(game.startedAt, game.finishedAt)}!`}</p>
 							<div className="mb-6">
 								<h3 className="font-bold text-purple-600 mb-2">Final Scores:</h3>
 								<div className="flex justify-center gap-6">
-									{game.players.map((player, index) => (
+									{game.players.map((player) => (
 										<div key={player.id} className="text-center">
 											<div className="font-medium text-purple-900">{player.name}</div>
 											<div className="text-amber-600 font-bold">{player.score}</div>
