@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import type { Card, CardData, GameState, Player } from "./types/game.types";
+import type { Card, CardData, GameState, Player } from "@memory-game/common";
 import { saveGame } from "@memory-game/database";
 
 type GameStatus = "waiting" | "playing" | "finished";

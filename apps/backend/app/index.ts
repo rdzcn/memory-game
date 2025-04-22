@@ -5,7 +5,7 @@ import { Server as SocketIOServer } from "socket.io";
 import { createServer } from "node:http";
 import cors from "cors";
 import { errorHandler } from "./middleware";
-import GamesController from "./controllers/games.controller";
+import GamesController from "./controllers/games-controller";
 import { GameEventHandler } from "./server/game-event-handler";
 
 const PORT = process.env.PORT || 4040;

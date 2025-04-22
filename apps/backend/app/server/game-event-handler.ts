@@ -1,5 +1,5 @@
 import type { Server, Socket } from "socket.io";
-import type GamesController from "../controllers/games.controller";
+import type GamesController from "../controllers/games-controller";
 import { HeartbeatManager } from "./heartbeat";
 import { getHighestScoreGame } from "@memory-game/database";
 

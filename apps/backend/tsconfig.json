@@ -1,22 +1,15 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./app",
-    "resolveJsonModule": true,
-    "target": "es2021",
-    "lib": ["es2021"],
     "module": "CommonJS",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-			"@app/*": ["./app/*"]
-    },
     "sourceMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
   },
+  "references": [
+    { "path": "../../packages/common" },
+    { "path": "../../packages/database" }
+  ],
   "include": ["app/**/*"],
   "exclude": ["node_modules", "dist"]
 }
