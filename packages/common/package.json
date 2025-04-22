@@ -1,0 +1,15 @@
+{
+	"name": "@memory-game/common",
+	"version": "1.0.0",
+	"main": "dist/types/index.js",
+	"types": "dist/types/index.d.ts",
+	"exports": {
+		".": "./dist/types/index.js"
+	},
+	"scripts": {
+		"build": "tsc -b"
+	},
+	"devDependencies": {
+		"typescript": "^5.0.0"
+	}
+}
