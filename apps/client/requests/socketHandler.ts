@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
 
 const url =
 	process.env.NODE_ENV === "development"
@@ -7,7 +7,7 @@ const url =
 
 // const url = "https://api.memorygameclub.com";
 
-const socket = io(url, {
+const socket: Socket = io(url, {
 	path: "/socket.io",
 	transports: ["websocket", "polling"],
 	reconnection: true,

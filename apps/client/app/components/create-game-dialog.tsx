@@ -10,13 +10,13 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import socket from "@/requests/socketHandler";
-import type { GameState } from "@/types/game.types";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from "@client/components/ui/dialog";
+import { Input } from "@client/components/ui/input";
+import { Label } from "@client/components/ui/label";
+import { Button } from "@client/components/ui/button";
+import socket from "@client/requests/socketHandler";
+import type { GameState } from "@memory-game/common";
+import { RadioGroup, RadioGroupItem } from "@client/components/ui/radio-group";
 
 type FormData = {
 	gameTitle: string;

@@ -9,11 +9,11 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import socket from "@/requests/socketHandler";
+} from "@client/components/ui/dialog";
+import { Input } from "@client/components/ui/input";
+import { Label } from "@client/components/ui/label";
+import { Button } from "@client/components/ui/button";
+import socket from "@client/requests/socketHandler";
 
 type FormData = {
 	username: string;

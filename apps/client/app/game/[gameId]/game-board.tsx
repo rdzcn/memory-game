@@ -4,16 +4,16 @@ import { useCallback, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Trophy, Timer, LogOut, Sparkles, Gamepad2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import socket from "@/requests/socketHandler";
-import { Button } from "@/components/ui/button";
-import useHeartbeat from "@/app/hooks/useHeartbeat";
+import socket from "@client/requests/socketHandler";
+import { Button } from "@client/components/ui/button";
+import useHeartbeat from "@client/app/hooks/useHeartbeat";
 import { MemoryCard } from "../components/memory-card";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import type { GameState, Player } from "@/types/game.types";
-import CountUp from "@/app/components/timer";
-import { calculateGameDuration } from "@/app/utils";
+import { Card } from "@client/components/ui/card";
+import { Badge } from "@client/components/ui/badge";
+import { cn } from "@client/lib/utils";
+import type { GameState, Player } from "@memory-game/common";
+import CountUp from "@client/app/components/timer";
+import { calculateGameDuration } from "@client/app/utils";
 
 interface GameBoardProps {
 	gameId: string;

@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import socket from "@/requests/socketHandler";
+import socket from "@client/requests/socketHandler";
 import {
 	Card,
 	CardContent,
-} from "@/components/ui/card";
-import type { GameState } from "@/types/game.types";
+} from "@client/components/ui/card";
+import type { GameState } from "@memory-game/common";
 import CreateGameDialog from "./components/create-game-dialog";
 import { GameCard } from "./components/game-card";
 import { Clock, Gamepad2, Star, Trophy, Users } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@client/components/ui/tabs";
 
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);
@@ -105,7 +105,7 @@ export default function Home() {
 					</TabsList>
 
 					<TabsContent value="all" className="mt-4">
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 							{games.map((game) => (
 								<GameCard key={game.id} game={game} />
 							))}

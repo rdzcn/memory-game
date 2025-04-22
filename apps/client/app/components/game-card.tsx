@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { Gem, Timer, Trophy, Users } from "lucide-react"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import type { GameState } from "@/types/game.types"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@client/components/ui/card"
+import { Button } from "@client/components/ui/button"
+import { Badge } from "@client/components/ui/badge"
+import type { GameState } from "@memory-game/common"
 import JoinGameDialog from "./join-game-dialog"
 import { calculateGameDuration } from "../utils";
 

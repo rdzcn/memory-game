@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
-import type { Card } from "@//types/game.types";
+import { cn } from "@client/lib/utils";
+import type { Card } from "@memory-game/common";
 
 interface MemoryCardProps {
 	card: Card;
