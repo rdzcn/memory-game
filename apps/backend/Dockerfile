@@ -9,6 +9,8 @@ COPY apps/backend/package.json ./apps/backend/
 COPY packages/database/dist ./packages/database/dist
 COPY packages/database/package.json ./packages/database/
 COPY packages/database/app/prisma ./packages/database/app/prisma
+COPY packages/common/dist ./packages/common/dist
+COPY packages/common/package.json ./packages/common/
 
 # Copy workspace configuration files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
