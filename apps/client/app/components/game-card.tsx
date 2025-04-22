@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import { Timer, Trophy, Users } from "lucide-react"
+import { Gem, Timer, Trophy, Users } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -79,6 +79,12 @@ export function GameCard({ game }: { game: GameState }) {
 						<span className="text-sm text-amber-700">{calculateGameDuration(game.startedAt, game.finishedAt)}</span>
 					</div>
 				) : null}
+				{game.status === "finished" && (
+					<div className="flex items-center mt-2">
+						<Gem className="h-4 w-4 text-amber-500 mr-1" />
+						<span className="text-sm text-amber-700">Game score: {game.gameScore}</span>
+					</div>
+				)}
 			</CardContent>
 			<CardFooter className="bg-purple-50">
 				<div className="flex justify-between items-center pt-4">
