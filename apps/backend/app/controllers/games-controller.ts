@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { Game } from "../game";
-import type { GameState } from "../types/game.types";
+import type { GameState } from "@memory-game/common";
 
 const GAMES_FILE = path.resolve(__dirname, "../data/games.json");
 
