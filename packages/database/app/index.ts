@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import type { GameState, Player } from "./types/game.types";
+import type { GameState, Player } from "@memory-game/common";
 
 import { PrismaClient } from "@prisma/client";
 
