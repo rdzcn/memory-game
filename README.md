@@ -53,3 +53,20 @@ realtime-memory-game/
 ├── .github/workflows/      # CI/CD pipelines
 ├── docker-compose.yml
 └── pnpm-workspace.yaml
+```
+
+## Local development
+
+```bash
+### Install dependencies
+pnpm install
+
+### Build backend & frontend
+pnpm build
+
+### Run backend (with watch)
+pnpm --filter @memory-game/backend dev
+
+### Run frontend
+pnpm --filter @memory-game/client dev
+
