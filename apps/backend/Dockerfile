@@ -25,4 +25,3 @@ RUN npx prisma generate --schema=./packages/database/app/prisma/schema.prisma
 
 EXPOSE 4040
 CMD ["node", "apps/backend/dist/index.js"]
-CMD ["node", "apps/backend/dist/index.js"]
