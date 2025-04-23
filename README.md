@@ -43,7 +43,7 @@ Memory Game Club is a real-time web game where players compete by flipping cards
 ## 🏗️ Architecture
 
 ```bash
-realtime-memory-game/
+memory-game/
 ├── apps/
 │   └── backend/            # Express app, game logic, WebSocket handlers
 │   ├── client/             # NextJs frontend
