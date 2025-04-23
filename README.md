@@ -70,3 +70,6 @@ pnpm --filter @memory-game/backend dev
 ### Run frontend
 pnpm --filter @memory-game/client dev
 
+### Or simply together with
+pnpm dev
+
