@@ -104,12 +104,11 @@ jobs:
           EOL
 
           # Create deploy script with explicit variable declarations
-          # Note: Removed the single quotes around EOL
           cat > deploy.sh << EOL
           #!/bin/bash
-          set -euo pipefail  # Improved error handling
+          set -euo pipefail  # Error handling
 
-          # Explicitly set the deployment directory
+          # Set the deployment directory
           APP_DIR="${APP_DIR}"
           DATABASE_URL="${DATABASE_URL}"
           DIRECT_URL="${DIRECT_URL}"
@@ -154,7 +153,10 @@ jobs:
           # Move the database package
           mv deploy/packages/database packages/
 
-          # Move the common package
+          # Remove old common package if it exists
+          rm -rf packages/common
+
+          # Move the new common package
           mv deploy/packages/common packages/
 
           # Move root level files
