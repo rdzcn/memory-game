@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { Game } from "../game";
-import type { GameState } from "@memory-game/common";
+import type { CreateGameData, GameState } from "@memory-game/common";
 
 const GAMES_FILE = path.resolve(__dirname, "../data/games.json");
 
@@ -46,12 +46,10 @@ class GamesController {
 		username,
 		socketId,
 		cardCount,
-	}: {
-		gameTitle: string;
-		username: string;
+		playMode,
+	}: CreateGameData & {
 		socketId: string;
-		cardCount: number;
-	}) {
+	}): GameState {
 		const playerId = crypto.randomUUID();
 		const newGame = new Game(gameTitle, cardCount);
 
@@ -62,7 +60,7 @@ class GamesController {
 			score: 0,
 		};
 
-		newGame.addPlayer(player);
+		newGame.addPlayer(player, playMode);
 		const gameId = newGame.getId();
 
 		// Store the Game instance
@@ -95,7 +93,7 @@ class GamesController {
 			score: 0,
 		};
 
-		game.addPlayer(player);
+		game.addPlayer(player, "multi-player");
 
 		// Save updated state
 		const games = readGames();

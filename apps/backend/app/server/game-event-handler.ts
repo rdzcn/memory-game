@@ -2,6 +2,17 @@ import type { Server, Socket } from "socket.io";
 import type GamesController from "../controllers/games-controller";
 import { HeartbeatManager } from "./heartbeat";
 import { getHighestScoreGame } from "@memory-game/database";
+import type {
+	CreateGameData,
+	FlipCardData,
+	HeartbeatData,
+	JoinGameData,
+	LeaveGameData,
+	RegisterSocketData,
+	SwitchTurnData,
+	UnregisterSocketData,
+	WatchGameData,
+} from "@memory-game/common";
 
 export class GameEventHandler {
 	private heartbeatManager: HeartbeatManager;
@@ -15,20 +26,32 @@ export class GameEventHandler {
 
 	handleConnection(socket: Socket): void {
 		socket.on("get-games", () => this.handleGetGames());
-		socket.on("create-game", (data) => this.handleCreateGame(socket, data));
-		socket.on("join-game", (data) => this.handleJoinGame(socket, data));
-		socket.on("leave-game", (data) => this.handleLeaveGame(socket, data));
-		socket.on("register-socket", (data) =>
+		socket.on("create-game", (data: CreateGameData) =>
+			this.handleCreateGame(socket, data),
+		);
+		socket.on("join-game", (data: JoinGameData) =>
+			this.handleJoinGame(socket, data),
+		);
+		socket.on("leave-game", (data: LeaveGameData) =>
+			this.handleLeaveGame(socket, data),
+		);
+		socket.on("register-socket", (data: RegisterSocketData) =>
 			this.handleRegisterSocket(socket, data),
 		);
-		socket.on("unregister-socket", (data) =>
+		socket.on("unregister-socket", (data: UnregisterSocketData) =>
 			this.handleUnregisterSocket(socket, data),
 		);
-		socket.on("heartbeat", (data) => this.handleHeartbeat(socket, data));
+		socket.on("heartbeat", (data: HeartbeatData) =>
+			this.handleHeartbeat(socket, data),
+		);
 		socket.on("start-game", (data) => this.handleStartGame(socket, data));
-		socket.on("flip-card", (data) => this.handleFlipCard(data));
-		socket.on("switch-turn", (data) => this.handleSwitchTurn(data));
-		socket.on("watch-game", (data) => this.handleWatchGame(socket, data));
+		socket.on("flip-card", (data: FlipCardData) => this.handleFlipCard(data));
+		socket.on("switch-turn", (data: SwitchTurnData) =>
+			this.handleSwitchTurn(data),
+		);
+		socket.on("watch-game", (data: WatchGameData) =>
+			this.handleWatchGame(socket, data),
+		);
 		socket.on("get-highest-score-game", () => this.handleGetHighestScoreGame());
 		socket.on("disconnect", () => this.handleDisconnect(socket));
 		socket.on("request-game-state", ({ gameId }) => {
@@ -46,11 +69,7 @@ export class GameEventHandler {
 
 	handleCreateGame(
 		socket: Socket,
-		{
-			username,
-			gameTitle,
-			cardCount = 12,
-		}: { username: string; gameTitle: string; cardCount?: number },
+		{ username, gameTitle, cardCount = 12, playMode }: CreateGameData,
 	): void {
 		const socketId = socket.id;
 		const game = this.gameController.createGame({
@@ -58,6 +77,7 @@ export class GameEventHandler {
 			gameTitle,
 			socketId,
 			cardCount,
+			playMode,
 		});
 
 		const player = game.players[0];
@@ -71,10 +91,7 @@ export class GameEventHandler {
 		this.io.emit("game-created", game);
 	}
 
-	handleJoinGame(
-		socket: Socket,
-		{ gameId, username }: { gameId: string; username: string },
-	): void {
+	handleJoinGame(socket: Socket, { gameId, username }: JoinGameData): void {
 		const { playerId, game } = this.gameController.joinGame({
 			gameId,
 			username,
@@ -96,10 +113,7 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game);
 	}
 
-	handleLeaveGame(
-		socket: Socket,
-		{ gameId, playerId }: { gameId: string; playerId: string },
-	): void {
+	handleLeaveGame(socket: Socket, { gameId, playerId }: LeaveGameData): void {
 		const game = this.gameController.leaveGame({ gameId, playerId });
 		socket.leave(gameId);
 
@@ -113,11 +127,7 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game);
 	}
 
-	async handleFlipCard({
-		gameId,
-		playerId,
-		id,
-	}: { gameId: string; id: number; playerId: string }): Promise<void> {
+	async handleFlipCard({ gameId, playerId, id }: FlipCardData): Promise<void> {
 		const gameState = this.gameController.flipCard({
 			gameId,
 			id,
@@ -135,13 +145,13 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", gameState);
 	}
 
-	handleSwitchTurn({ gameId }: { gameId: string }): void {
+	handleSwitchTurn({ gameId }: SwitchTurnData): void {
 		const game = this.gameController.switchTurn({ gameId });
 
 		this.io.to(gameId).emit("turn-switched", game);
 	}
 
-	handleWatchGame(socket: Socket, { gameId }: { gameId: string }): void {
+	handleWatchGame(socket: Socket, { gameId }: WatchGameData): void {
 		const game = this.gameController.getGame(gameId);
 		if (!game) {
 			socket.emit("game-not-found");
@@ -152,7 +162,7 @@ export class GameEventHandler {
 
 	handleRegisterSocket(
 		socket: Socket,
-		{ gameId, playerId }: { gameId: string; playerId: string },
+		{ gameId, playerId }: RegisterSocketData,
 	): void {
 		this.heartbeatManager.registerSocket(socket, gameId, playerId);
 		socket.join(gameId);
@@ -166,7 +176,10 @@ export class GameEventHandler {
 		this.io.emit("highest-score-game", highestScoreGame);
 	}
 
-	handleUnregisterSocket(socket: Socket, { gameId }: { gameId: string }): void {
+	handleUnregisterSocket(
+		socket: Socket,
+		{ gameId }: UnregisterSocketData,
+	): void {
 		socket.leave(gameId);
 	}
 
@@ -176,10 +189,7 @@ export class GameEventHandler {
 		this.io.emit("user-disconnected", socket.id);
 	}
 
-	handleHeartbeat(
-		socket: Socket,
-		{ gameId, playerId }: { gameId: string; playerId: string },
-	): void {
+	handleHeartbeat(socket: Socket, { gameId, playerId }: HeartbeatData): void {
 		// Handle heartbeat
 		console.log("Heartbeat received", gameId, playerId);
 		this.heartbeatManager.recordHeartbeat(playerId);

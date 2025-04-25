@@ -1,5 +1,11 @@
 import crypto from "node:crypto";
-import type { Card, CardData, GameState, Player } from "@memory-game/common";
+import type {
+	Card,
+	CardData,
+	GameState,
+	Player,
+	PlayMode,
+} from "@memory-game/common";
 import { saveGame } from "@memory-game/database";
 
 type GameStatus = "waiting" | "playing" | "finished";
@@ -191,7 +197,7 @@ export class Game {
 		}
 	}
 
-	public addPlayer(player: Player): boolean {
+	public addPlayer(player: Player, playMode: PlayMode): boolean {
 		if (this.players.length >= 2) {
 			return false;
 		}
@@ -204,7 +210,7 @@ export class Game {
 		}
 
 		// If we now have 2 players, start the game
-		if (this.players.length === 2) {
+		if (this.players.length === 2 || playMode === "single-player") {
 			this.startedAt = Date.now();
 			this.status = "playing";
 		}
@@ -223,12 +229,13 @@ export class Game {
 	}
 
 	public flipCard({ playerId, id }: { playerId: string; id: number }): boolean {
-		// Validation checks
 		const cardIndex = this.cards.findIndex((card) => card.id === id);
 
 		if (cardIndex === -1) {
 			return false; // Card not found
 		}
+
+		// Validation checks
 		if (
 			this.status !== "playing" ||
 			this.currentTurn !== playerId ||

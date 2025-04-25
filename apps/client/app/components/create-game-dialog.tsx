@@ -22,6 +22,7 @@ type FormData = {
 	gameTitle: string;
 	username: string;
 	cardCount: number;
+	playMode: "single-player" | "multi-player";
 };
 
 export default function CreateGameDialog() {
@@ -81,6 +82,23 @@ export default function CreateGameDialog() {
 						{errors.username && (
 							<p className="text-red-500 text-sm">{errors.username.message}</p>
 						)}
+					</div>
+					<div className="space-y-2">
+						<Label>Choose Play Mode</Label>
+						<RadioGroup
+							defaultValue="multi-player"
+							onValueChange={(value: "single-player" | "multi-player") => setValue("playMode", value)}
+							className="flex gap-4"
+						>
+							<div className="flex items-center space-x-2">
+								<RadioGroupItem value="single-player" id="single-player" />
+								<Label htmlFor="single-player">Single Player</Label>
+							</div>
+							<div className="flex items-center space-x-2">
+								<RadioGroupItem value="multi-player" id="multi-player" />
+								<Label htmlFor="multi-player">Two Players</Label>
+							</div>
+						</RadioGroup>
 					</div>
 					<div className="space-y-2">
 						<Label>Choose Difficulty Level</Label>
