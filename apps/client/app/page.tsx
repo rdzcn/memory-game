@@ -6,22 +6,26 @@ import {
 	Card,
 	CardContent,
 } from "@client/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@client/components/ui/tabs";
 import type { GameState } from "@memory-game/common";
 import CreateGameDialog from "./components/create-game-dialog";
 import { GameCard } from "./components/game-card";
 import { Clock, Gamepad2, Star, Trophy, Users } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@client/components/ui/tabs";
+
+interface DashboardStatistics {
+	highestScoreGame: GameState;
+	gamesCount: number;
+}
 
 export default function Home() {
 	const [games, setGames] = useState<GameState[]>([]);
 	const [onlineUsers, setOnlineUsers] = useState(0);
-	const [highestScoreGame, setHighestScoreGame] = useState<GameState | null>(null);
+	const [dashboardStatistics, setDashboardStatistics] = useState<DashboardStatistics | null>(null);
 	const [activeTab, setActiveTab] = useState("all")
-	const completedGames = games.filter((game) => game.status === "finished");
 
 	useEffect(() => {
 		socket.emit("get-games");
-		socket.emit("get-highest-score-game");
+		socket.emit("get-dashboard-statistics");
 	}, []);
 
 	useEffect(() => {
@@ -29,19 +33,18 @@ export default function Home() {
 			setGames(games);
 		};
 
-		socket.on("highest-score-game", (game: GameState) => {
-			setHighestScoreGame(game);
+		socket.on("dashboard-statistics", (statistics: DashboardStatistics) => {
+			setDashboardStatistics(statistics);
 		});
 		socket.on("games", setGamesData);
 		socket.on("user-count", ({ count }: { count: number }) => {
-			console.log("User count updated:", count);
 			setOnlineUsers(count);
 		});
 
 		return () => {
 			socket.off("games");
 			socket.off("user-count");
-			socket.off("highest-score-game");
+			socket.off("dashboard-statistics");
 		};
 	}, []);
 
@@ -73,7 +76,7 @@ export default function Home() {
 								<Trophy className="h-6 w-6 text-purple-500 mr-2" />
 								<div>
 									<p className="text-sm text-purple-700">Games Completed</p>
-									<p className="text-xl font-bold text-purple-800">{completedGames.length}</p>
+									<p className="text-xl font-bold text-purple-800">{dashboardStatistics?.gamesCount || 0}</p>
 								</div>
 							</CardContent>
 						</Card>
@@ -83,7 +86,7 @@ export default function Home() {
 								<Star className="h-6 w-6 text-amber-500 mr-2" />
 								<div>
 									<p className="text-sm text-amber-700">High Score</p>
-									<p className="text-xl font-bold text-amber-800">{highestScoreGame?.gameScore || "-"}</p>
+									<p className="text-xl font-bold text-amber-800">{dashboardStatistics?.highestScoreGame?.gameScore || "-"}</p>
 								</div>
 							</CardContent>
 						</Card>

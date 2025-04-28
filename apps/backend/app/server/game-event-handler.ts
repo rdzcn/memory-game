@@ -1,7 +1,7 @@
 import type { Server, Socket } from "socket.io";
 import type GamesController from "../controllers/games-controller";
 import { HeartbeatManager } from "./heartbeat";
-import { getHighestScoreGame } from "@memory-game/database";
+import { getHighestScoreGame, getTotalGamesCount } from "@memory-game/database";
 import type {
 	CreateGameData,
 	FlipCardData,
@@ -52,13 +52,16 @@ export class GameEventHandler {
 		socket.on("watch-game", (data: WatchGameData) =>
 			this.handleWatchGame(socket, data),
 		);
-		socket.on("get-highest-score-game", () => this.handleGetHighestScoreGame());
 		socket.on("disconnect", () => this.handleDisconnect(socket));
 		socket.on("request-game-state", ({ gameId }) => {
 			const game = this.gameController.getGame(gameId);
 			if (game) {
 				socket.emit("game-state", game.getState());
 			}
+		});
+		// Database related events
+		socket.on("get-dashboard-statistics", () => {
+			this.handleGetDashboardStatistics();
 		});
 	}
 
@@ -171,9 +174,10 @@ export class GameEventHandler {
 		this.io.to(gameId).emit("game-updated", game?.getState());
 	}
 
-	async handleGetHighestScoreGame(): Promise<void> {
+	async handleGetDashboardStatistics(): Promise<void> {
 		const highestScoreGame = await getHighestScoreGame();
-		this.io.emit("highest-score-game", highestScoreGame);
+		const gamesCount = await getTotalGamesCount();
+		this.io.emit("dashboard-statistics", { highestScoreGame, gamesCount });
 	}
 
 	handleUnregisterSocket(

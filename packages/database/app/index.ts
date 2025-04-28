@@ -106,4 +106,16 @@ async function getHighestScoreGame() {
 	});
 }
 
-export { prisma, saveGame, getGameById, getAllGames, getHighestScoreGame };
+async function getTotalGamesCount() {
+	const count = await prisma.game.count();
+	return count;
+}
+
+export {
+	prisma,
+	saveGame,
+	getGameById,
+	getAllGames,
+	getHighestScoreGame,
+	getTotalGamesCount,
+};
