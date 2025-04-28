@@ -41,16 +41,16 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 
 
 	if (gameMode === "playing") {
-		player = game.players?.find((player) => player.id === playerId);
-		otherPlayer = game.players?.find((player) => player.id !== playerId);
+		player = game?.players?.find((player) => player.id === playerId);
+		otherPlayer = game?.players?.find((player) => player.id !== playerId);
 	} else {
-		player = game.players?.[0];
-		otherPlayer = game.players?.[1];
+		player = game?.players?.[0];
+		otherPlayer = game?.players?.[1];
 	}
 
-	const matchedPairs = Math.floor(game.cards?.filter((card) => card.isMatched).length / 2);
+	const matchedPairs = Math.floor(game?.cards?.filter((card) => card.isMatched).length / 2);
 
-	useHeartbeat({ socket, gameId, playerId, isFinished: game.status === "finished" });
+	useHeartbeat({ socket, gameId, playerId, isFinished: game?.status === "finished" });
 
 	const handleLeaveGame = useCallback(() => {
 		if (gameMode === "playing") {
@@ -60,6 +60,12 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 		}
 		router.push("/");
 	}, [gameMode, gameId, router, playerId]);
+
+	useEffect(() => {
+		if (!game) {
+			router.push("/");
+		}
+	}, [game, router]);
 
 	useEffect(() => {
 		if (gameId) {
@@ -88,9 +94,9 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 
 	useEffect(() => {
 		if (
-			game.flippedCards?.length === 2 &&
-			game.flippedCards[0]?.value !== game.flippedCards[1].value &&
-			game.currentTurn === playerId
+			game?.flippedCards?.length === 2 &&
+			game?.flippedCards[0]?.value !== game?.flippedCards[1].value &&
+			game?.currentTurn === playerId
 		) {
 			setTimeout(() => {
 				socket.emit("switch-turn", { gameId });
@@ -139,7 +145,7 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 		socket.emit("flip-card", { gameId, id, playerId });
 	};
 
-	return (
+	return (game ?
 		<div className="min-h-screen bg-gradient-to-b from-purple-50 to-blue-50 p-4 md:p-8">
 			<div className="max-w-6xl mx-auto">
 				<div className="mb-4 text-center">
@@ -358,6 +364,6 @@ export default function GameBoard({ gameId }: GameBoardProps) {
 					</motion.div>
 				)}
 			</div>
-		</div>
+		</div> : null
 	);
 }
