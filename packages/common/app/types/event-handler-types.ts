@@ -1,4 +1,4 @@
-export type PlayMode = "single-player" | "multi-player";
+import type { PlayMode } from "./game-types";
 
 export type CreateGameData = {
 	username: string;

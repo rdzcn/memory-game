@@ -15,14 +15,14 @@ import { Input } from "@client/components/ui/input";
 import { Label } from "@client/components/ui/label";
 import { Button } from "@client/components/ui/button";
 import socket from "@client/requests/socketHandler";
-import type { GameState } from "@memory-game/common";
+import type { GameState, PlayMode } from "@memory-game/common";
 import { RadioGroup, RadioGroupItem } from "@client/components/ui/radio-group";
 
 type FormData = {
 	gameTitle: string;
 	username: string;
 	cardCount: number;
-	playMode: "single-player" | "multi-player";
+	playMode: PlayMode
 };
 
 export default function CreateGameDialog() {
