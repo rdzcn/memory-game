@@ -33,7 +33,12 @@ class GamesController {
 		// Convert saved game states back to Game instances
 		const savedGames = readGames();
 		for (const [gameId, gameState] of Object.entries(savedGames)) {
-			const game = new Game(gameState.title, gameState.cardCount, true);
+			const game = new Game(
+				gameState.title,
+				gameState.cardCount,
+				gameState.playMode,
+				true,
+			);
 
 			// Restore the game state
 			game.restoreState(gameState);
@@ -51,7 +56,7 @@ class GamesController {
 		socketId: string;
 	}): GameState {
 		const playerId = crypto.randomUUID();
-		const newGame = new Game(gameTitle, cardCount);
+		const newGame = new Game(gameTitle, cardCount, playMode);
 
 		const player = {
 			id: playerId,
@@ -60,7 +65,7 @@ class GamesController {
 			score: 0,
 		};
 
-		newGame.addPlayer(player, playMode);
+		newGame.addPlayer(player);
 		const gameId = newGame.getId();
 
 		// Store the Game instance
@@ -93,7 +98,7 @@ class GamesController {
 			score: 0,
 		};
 
-		game.addPlayer(player, "multi-player");
+		game.addPlayer(player);
 
 		// Save updated state
 		const games = readGames();

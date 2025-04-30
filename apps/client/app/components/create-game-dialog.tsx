@@ -33,10 +33,11 @@ export default function CreateGameDialog() {
 		handleSubmit,
 		setValue,
 		formState: { errors },
-	} = useForm<FormData>({ defaultValues: { cardCount: 12 } });
+	} = useForm<FormData>({ defaultValues: { cardCount: 12, playMode: "single-player" } });
 	const router = useRouter();
 
 	const onSubmit = async (data: FormData) => {
+		console.log("Form submitted", data);
 		socket.emit("create-game", data);
 
 		socket.once("game-created", (game: GameState) => {
@@ -86,7 +87,7 @@ export default function CreateGameDialog() {
 					<div className="space-y-2">
 						<Label>Choose Play Mode</Label>
 						<RadioGroup
-							defaultValue="multi-player"
+							defaultValue="single-player"
 							onValueChange={(value: "single-player" | "multi-player") => setValue("playMode", value)}
 							className="flex gap-4"
 						>

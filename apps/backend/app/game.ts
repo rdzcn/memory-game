@@ -53,8 +53,14 @@ export class Game {
 	private lastFlippedCard?: Card;
 	private winner?: Player;
 	private totalMoves: number;
+	private playMode: PlayMode;
 
-	constructor(title: string, cardCount: number, skipCardInit?: boolean) {
+	constructor(
+		title: string,
+		cardCount: number,
+		playMode: PlayMode,
+		skipCardInit?: boolean,
+	) {
 		this.id = crypto.randomUUID(); // Generate unique game ID
 		this.players = [];
 		this.currentTurn = "";
@@ -70,6 +76,7 @@ export class Game {
 		this.finishedAt = undefined;
 		this.gameScore = 0;
 		this.totalMoves = 0;
+		this.playMode = playMode;
 	}
 
 	private initializeCards(): Card[] {
@@ -128,6 +135,7 @@ export class Game {
 		this.lastFlippedCard = state.lastFlippedCard;
 		this.gameScore = state.gameScore;
 		this.totalMoves = state.totalMoves;
+		this.playMode = state.playMode;
 
 		// If cards aren't in the saved state, initialize new ones
 		if (state.cards && state.cards.length > 0) {
@@ -197,7 +205,7 @@ export class Game {
 		}
 	}
 
-	public addPlayer(player: Player, playMode: PlayMode): boolean {
+	public addPlayer(player: Player): boolean {
 		if (this.players.length >= 2) {
 			return false;
 		}
@@ -210,7 +218,7 @@ export class Game {
 		}
 
 		// If we now have 2 players, start the game
-		if (this.players.length === 2 || playMode === "single-player") {
+		if (this.players.length === 2 || this.playMode === "single-player") {
 			this.startedAt = Date.now();
 			this.status = "playing";
 		}
@@ -325,6 +333,7 @@ export class Game {
 			finishedAt: this.finishedAt,
 			totalMoves: this.totalMoves,
 			gameScore: this.gameScore,
+			playMode: this.playMode,
 		};
 	}
 

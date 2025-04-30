@@ -1,5 +1,7 @@
 export type GameStatus = "waiting" | "playing" | "finished";
 
+export type PlayMode = "single-player" | "multi-player";
+
 export interface Player {
 	id: string;
 	name: string;
@@ -22,6 +24,7 @@ export interface GameState {
 	finishedAt?: number;
 	gameScore: number;
 	totalMoves: number;
+	playMode: PlayMode;
 }
 
 export interface Card {
