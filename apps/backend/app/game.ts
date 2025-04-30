@@ -183,17 +183,89 @@ export class Game {
 	}
 
 	private calculateGameScore(): number {
-		const baseScore = 1000;
-		const difficultyMultiplier = this.cardCount / 12;
-		const optimalMoves = this.cardCount * 2;
-		const optimalityFactor = optimalMoves / this.totalMoves;
-		const durationInMs =
-			this.finishedAt && this.startedAt ? this.finishedAt - this.startedAt : 0;
-		const timeFactor = durationInMs / 1000;
+		const startTime = this.startedAt || Date.now();
+		const endTime = this.finishedAt || Date.now();
+		const durationSec = (endTime - startTime) / 1000;
 
-		const rawScore =
-			(baseScore * difficultyMultiplier * optimalityFactor * 10) / timeFactor;
-		return Math.round(rawScore);
+		const idealClicks = this.cardCount * 2;
+		let idealTimeSec = 0;
+		let difficultyMultiplier = 1;
+
+		switch (this.cardCount) {
+			case 12:
+				difficultyMultiplier = 0.75;
+				idealTimeSec = 50;
+				break;
+			case 16:
+				difficultyMultiplier = 1.15;
+				idealTimeSec = 110;
+				break;
+			case 24:
+				difficultyMultiplier = 1.1;
+				idealTimeSec = 180;
+				break;
+			default:
+				throw new Error("Invalid number of pairs. Must be 12, 16, or 24.");
+		}
+
+		const maxTimeSec = idealTimeSec * 4;
+		const maxClicks = idealClicks * 2.5;
+
+		const timeScore = Math.max(0, 1 - durationSec / maxTimeSec);
+		const clickScore = Math.max(
+			0,
+			1 - (this.totalMoves - idealClicks) / (maxClicks - idealClicks),
+		);
+
+		// Slightly weight click score more
+		const baseScore = (timeScore * 0.4 + clickScore * 0.6) * 1000;
+
+		const finalScore = Math.min(
+			1000,
+			Math.round(baseScore * difficultyMultiplier),
+		);
+		return finalScore;
+	}
+
+	private calculateMemoryGameScore() {
+		const start = this.startedAt || Date.now();
+		const end = this.finishedAt || Date.now();
+
+		const elapsedTimeSeconds = (end - start) / 1000;
+
+		let difficultyFactor = 0;
+		let maxTimeAllowed = 0;
+
+		switch (this.cardCount) {
+			case 12:
+				difficultyFactor = 0.7;
+				maxTimeAllowed = 180; // 3 minutes
+				break;
+			case 16:
+				difficultyFactor = 0.85;
+				maxTimeAllowed = 300; // 5 minutes
+				break;
+			case 24:
+				difficultyFactor = 1.0;
+				maxTimeAllowed = 480; // 8 minutes
+				break;
+			default:
+				throw new Error("Invalid number of pairs. Must be 12, 16, or 24.");
+		}
+
+		// Calculate time score component (0-500 points)
+		const timeRatio = Math.min(elapsedTimeSeconds / maxTimeAllowed, 1);
+		const timeScore = 500 * Math.max(1 - timeRatio, 0.1) * difficultyFactor;
+
+		// Calculate efficiency score component (0-500 points)
+		const minPossibleClicks = 2 * this.cardCount;
+		const efficiencyRatio = Math.min(minPossibleClicks / this.totalMoves, 1);
+		const efficiencyScore = 500 * efficiencyRatio * difficultyFactor;
+
+		// Calculate final score (max 1000)
+		const score = Math.min(timeScore + efficiencyScore, 1000);
+
+		return Math.round(score);
 	}
 
 	private async saveFinishedGame(): Promise<void> {
