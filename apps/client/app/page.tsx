@@ -60,10 +60,11 @@ export default function Home() {
 					</div>
 					<p className="text-lg text-purple-400">Fun memory games for kids!</p>
 				</header>
-				<div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-					<DashboardStats />
-				</div>
-
+				{dashboardStatistics ?
+					<div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+						<DashboardStats onlineUsers={onlineUsers} dashboardStatistics={dashboardStatistics} />
+					</div> :
+					null}
 				<Tabs defaultValue="all" className="mb-6" onValueChange={setActiveTab}>
 					<TabsList className="bg-purple-100">
 						<TabsTrigger value="all" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">

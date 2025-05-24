@@ -2,8 +2,15 @@ import { Users, Trophy, Star, ArrowUp, Activity } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@client/components/ui/card"
 import { Badge } from "@client/components/ui/badge"
 import CreateGameDialog from "./create-game-dialog"
+import type { DatabaseGame } from "@memory-game/common";
+import { HighScoreCard } from "./highest-score-card";
 
-export default function DashboardStats() {
+interface DashboardStatistics {
+	highestScoreGame: DatabaseGame;
+	gamesCount: number;
+}
+
+export default function DashboardStats({ onlineUsers, dashboardStatistics }: { onlineUsers: number, dashboardStatistics: DashboardStatistics }) {
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full">
 			<div className="flex flex-col gap-4">
@@ -60,7 +67,7 @@ export default function DashboardStats() {
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-3">
-					<div className="flex items-center justify-between">
+					{/* <div className="flex items-center justify-between">
 						<p className="text-4xl font-bold text-amber-700">116</p>
 						<Badge variant="outline" className="bg-amber-200 text-amber-800 border-amber-300 font-medium">
 							Easy (12 pairs)
@@ -79,7 +86,8 @@ export default function DashboardStats() {
 
 						<div className="text-amber-700 font-medium">Play Mode:</div>
 						<div className="text-right font-semibold text-amber-900">Multi player</div>
-					</div>
+					</div> */}
+					{dashboardStatistics ? <HighScoreCard game={dashboardStatistics.highestScoreGame} /> : null}
 				</CardContent>
 			</Card>
 			<Card className="overflow-hidden border-none shadow-md bg-gradient-to-br from-green-50 to-green-100">
