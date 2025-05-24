@@ -24,7 +24,7 @@ export default function DashboardStats({ onlineUsers, dashboardStatistics }: { o
 					</CardHeader>
 					<CardContent className="space-y-3">
 						<div className="flex items-center justify-between">
-							<p className="text-4xl font-bold text-blue-700">8</p>
+							<p className="text-4xl font-bold text-blue-700">{onlineUsers}</p>
 							<Badge
 								variant="outline"
 								className="bg-blue-100 text-blue-700 border-blue-200 font-medium flex items-center gap-1"
@@ -46,7 +46,7 @@ export default function DashboardStats({ onlineUsers, dashboardStatistics }: { o
 					</CardHeader>
 					<CardContent className="space-y-3">
 						<div className="flex items-center justify-between">
-							<p className="text-4xl font-bold text-purple-700">8</p>
+							<p className="text-4xl font-bold text-purple-700">{dashboardStatistics.gamesCount}</p>
 							<Badge
 								variant="outline"
 								className="bg-purple-100 text-purple-700 border-purple-200 font-medium flex items-center gap-1"
@@ -67,26 +67,6 @@ export default function DashboardStats({ onlineUsers, dashboardStatistics }: { o
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-3">
-					{/* <div className="flex items-center justify-between">
-						<p className="text-4xl font-bold text-amber-700">116</p>
-						<Badge variant="outline" className="bg-amber-200 text-amber-800 border-amber-300 font-medium">
-							Easy (12 pairs)
-						</Badge>
-					</div>
-
-					<div className="grid grid-cols-2 gap-y-2 text-sm">
-						<div className="text-amber-700 font-medium">Player:</div>
-						<div className="text-right font-semibold text-amber-900">jill</div>
-
-						<div className="text-amber-700 font-medium">Total Moves:</div>
-						<div className="text-right font-semibold text-amber-900">38</div>
-
-						<div className="text-amber-700 font-medium">Duration:</div>
-						<div className="text-right font-semibold text-amber-900">00:54</div>
-
-						<div className="text-amber-700 font-medium">Play Mode:</div>
-						<div className="text-right font-semibold text-amber-900">Multi player</div>
-					</div> */}
 					{dashboardStatistics ? <HighScoreCard game={dashboardStatistics.highestScoreGame} /> : null}
 				</CardContent>
 			</Card>
