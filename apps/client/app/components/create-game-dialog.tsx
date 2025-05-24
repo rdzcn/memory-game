@@ -51,10 +51,12 @@ export default function CreateGameDialog() {
 		});
 	};
 
+
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button>
+				<Button type="button" variant="ghost" className="hover:bg-purple-500 hover:text-white" >
 					<Plus className="h-6 w-6" />
 					Create a Game
 				</Button>

@@ -46,3 +46,17 @@ export interface PlayerConnection {
 	missedBeats: number;
 	socketId?: string;
 }
+
+export type DatabaseGame = {
+	id: string;
+	title: string;
+	status: "finished";
+	players: Player[];
+	cardCount: number;
+	createdAt: Date;
+	startedAt: Date | null;
+	finishedAt: Date | null;
+	winnerId: string | null;
+	gameScore: number;
+	totalMoves: number;
+};

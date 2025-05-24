@@ -1,1 +1,168 @@
-{}
+{
+    "b228c1cf-bfd1-49d3-9487-15ef4bd2abeb": {
+        "id": "b228c1cf-bfd1-49d3-9487-15ef4bd2abeb",
+        "players": [
+            {
+                "id": "653b9077-33c3-4cb3-83e0-dbb9d7956cc8",
+                "name": "jack",
+                "socketId": "CDieHejGIvnaQofZAAyJ",
+                "score": 0
+            }
+        ],
+        "flippedCards": [],
+        "currentTurn": "653b9077-33c3-4cb3-83e0-dbb9d7956cc8",
+        "status": "waiting",
+        "title": "hello",
+        "cards": [
+            {
+                "id": 21,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 15,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 8,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 10,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 20,
+                "value": "squirtle",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 18,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 4,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 1,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 22,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 0,
+                "value": "seadra",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 23,
+                "value": "starmie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 14,
+                "value": "charmander",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 19,
+                "value": "caterpie",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 6,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 16,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 3,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 12,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 7,
+                "value": "slowpoke",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 11,
+                "value": "lickitung",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 2,
+                "value": "goldeen",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 13,
+                "value": "farfetchd",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 17,
+                "value": "hitmonchan",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 9,
+                "value": "bulbasaur",
+                "isFlipped": false,
+                "isMatched": false
+            },
+            {
+                "id": 5,
+                "value": "scyther",
+                "isFlipped": false,
+                "isMatched": false
+            }
+        ],
+        "cardCount": 12,
+        "createdAt": 1746299299932,
+        "totalMoves": 4,
+        "gameScore": 0,
+        "playMode": "multi-player"
+    }
+}

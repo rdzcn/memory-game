@@ -7,13 +7,15 @@ import {
 	CardContent,
 } from "@client/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@client/components/ui/tabs";
-import type { GameState } from "@memory-game/common";
+import type { DatabaseGame, GameState } from "@memory-game/common";
 import CreateGameDialog from "./components/create-game-dialog";
 import { GameCard } from "./components/game-card";
 import { Clock, Gamepad2, Star, Trophy, Users } from "lucide-react";
+import { HighScoreCard } from "./components/highest-score-card";
+import DashboardStats from "./components/dashboard-stats";
 
 interface DashboardStatistics {
-	highestScoreGame: GameState;
+	highestScoreGame: DatabaseGame;
 	gamesCount: number;
 }
 
@@ -58,40 +60,8 @@ export default function Home() {
 					</div>
 					<p className="text-lg text-purple-400">Fun memory games for kids!</p>
 				</header>
-
 				<div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-					<div className="flex space-x-4">
-						<Card className="bg-blue-50 border-blue-200">
-							<CardContent className="p-4 flex items-center">
-								<Users className="h-6 w-6 text-blue-500 mr-2" />
-								<div>
-									<p className="text-sm text-blue-700">Total Players</p>
-									<p className="text-xl font-bold text-blue-800">{onlineUsers}</p>
-								</div>
-							</CardContent>
-						</Card>
-
-						<Card className="bg-purple-50 border-purple-200">
-							<CardContent className="p-4 flex items-center">
-								<Trophy className="h-6 w-6 text-purple-500 mr-2" />
-								<div>
-									<p className="text-sm text-purple-700">Games Completed</p>
-									<p className="text-xl font-bold text-purple-800">{dashboardStatistics?.gamesCount || 0}</p>
-								</div>
-							</CardContent>
-						</Card>
-
-						<Card className="bg-amber-50 border-amber-200">
-							<CardContent className="p-4 flex items-center">
-								<Star className="h-6 w-6 text-amber-500 mr-2" />
-								<div>
-									<p className="text-sm text-amber-700">High Score</p>
-									<p className="text-xl font-bold text-amber-800">{dashboardStatistics?.highestScoreGame?.gameScore || "-"}</p>
-								</div>
-							</CardContent>
-						</Card>
-					</div>
-					<CreateGameDialog />
+					<DashboardStats />
 				</div>
 
 				<Tabs defaultValue="all" className="mb-6" onValueChange={setActiveTab}>
