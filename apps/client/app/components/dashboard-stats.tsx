@@ -12,7 +12,7 @@ interface DashboardStatistics {
 
 export default function DashboardStats({ onlineUsers, dashboardStatistics }: { onlineUsers: number, dashboardStatistics: DashboardStatistics }) {
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full">
+		<div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
 			<div className="flex flex-col gap-4">
 				{/* Players Online Card */}
 				<Card className="overflow-hidden border-none shadow-md bg-gradient-to-br from-blue-50 to-blue-100">
@@ -71,7 +71,7 @@ export default function DashboardStats({ onlineUsers, dashboardStatistics }: { o
 				</CardContent>
 			</Card>
 			<Card className="overflow-hidden border-none shadow-md bg-gradient-to-br from-green-50 to-green-100">
-				<CardContent className="grid place-items-center h-full">
+				<CardContent className="flex justify-center items-center h-full p-4">
 					<CreateGameDialog />
 				</CardContent>
 			</Card>

@@ -54,81 +54,75 @@ export default function CreateGameDialog() {
 
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
-				<Button type="button" variant="ghost" className="hover:bg-purple-500 hover:text-white" >
-					<Plus className="h-6 w-6" />
-					Create a Game
-				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Create a New Game</DialogTitle>
-				</DialogHeader>
-				<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-					<div className="space-y-2">
-						<Label htmlFor="gameTitle">Game Name</Label>
+		<>
+			{!open ? <Button type="button" variant="ghost" className="hover:bg-purple-500 hover:text-white" onClick={() => setOpen(true)}>
+				<Plus className="h-6 w-6" />
+				Create a Game
+			</Button> :
+				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4 w-full">
+					<div className="space-y-1">
 						<Input
 							id="gameTitle"
+							placeholder="Enter game name"
+							className="h-8 text-sm border-gray-400"
 							{...register("gameTitle", { required: "Game name is required" })}
 						/>
 						{errors.gameTitle && (
 							<p className="text-red-500 text-sm">{errors.gameTitle.message}</p>
 						)}
 					</div>
-					<div className="space-y-2">
-						<Label htmlFor="username">Your Username</Label>
+					<div className="space-y-1">
 						<Input
 							id="username"
+							placeholder="Enter your player name"
+							className="h-8 text-sm border-gray-400"
 							{...register("username", { required: "Username is required" })}
 						/>
 						{errors.username && (
 							<p className="text-red-500 text-sm">{errors.username.message}</p>
 						)}
 					</div>
-					<div className="space-y-2">
-						<Label>Choose Play Mode</Label>
+					<div className="flex space-y-1 rounded-lg border border-gray-400 p-1">
 						<RadioGroup
 							defaultValue="single-player"
 							onValueChange={(value: "single-player" | "multi-player") => setValue("playMode", value)}
-							className="flex gap-4"
+							className="flex flex-col md:flex-row md:space-x-2"
 						>
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem value="single-player" id="single-player" />
-								<Label htmlFor="single-player">Single Player</Label>
+							<div className="flex items-center space-x-2 p-1 rounded-lg border border-gray-300 hover:bg-purple-200 transition-colors">
+								<RadioGroupItem value="single-player" id="single-player" className="w-4 h-4" />
+								<Label htmlFor="single-player" className="text-sm cursor-pointer">Single Player</Label>
 							</div>
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem value="multi-player" id="multi-player" />
-								<Label htmlFor="multi-player">Two Players</Label>
+							<div className="flex items-center space-x-2 p-1 rounded-lg border border-gray-300 hover:bg-purple-200 transition-colors">
+								<RadioGroupItem value="multi-player" id="multi-player" className="w-4 h-4" />
+								<Label htmlFor="multi-player" className="text-sm cursor-pointer">Two Players</Label>
 							</div>
 						</RadioGroup>
 					</div>
-					<div className="space-y-2">
-						<Label>Choose Difficulty Level</Label>
+					<div className="flex space-y-1 rounded-lg border border-gray-400 p-1">
 						<RadioGroup
 							defaultValue="12"
 							onValueChange={(value) => setValue("cardCount", Number(value))}
-							className="flex gap-4"
+							className="flex flex-col md:flex-row md:space-x-2"
 						>
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem value="12" id="card-12" />
-								<Label htmlFor="card-12">Easy (12 pairs)</Label>
+							<div className="flex items-center space-x-2 p-1 rounded-lg border border-gray-300 hover:bg-purple-200 transition-colors">
+								<RadioGroupItem value="12" id="card-12" className="w-4 h-4" />
+								<Label htmlFor="card-12" className="text-sm cursor-pointer">Easy (12)</Label>
 							</div>
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem value="16" id="card-16" />
-								<Label htmlFor="card-16">Medium (16 pairs)</Label>
+							<div className="flex items-center space-x-2 p-1 rounded-lg border border-gray-300 hover:bg-purple-200 transition-colors">
+								<RadioGroupItem value="16" id="card-16" className="w-4 h-4" />
+								<Label htmlFor="card-16" className="text-sm cursor-pointer">Medium (16)</Label>
 							</div>
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem value="24" id="card-24" />
-								<Label htmlFor="card-24">Hard (24 pairs)</Label>
+							<div className="flex items-center space-x-2 p-1 rounded-lg border border-gray-300 hover:bg-purple-200 transition-colors">
+								<RadioGroupItem value="24" id="card-24" className="w-4 h-4" />
+								<Label htmlFor="card-24" className="text-sm cursor-pointer">Hard (24)</Label>
 							</div>
 						</RadioGroup>
 					</div>
-					<Button type="submit">
+					<Button type="submit" className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-2 h-9 rounded-lg transition-all duration-200">
 						Create Game
 					</Button>
-				</form>
-			</DialogContent>
-		</Dialog>
+				</form>}
+
+		</>
 	);
 }
