@@ -4,12 +4,15 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"supabase:start": "supabase start",
+		"supabase:stop": "supabase stop",
 		"client": "pnpm --filter @memory-game/client run dev",
 		"backend": "pnpm --filter @memory-game/backend run dev",
 		"format": "pnpm biome write",
 		"check-types": "tsc --noEmit",
 		"build": "turbo run build",
-		"dev": "turbo run dev",
+		"dev": "./scripts/start-dev.sh",
+		"dev:quick": "turbo run dev",
 		"lint": "turbo run lint",
 		"db:generate": "turbo run db:generate",
 		"db:migrate:dev": "turbo run db:migrate:dev",
@@ -23,6 +26,7 @@
 		"biome": "^0.3.3"
 	},
 	"devDependencies": {
+		"concurrently": "^9.2.0",
 		"cross-env": "^7.0.3",
 		"turbo": "^2.5.0"
 	},
