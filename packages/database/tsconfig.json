@@ -5,7 +5,8 @@
     "rootDir": "./app",
     "lib": ["ES2019", "ESNext.AsyncIterable"],
     "module": "CommonJS",
-    "target": "ES2019"
+    "target": "ES2019",
+    "ignoreDeprecations": "6.0"
   },
   "references": [
     { "path": "../common" }
