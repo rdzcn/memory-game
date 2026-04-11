@@ -3,10 +3,15 @@ import { io, type Socket } from "socket.io-client";
 const url =
 	process.env.NODE_ENV === "development"
 		? "http://localhost:4040"
-		: "https://api.ardinho.com/memory-game";
+		: "https://api.ardinho.com";
+
+const path =
+	process.env.NODE_ENV === "development"
+		? "/socket.io"
+		: "/memory-game/socket.io";
 
 const socket: Socket = io(url, {
-	path: "/socket.io",
+	path,
 	transports: ["websocket", "polling"],
 	reconnection: true,
 	reconnectionAttempts: 5,
