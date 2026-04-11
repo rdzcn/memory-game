@@ -3,9 +3,7 @@ import { io, type Socket } from "socket.io-client";
 const url =
 	process.env.NODE_ENV === "development"
 		? "http://localhost:4040"
-		: "https://api.memorygameclub.com";
-
-// const url = "https://api.memorygameclub.com";
+		: "https://api.ardinho.com/memory-game";
 
 const socket: Socket = io(url, {
 	path: "/socket.io",

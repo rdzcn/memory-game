@@ -12,16 +12,25 @@ const PORT = process.env.PORT || 4040;
 
 const app = express();
 app.use(express.static("public"));
-app.use(cors());
+app.use(
+	cors({
+		origin: ALLOWED_ORIGINS,
+	})
+);
 app.use(express.json());
 app.use(errorHandler);
 
 const server = createServer(app);
 
+const ALLOWED_ORIGINS =
+	process.env.NODE_ENV === "development"
+		? ["http://localhost:3000"]
+		: ["https://memorygame.ardinho.com"];
+
 const io = new SocketIOServer(server, {
 	path: "/socket.io",
 	cors: {
-		origin: "*",
+		origin: ALLOWED_ORIGINS,
 		methods: ["GET", "POST"],
 	},
 });
