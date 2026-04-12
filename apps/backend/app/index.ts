@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4040;
 const ALLOWED_ORIGINS =
 	process.env.NODE_ENV === "development"
 		? ["http://localhost:3000"]
-		: ["https://memorygame.ardinho.com"];
+		: ["https://memorygame.ardinho.com", "https://api.ardinho.com"];
 
 const app = express();
 app.use(express.static("public"));
