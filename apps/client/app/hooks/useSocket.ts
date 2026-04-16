@@ -6,7 +6,7 @@ export function useSocket(): Socket | null {
 
 	useEffect(() => {
 		if (!socketRef.current) {
-			socketRef.current = io("http://localhost:4040"); // Adjust port as needed
+			socketRef.current = io("http://localhost:4102"); // Adjust port as needed
 		}
 
 		return () => {
