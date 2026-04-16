@@ -16,15 +16,46 @@ const ALLOWED_ORIGINS =
 		: ["https://memorygame.ardinho.com", "https://api.ardinho.com"];
 
 const app = express();
-app.use(express.static("public"));
+
+// ── Global middleware ─────────────────────────────────────
+app.use(express.json());
 app.use(
 	cors({
 		origin: ALLOWED_ORIGINS,
 	})
 );
-app.use(express.json());
 app.use(errorHandler);
 
+// ── Sub-router for /memory-game ─────────────────────────────
+const apiRouter = express.Router();
+
+// Serve static files under /memory-game
+apiRouter.use(express.static("public"));
+
+// Health and debug routes
+apiRouter.get("/", (req, res) => {
+	res.send("✅ Memory Game API is running under /memory-game");
+});
+
+apiRouter.get("/health", (req, res) => {
+	// TODO: Add actual health check logic here (database, etc.)
+	res.status(200).json({ status: "ok" });
+});
+
+apiRouter.get("/debug", (req, res) => {
+	res.json({
+		headers: req.headers,
+		origin: req.get("origin"),
+		baseUrl: req.baseUrl,
+		url: req.url,
+		cors: "ok",
+	});
+});
+
+// Mount the router at /memory-game
+app.use("/memory-game", apiRouter);
+
+// ── Socket.IO Setup ───────────────────────────────────────
 const server = createServer(app);
 
 const io = new SocketIOServer(server, {
@@ -39,8 +70,6 @@ const gamesController = new GamesController();
 const gameEventHandler = new GameEventHandler(io, gamesController);
 
 // Track active connections
-// Not accuracte currently as it registeres the same user twice when the page refreshes
-// It should be fixed in the future
 let onlineUsers = 0;
 
 // WebSocket connection
@@ -63,24 +92,8 @@ io.on("connection", (socket) => {
 	});
 });
 
-app.get("/", (req, res) => {
-	res.send("✅ Health check OK");
-});
-
-app.get("/health", (req, res) => {
-	// TODO: Add actual health check logic here
-	// database connection
-	res.status(200).json({ status: "ok" });
-});
-
-app.get("/debug", (req, res) => {
-	res.json({
-		headers: req.headers,
-		origin: req.get("origin"),
-		cors: "ok",
-	});
-});
-
+// ── Start server ──────────────────────────────────────────
 server.listen(PORT, () => {
-	console.log(`🚀 Server is running on port ${PORT}`);
+	console.log(`🚀 Memory Game Server is running on port ${PORT}`);
+	console.log(`   → API available at http://localhost:${PORT}/memory-game`);
 });
